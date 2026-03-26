@@ -21,6 +21,7 @@
             position: relative;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: all 0.3s ease;
         }
 
         /* الكرات والأشكال العائمة بالخلفية */
@@ -52,11 +53,10 @@
             position: relative;
         }
 
-        /* زر المعلومات (Info Button) */
-        .info-btn {
+        /* الأزرار العلوية (اللغة والمعلومات) */
+        .top-btn {
             position: absolute;
             top: 20px;
-            left: 20px;
             background: none;
             border: none;
             color: #3b82f6;
@@ -64,12 +64,24 @@
             transition: transform 0.2s;
             z-index: 10;
             padding: 5px;
+            display: flex; align-items: center; justify-content: center;
         }
-        .info-btn:active { transform: scale(0.9); }
-        .info-btn svg { width: 26px; height: 26px; stroke-width: 2.2; opacity: 0.8; }
+        .top-btn:active { transform: scale(0.9); }
+        .top-btn svg { width: 26px; height: 26px; stroke-width: 2.2; opacity: 0.8; }
         
-        .header-section { text-align: center; margin-bottom: 25px; }
-        .title { font-size: 26px; font-weight: 900; color: #0f172a; margin-bottom: 2px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
+        /* دعم الاتجاهين LTR و RTL */
+        [dir="rtl"] .info-btn { left: 20px; }
+        [dir="rtl"] .lang-btn { right: 20px; }
+        [dir="ltr"] .info-btn { right: 20px; }
+        [dir="ltr"] .lang-btn { left: 20px; }
+        
+        [dir="ltr"] .info-content { text-align: left; }
+        [dir="ltr"] .info-content ul { padding-right: 0; padding-left: 20px; }
+        [dir="ltr"] .v-pass-info { text-align: left; }
+        [dir="ltr"] .v-pass-num-box { text-align: left; }
+
+        .header-section { text-align: center; margin-bottom: 25px; margin-top: 10px; }
+        .title { font-size: 26px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
         .subtitle { font-size: 12px; color: #3b82f6; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(59, 130, 246, 0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.2); }
         
         /* شريط التحميل الذكي القابل للإغلاق */
@@ -94,11 +106,11 @@
         
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
         .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 20px #60a5fa, 0 0 40px #3b82f6; animation: scan 1.8s infinite linear; position: absolute; top: 0; }
-        .overlay p { color: #ffffff; font-weight: 800; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; }
+        .overlay p { color: #ffffff; font-weight: 800; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; text-align: center; }
         @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
         .tools { display: none; gap: 12px; margin-bottom: 20px; }
-        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .btn-rotate { background: rgba(255,255,255,0.9); color: #475569; flex: 1; border: 1px solid rgba(0,0,0,0.05); }
         .btn-rotate:active { background: #e2e8f0; }
         .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; box-shadow: 0 8px 25px rgba(37,99,235,0.3); }
@@ -108,7 +120,7 @@
         .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
         
         .form-group { display: flex; flex-direction: column; width: 100%; }
-        label { font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        label { font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; margin-right: 4px; margin-left: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .label-red { color: #dc2626; }
         
         input { padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.6); font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.3s; width: 100%; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); backdrop-filter: blur(10px); }
@@ -130,12 +142,12 @@
         .v-title-main { font-size: 24px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; }
         .v-title-sub { font-size: 10px; color: #93c5fd; font-weight: 700; letter-spacing: 1px; opacity: 0.9; }
         .v-date-corner { position: absolute; top: 12px; left: 15px; font-size: 10px; opacity: 0.7; font-family: monospace; font-weight: 600; }
+        [dir="ltr"] .v-date-corner { left: auto; right: 15px; }
         
         .v-body { padding: 25px 20px; }
         
         .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .v-badge { background: #f1f5f9; padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: 900; border: 1px solid #e2e8f0; color: #475569; letter-spacing: 0.5px; }
-        .v-pass-info { text-align: right; max-width: 70%; }
         .v-pass-label { font-size: 10px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .v-pass-name { font-size: 20px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
         
@@ -163,7 +175,6 @@
         
         .v-footer { display: flex; justify-content: space-between; align-items: center; }
         .qr-container { background: white; padding: 6px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-        .v-pass-num-box { text-align: right; }
         .v-pass-num-label { font-size: 10px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
         .v-pass-num-value { font-size: 26px; font-weight: 900; font-family: monospace; color: #0f172a; letter-spacing: 2px; }
         
@@ -174,25 +185,23 @@
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); }
         .modal-overlay.active .modal-card { transform: translateY(0); }
-        .modal-close-btn { position: absolute; top: 15px; left: 15px; background: rgba(15,23,42,0.05); border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .modal-close-btn { position: absolute; top: 15px; background: rgba(15,23,42,0.05); border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
         .modal-close-btn:active { background: rgba(15,23,42,0.1); transform: scale(0.9); }
+        [dir="rtl"] .modal-close-btn { left: 15px; }
+        [dir="ltr"] .modal-close-btn { right: 15px; }
         
-        /* تنسيق محتوى دليل الاستخدام */
         .info-title { font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 15px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .info-content { font-size: 13.5px; color: #475569; line-height: 1.7; font-weight: 600; text-align: right; }
         .info-content p { margin-bottom: 15px; }
         .info-content h4 { font-size: 15px; color: #1e40af; margin-bottom: 8px; font-weight: 800; margin-top: 15px; display: flex; align-items: center; gap: 5px; }
         .info-content ul { padding-right: 20px; margin-bottom: 15px; }
         .info-content li { margin-bottom: 8px; }
-        
-        .save-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        .save-overlay.active { display: flex; }
-        .save-overlay .card-inner { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; max-width: 90%; }
-        .save-overlay img { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
-        .save-title { font-size: 16px; font-weight: 900; color: #0f172a; margin-bottom: 5px; }
-        .save-subtitle { font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.4; margin-bottom: 15px; }
-        .btn-save-confirm { background: #16a34a; color: white; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; }
-        .btn-save-close { background: #cbd5e1; color: #475569; border-radius: 12px; padding: 10px 20px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; }
+
+        .save-title { font-size: 16px; font-weight: 900; color: #0f172a; margin-bottom: 5px; text-align: center;}
+        .save-subtitle { font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.4; margin-bottom: 15px; text-align: center;}
+        #finalImage { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+        .btn-save-confirm { background: #16a34a; color: white; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; margin-bottom: 10px;}
+        .btn-save-close { background: #cbd5e1; color: #475569; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: bold; border: none; cursor: pointer; }
         
         .highlight { border-color: #22c55e !important; background-color: rgba(240, 253, 244, 0.9) !important; box-shadow: 0 0 0 4px rgba(34,197,94,0.2) !important; }
     </style>
@@ -208,7 +217,7 @@
     <div class="container">
         <div class="card">
             
-            <button onclick="showAppInfo()" class="info-btn" title="دليل الاستخدام">
+            <button onclick="showAppInfo()" class="top-btn info-btn" title="دليل الاستخدام / User Guide">
                 <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <line x1="12" y1="16" x2="12" y2="12"></line>
@@ -216,16 +225,24 @@
                 </svg>
             </button>
 
+            <button onclick="toggleLanguage()" class="top-btn lang-btn" title="تغيير اللغة / Change Language">
+                <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+            </button>
+
             <div class="header-section">
-                <h1 class="title">التدقيق الذكي للجوازات</h1>
-                <p class="subtitle">النظام الشامل لفحص صلاحية السفر</p>
+                <h1 class="title" id="t_title">التدقيق الذكي للجوازات</h1>
+                <p class="subtitle" id="t_subtitle">النظام الشامل لفحص صلاحية السفر</p>
                 
                 <div id="downloadBanner" class="download-banner-container">
                     <a href="PassCheck.apk" class="download-app-btn" download>
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M17.523 15.3414C17.523 15.3414 17.523 15.3414 17.522 15.3414C16.812 15.3414 16.237 15.9164 16.237 16.6264C16.237 17.3364 16.812 17.9114 17.522 17.9114C18.232 17.9114 18.807 17.3364 18.807 16.6264C18.807 15.9174 18.232 15.3414 17.523 15.3414ZM6.477 15.3414C5.767 15.3414 5.192 15.9164 5.192 16.6264C5.192 17.3364 5.767 17.9114 6.477 17.9114C7.187 17.9114 7.762 17.3364 7.762 16.6264C7.762 15.9174 7.187 15.3414 6.477 15.3414ZM18.168 11.2334L19.983 8.08942C20.106 7.87642 20.033 7.60442 19.82 7.48142C19.607 7.35742 19.336 7.43142 19.212 7.64342L17.362 10.8464C15.82 10.1364 14.011 9.71542 12.001 9.71542C9.99 9.71542 8.18 10.1364 6.638 10.8464L4.788 7.64342C4.664 7.43042 4.393 7.35742 4.18 7.48142C3.967 7.60442 3.894 7.87642 4.017 8.08942L5.832 11.2334C2.531 13.0654 0.287003 16.3264 0.0240021 20.2154H23.976C23.713 16.3264 21.469 13.0654 18.168 11.2334Z"/></svg>
-                        تحميل تطبيق الأندرويد
+                        <span id="t_dl_btn">تحميل تطبيق الأندرويد</span>
                     </a>
-                    <button onclick="hideDownloadBanner()" class="close-btn" title="إخفاء الزر نهائياً">✖</button>
+                    <button onclick="hideDownloadBanner()" class="close-btn" title="إخفاء">✖</button>
                 </div>
             </div>
             
@@ -237,45 +254,45 @@
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 8V6a2 2 0 0 1 2-2h2l1.5-1.5A1.5 1.5 0 0 1 10.56 2h2.88a1.5 1.5 0 0 1 1.06.44L16 4h2a2 2 0 0 1 2 2v2M4 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2M4 8h16M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <p>المس هنا لالتقاط أو إدراج الجواز</p>
-                        <span>يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
+                        <p id="t_cam_p">المس هنا لالتقاط أو إدراج الجواز</p>
+                        <span id="t_cam_span">يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
                     </div>
                     <img id="previewImg">
                     <div class="overlay" id="loader">
                         <div class="scan-line"></div>
-                        <p>جاري تحليل البيانات ضوئياً...</p>
+                        <p id="t_loader">جاري تحليل البيانات ضوئياً...</p>
                     </div>
                 </div>
             </div>
 
             <div class="tools" id="tools">
-                <button class="btn btn-rotate" onclick="rotateImage(90)">تعديل الاتجاه ⟳</button>
-                <button class="btn btn-scan" onclick="processImage()">مسح ضوئي 🔍</button>
+                <button class="btn btn-rotate" onclick="rotateImage(90)"><span id="t_btn_rotate">تعديل الاتجاه</span> ⟳</button>
+                <button class="btn btn-scan" onclick="processImage()"><span id="t_btn_scan">مسح ضوئي</span> 🔍</button>
             </div>
 
             <div class="input-row input-row-1-2">
                 <div class="form-group">
-                    <label>الاسم الكامل (English)</label>
+                    <label id="t_lbl_name">الاسم الكامل (English)</label>
                     <input type="text" id="nameInput" placeholder="JOHN DOE" class="text-left">
                 </div>
                 <div class="form-group">
-                    <label>رقم الجواز</label>
+                    <label id="t_lbl_pass">رقم الجواز</label>
                     <input type="text" id="passNumInput" placeholder="A1234567" class="text-center text-left">
                 </div>
             </div>
 
             <div class="input-row">
                 <div class="form-group">
-                    <label>تاريخ الميلاد</label>
+                    <label id="t_lbl_dob">تاريخ الميلاد</label>
                     <input type="date" id="dobInput">
                 </div>
                 <div class="form-group">
-                    <label class="label-red">تاريخ النفاذ (Expiry)</label>
+                    <label class="label-red" id="t_lbl_exp">تاريخ النفاذ (Expiry)</label>
                     <input type="date" id="expiryInput" class="input-red">
                 </div>
             </div>
             
-            <button class="btn btn-main" onclick="generateTicket()">إصدار تقرير الصلاحية</button>
+            <button class="btn btn-main" onclick="generateTicket()" id="t_btn_gen">إصدار تقرير الصلاحية</button>
         </div>
 
         <div id="ticketArea">
@@ -296,14 +313,14 @@
                     </div>
 
                     <div class="v-status-box" id="validityBox">
-                        <p class="v-status-label">Travel Validity Status</p>
+                        <p class="v-status-label" id="t_v_status">Travel Validity Status</p>
                         <h3 class="v-status-title" id="vStatusTitle">--</h3>
                         <p class="v-status-desc" id="vRemaining">--</p>
                     </div>
 
                     <div class="v-detail-row-single">
                         <p class="v-detail-value" id="vAge">--</p>
-                        <p class="v-detail-label">AGE DETAILS</p>
+                        <p class="v-detail-label" id="t_v_age">AGE DETAILS</p>
                     </div>
 
                     <div class="v-details-grid">
@@ -332,29 +349,33 @@
                 <div class="v-bottom-bar"></div>
             </div>
             
-            <button class="btn btn-success" onclick="downloadImage()">حفظ التقرير كصورة 💾</button>
-            <button class="btn btn-clear" onclick="location.reload()">مسح وبدء جديد ↻</button>
+            <button class="btn btn-success" onclick="downloadImage()">
+                <span id="t_btn_save">حفظ التقرير كصورة</span> 💾
+            </button>
+            <button class="btn btn-clear" onclick="location.reload()">
+                <span id="t_btn_clear">مسح وبدء جديد</span> ↻
+            </button>
         </div>
     </div>
 
     <div class="modal-overlay" id="appInfoModal">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="hideAppInfo()">✖</button>
-            <h3 class="info-title">ℹ️ دليل استخدام النظام</h3>
+            <h3 class="info-title" id="t_info_title">ℹ️ دليل استخدام النظام</h3>
             <div class="info-content">
-                <p>هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر باستخدام تقنيات الذكاء الاصطناعي.</p>
+                <p id="t_info_desc">هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر باستخدام تقنيات الذكاء الاصطناعي.</p>
                 
-                <h4>⚙️ كيف يعمل النظام؟</h4>
+                <h4 id="t_info_h1">⚙️ كيف يعمل النظام؟</h4>
                 <ul>
-                    <li><strong>إدراج الجواز:</strong> المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة من الاستوديو.</li>
-                    <li><strong>الفحص التلقائي:</strong> سيقوم النظام باستخراج (الاسم، رقم الجواز، وتاريخ النفاذ) فوراً من الصورة.</li>
-                    <li><strong>التقرير الذكي:</strong> سيقوم النظام بحساب عمر المسافر، وتحديد ما إذا كان الجواز (صالح للسفر، غير صالح، أو منتهي) بناءً على شرط الـ 6 أشهر المعتمد دولياً.</li>
+                    <li id="t_info_l1"><strong>إدراج الجواز:</strong> المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة من الاستوديو.</li>
+                    <li id="t_info_l2"><strong>الفحص التلقائي:</strong> سيقوم النظام باستخراج (الاسم، رقم الجواز، وتاريخ النفاذ) فوراً من الصورة.</li>
+                    <li id="t_info_l3"><strong>التقرير الذكي:</strong> سيقوم النظام بحساب عمر المسافر، وتحديد ما إذا كان الجواز (صالح للسفر، غير صالح، أو منتهي) بناءً على شرط الـ 6 أشهر المعتمد دولياً.</li>
                 </ul>
 
-                <h4>💡 نصائح للحصول على قراءة دقيقة:</h4>
+                <h4 id="t_info_h2">💡 نصائح للحصول على قراءة دقيقة:</h4>
                 <ul>
-                    <li>تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء (تجنب استخدام الفلاش القوي).</li>
-                    <li>يجب أن يظهر الشريط السفلي للجواز (الشريط المليء بالحروف والأرقام MRZ) بالكامل ويكون مقروءاً بوضوح.</li>
+                    <li id="t_info_l4">تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء (تجنب استخدام الفلاش القوي).</li>
+                    <li id="t_info_l5">يجب أن يظهر الشريط السفلي للجواز (الشريط المليء بالحروف والأرقام MRZ) بالكامل ويكون مقروءاً بوضوح.</li>
                 </ul>
             </div>
         </div>
@@ -362,16 +383,83 @@
 
     <div class="save-overlay" id="saveOverlay">
         <div class="card-inner">
-            <h3 class="save-title">التقرير جاهز!</h3>
-            <p class="save-subtitle">المس مطولاً على الصورة في الأسفل، ثم اختر 'حفظ الصورة'.</p>
+            <h3 class="save-title" id="t_save_title">التقرير جاهز!</h3>
+            <p class="save-subtitle" id="t_save_sub">المس مطولاً على الصورة في الأسفل، ثم اختر 'حفظ الصورة'.</p>
             <img id="finalImage" alt="Passport Report">
-            <button class="btn-save-confirm" onclick="downloadImageLink()">اضغط هنا إذا لم يفتح (احتياط)</button>
-            <button class="btn-save-close" onclick="closeSaveOverlay()">إغلاق</button>
+            <button class="btn-save-confirm" onclick="downloadImageLink()" id="t_save_btn1">اضغط هنا إذا لم يفتح (احتياط)</button>
+            <button class="btn-save-close" onclick="closeSaveOverlay()" id="t_save_btn2">إغلاق</button>
         </div>
     </div>
 
     <script>
-        // دوال فتح وإغلاق نافذة الشرح (Info)
+        // ---------------- قاموس الترجمة ---------------- //
+        let currentLang = 'ar';
+        const dict = {
+            t_title: { ar: "التدقيق الذكي للجوازات", en: "Smart Passport Check" },
+            t_subtitle: { ar: "النظام الشامل لفحص صلاحية السفر", en: "Comprehensive Travel Eligibility System" },
+            t_dl_btn: { ar: "تحميل تطبيق الأندرويد", en: "Download Android App" },
+            t_cam_p: { ar: "المس هنا لالتقاط أو إدراج الجواز", en: "Tap here to capture or upload passport" },
+            t_cam_span: { ar: "يدعم الفحص التلقائي بالذكاء الاصطناعي", en: "Powered by AI Auto-Scan" },
+            t_loader: { ar: "جاري تحليل البيانات ضوئياً...", en: "Scanning passport data..." },
+            t_btn_rotate: { ar: "تعديل الاتجاه", en: "Rotate" },
+            t_btn_scan: { ar: "مسح ضوئي", en: "Scan" },
+            t_lbl_name: { ar: "الاسم الكامل (English)", en: "Full Name (English)" },
+            t_lbl_pass: { ar: "رقم الجواز", en: "Passport Number" },
+            t_lbl_dob: { ar: "تاريخ الميلاد", en: "Date of Birth" },
+            t_lbl_exp: { ar: "تاريخ النفاذ (Expiry)", en: "Expiry Date" },
+            t_btn_gen: { ar: "إصدار تقرير الصلاحية", en: "Generate Eligibility Report" },
+            t_btn_save: { ar: "حفظ التقرير كصورة", en: "Save Report as Image" },
+            t_btn_clear: { ar: "مسح وبدء جديد", en: "Clear & Start Over" },
+            t_v_status: { ar: "حالة صلاحية السفر", en: "Travel Validity Status" },
+            t_v_age: { ar: "تفاصيل العمر", en: "AGE DETAILS" },
+            t_info_title: { ar: "ℹ️ دليل استخدام النظام", en: "ℹ️ System User Guide" },
+            t_info_desc: { ar: "هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر باستخدام تقنيات الذكاء الاصطناعي.", en: "This system is designed to facilitate and speed up the process of checking passport validity for travel using AI technology." },
+            t_info_h1: { ar: "⚙️ كيف يعمل النظام؟", en: "⚙️ How does it work?" },
+            t_info_l1: { ar: "<strong>إدراج الجواز:</strong> المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة من الاستوديو.", en: "<strong>Insert Passport:</strong> Tap the camera box to take a photo or select one from the gallery." },
+            t_info_l2: { ar: "<strong>الفحص التلقائي:</strong> سيقوم النظام باستخراج (الاسم، رقم الجواز، وتاريخ النفاذ) فوراً من الصورة.", en: "<strong>Auto Scan:</strong> The system extracts (Name, Passport Number, Expiry Date) instantly." },
+            t_info_l3: { ar: "<strong>التقرير الذكي:</strong> سيقوم النظام بحساب عمر المسافر، وتحديد ما إذا كان الجواز (صالح للسفر، غير صالح، أو منتهي) بناءً على شرط الـ 6 أشهر المعتمد دولياً.", en: "<strong>Smart Report:</strong> Calculates passenger age and checks passport validity (Valid, Invalid, Expired) based on the international 6-month rule." },
+            t_info_h2: { ar: "💡 نصائح للحصول على قراءة دقيقة:", en: "💡 Tips for accurate scanning:" },
+            t_info_l4: { ar: "تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء (تجنب استخدام الفلاش القوي).", en: "Ensure the photo is clear without strong glare or flash." },
+            t_info_l5: { ar: "يجب أن يظهر الشريط السفلي للجواز (الشريط المليء بالحروف والأرقام MRZ) بالكامل ويكون مقروءاً بوضوح.", en: "The bottom MRZ code (letters and numbers) must be fully visible and readable." },
+            t_save_title: { ar: "التقرير جاهز!", en: "Report is Ready!" },
+            t_save_sub: { ar: "المس مطولاً على الصورة في الأسفل، ثم اختر 'حفظ الصورة'.", en: "Long press the image below, then choose 'Save Image'." },
+            t_save_btn1: { ar: "اضغط هنا إذا لم يفتح (احتياط)", en: "Tap here to download (Backup)" },
+            t_save_btn2: { ar: "إغلاق", en: "Close" }
+        };
+
+        const dynamicTexts = {
+            err_dob: { ar: "يرجى تحديد تاريخ الميلاد على الأقل", en: "Please set the Date of Birth at least" },
+            err_manual: { ar: "يرجى إدخال البيانات يدوياً.", en: "Please enter data manually." },
+            err_fail: { ar: "فشل استخراج البيانات", en: "Failed to extract data" },
+            rem_not_set: { ar: "لم يتم تحديد تاريخ النفاذ", en: "Expiry date not specified" },
+            rem_expired: { ar: "الجواز منتهي الصلاحية", en: "Passport is expired" },
+            status_expired: { ar: "EXPIRED (منتهي) ⛔", en: "EXPIRED ⛔" },
+            status_invalid: { ar: "INVALID (غير صالح) ⚠️", en: "INVALID ⚠️" },
+            status_valid: { ar: "VALID FOR TRAVEL ✅<br><span style='font-size:16px;'>(صالح)</span>", en: "VALID FOR TRAVEL ✅" },
+            age_y: { ar: "سنة", en: "Years" },
+            age_m: { ar: "شهر", en: "Months" },
+            age_d: { ar: "يوم", en: "Days" },
+            rem_prefix: { ar: "باقي:", en: "Remaining:" },
+            and: { ar: "و", en: "," }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+            for (let id in dict) {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = dict[id][currentLang];
+            }
+
+            // تحديث التقرير إذا كان مفتوح حتى يترجم التواريخ والأعمار
+            if (document.getElementById('ticketArea').style.display === 'block') {
+                generateTicket();
+            }
+        }
+
+        // ---------------- دوال النظام ---------------- //
         function showAppInfo() {
             document.getElementById('appInfoModal').style.display = 'flex';
             setTimeout(() => document.getElementById('appInfoModal').classList.add('active'), 10);
@@ -382,7 +470,6 @@
             setTimeout(() => document.getElementById('appInfoModal').style.display = 'none', 300);
         }
 
-        // دالة الإخفاء القطعية لزر التحميل وحفظ القرار بالذاكرة
         function hideDownloadBanner() {
             document.getElementById('downloadBanner').style.display = 'none';
             localStorage.setItem('hideAppBtn', 'true');
@@ -442,7 +529,7 @@
                 const data = await response.json();
 
                 if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) { 
-                    throw new Error("فشل"); 
+                    throw new Error(dynamicTexts.err_fail[currentLang]); 
                 }
 
                 const text = data.ParsedResults[0].ParsedText;
@@ -452,7 +539,7 @@
 
             } catch (error) {
                 console.error(error);
-                alert("يرجى إدخال البيانات يدوياً.");
+                alert(dynamicTexts.err_manual[currentLang]);
             } finally { 
                 document.getElementById('loader').style.display = 'none'; 
             }
@@ -466,11 +553,9 @@
                 img.src = imageElement.src;
                 img.onload = () => {
                     if (currentRotation === 90 || currentRotation === 270) { 
-                        canvas.width = img.height; 
-                        canvas.height = img.width; 
+                        canvas.width = img.height; canvas.height = img.width; 
                     } else { 
-                        canvas.width = img.width; 
-                        canvas.height = img.height; 
+                        canvas.width = img.width; canvas.height = img.height; 
                     }
                     ctx.translate(canvas.width / 2, canvas.height / 2);
                     ctx.rotate(currentRotation * Math.PI / 180);
@@ -556,7 +641,7 @@
             const nameVal = document.getElementById('nameInput').value || "GUEST";
             const passNum = document.getElementById('passNumInput').value || "---";
 
-            if (!dobVal) return alert("يرجى تحديد تاريخ الميلاد على الأقل");
+            if (!dobVal) return alert(dynamicTexts.err_dob[currentLang]);
             
             const today = new Date();
             const dob = new Date(dobVal);
@@ -567,7 +652,7 @@
             else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
 
             let statusTitle = "UNKNOWN";
-            let remainingText = "لم يتم تحديد تاريخ النفاذ";
+            let remainingText = dynamicTexts.rem_not_set[currentLang];
             let boxColor = "rgba(255,255,255,0.8)", borderColor = "rgba(0,0,0,0.1)", textColor = "#334155";
 
             if (expiryVal) {
@@ -575,16 +660,16 @@
                 const validDiff = calculateDiff(today, expiryDate);
                 
                 if (expiryDate < today) {
-                    statusTitle = "EXPIRED (منتهي) ⛔";
-                    remainingText = "الجواز منتهي الصلاحية";
+                    statusTitle = dynamicTexts.status_expired[currentLang];
+                    remainingText = dynamicTexts.rem_expired[currentLang];
                     boxColor = "rgba(254,226,226,0.9)"; borderColor = "#fca5a5"; textColor = "#991b1b";
                 } else {
-                    remainingText = `باقي: ${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم`;
+                    remainingText = `${dynamicTexts.rem_prefix[currentLang]} ${validDiff.years} ${dynamicTexts.age_y[currentLang]} ${dynamicTexts.and[currentLang]} ${validDiff.months} ${dynamicTexts.age_m[currentLang]} ${dynamicTexts.and[currentLang]} ${validDiff.days} ${dynamicTexts.age_d[currentLang]}`;
                     if (validDiff.totalMonths < 6) {
-                        statusTitle = "INVALID (غير صالح) ⚠️";
+                        statusTitle = dynamicTexts.status_invalid[currentLang];
                         boxColor = "rgba(255,237,213,0.9)"; borderColor = "#fdba74"; textColor = "#c2410c";
                     } else {
-                        statusTitle = "VALID FOR TRAVEL ✅<br><span style='font-size:16px;'>(صالح)</span>";
+                        statusTitle = dynamicTexts.status_valid[currentLang];
                         boxColor = "rgba(220,252,231,0.9)"; borderColor = "#86efac"; textColor = "#15803d";
                     }
                 }
@@ -595,7 +680,7 @@
             document.getElementById('vDob').innerText = dobVal;
             document.getElementById('vExpiry').innerText = expiryVal || "--";
             
-            document.getElementById('vAge').innerText = `${ageDiff.years} سنة، ${ageDiff.months} شهر، ${ageDiff.days} يوم`;
+            document.getElementById('vAge').innerText = `${ageDiff.years} ${dynamicTexts.age_y[currentLang]}، ${ageDiff.months} ${dynamicTexts.age_m[currentLang]}، ${ageDiff.days} ${dynamicTexts.age_d[currentLang]}`;
             
             document.getElementById('vTypeBadge').innerText = type;
             document.getElementById('vDate').innerText = today.toISOString().split('T')[0];
@@ -631,7 +716,7 @@
                 link.click();
                 document.body.removeChild(link);
             } catch(e) {
-                alert("تنبيه: يرجى المس مطولاً على الصورة لحفظها بالهاتف.");
+                alert(currentLang === 'ar' ? "تنبيه: يرجى المس مطولاً على الصورة لحفظها بالهاتف." : "Notice: Please long press the image to save it.");
             }
         }
 
