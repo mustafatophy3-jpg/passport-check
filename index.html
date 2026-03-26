@@ -2,311 +2,285 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام فحص صلاحية الجواز الشامل</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>نظام فحص الجواز الشامل</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; padding-bottom: 80px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #334155; padding: 20px 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
         
-        .preview-container {
-            position: relative;
-            background: #1e293b;
-            border-radius: 16px;
-            overflow: hidden;
-            height: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 12px;
-            border: 2px dashed #475569;
-        }
-        .preview-container img {
-            max-width: 100%;
-            max-height: 100%;
-            transition: transform 0.3s ease;
-        }
+        .container { max-width: 450px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
         
-        .control-btn {
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .btn-rotate { background: white; border: 1px solid #cbd5e1; color: #334155; }
-        .btn-scan { background: #2563eb; color: white; border: none; }
-        .btn-scan:hover { background: #1d4ed8; }
+        .title { text-align: center; font-size: 22px; font-weight: 900; color: #1e293b; margin-bottom: 5px; }
+        .subtitle { text-align: center; font-size: 13px; color: #64748b; font-weight: 600; margin-bottom: 20px; }
+        
+        .preview-box { position: relative; background: #1e293b; border-radius: 16px; height: 220px; display: flex; justify-content: center; align-items: center; border: 2px dashed #94a3b8; overflow: hidden; margin-bottom: 15px; cursor: pointer; }
+        .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; }
+        .placeholder { text-align: center; color: #94a3b8; }
+        .placeholder span { font-size: 40px; display: block; margin-bottom: 10px; opacity: 0.6; }
+        .placeholder p { font-size: 14px; font-weight: bold; }
+        
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; }
+        .scan-line { width: 80%; height: 2px; background: #60a5fa; box-shadow: 0 0 15px #60a5fa; animation: scan 1.5s infinite ease-in-out; }
+        .overlay p { color: #dbeafe; margin-top: 20px; font-weight: bold; font-size: 16px; }
+        @keyframes scan { 0% { transform: translateY(-60px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(60px); opacity: 0; } }
 
-        .voucher-card {
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px -12px rgba(0,0,0,0.15);
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-            position: relative;
-        }
-        .v-header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
-            color: white;
-            padding: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .dashed-cut {
-            border-top: 2px dashed #cbd5e1;
-            margin: 24px 0;
-            position: relative;
-        }
-        .dashed-cut::before, .dashed-cut::after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: #f1f5f9;
-            border-radius: 50%;
-            top: -16px;
-        }
-        .dashed-cut::before { right: -35px; }
-        .dashed-cut::after { left: -35px; }
+        .tools { display: none; gap: 10px; margin-bottom: 20px; }
+        .btn { padding: 14px; border-radius: 12px; font-weight: bold; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.2s; font-family: inherit; }
+        .btn-rotate { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; flex: 1; }
+        .btn-scan { background: #2563eb; color: white; flex: 2; box-shadow: 0 4px 10px rgba(37,99,235,0.3); }
+        .btn-scan:active, .btn-main:active { transform: scale(0.98); }
+        
+        .form-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .form-group { flex: 1; display: flex; flex-direction: column; }
+        .form-group.w-2-3 { flex: 2; }
+        .form-group.w-1-3 { flex: 1; }
+        
+        label { font-size: 11px; font-weight: bold; color: #64748b; margin-bottom: 5px; margin-right: 5px; }
+        .label-red { color: #ef4444; }
+        
+        input { padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; background: #f8fafc; font-family: inherit; font-size: 14px; font-weight: bold; color: #1e293b; outline: none; }
+        input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        input.input-red { background: #fef2f2; border-color: #fca5a5; color: #7f1d1d; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; direction: ltr; text-transform: uppercase; }
+        
+        .btn-main { background: #1e293b; color: white; width: 100%; margin-top: 10px; }
+        .btn-success { background: #16a34a; color: white; width: 100%; margin-top: 15px; }
+        .btn-clear { background: transparent; color: #94a3b8; width: 100%; margin-top: 10px; box-shadow: none; font-size: 13px; }
 
-        .scan-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            color: white;
-            backdrop-filter: blur(4px);
-        }
-        .scan-line {
-            width: 90%;
-            height: 2px;
-            background: #60a5fa;
-            box-shadow: 0 0 20px #60a5fa;
-            animation: scanMove 1.5s infinite ease-in-out;
-        }
-        @keyframes scanMove { 0% { transform: translateY(-100px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100px); opacity: 0; } }
+        /* Report Styles - Updated to match screenshot */
+        #ticketArea { display: none; }
+        .voucher { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        
+        .v-head { background: #1e3a8a; color: white; padding: 20px; text-align: center; position: relative; }
+        .v-title-main { font-size: 24px; font-weight: 900; letter-spacing: 1px; margin-bottom: 2px; }
+        .v-title-sub { font-size: 10px; color: #bfdbfe; font-weight: 600; letter-spacing: 0.5px; }
+        .v-date-corner { position: absolute; top: 10px; left: 15px; font-size: 10px; opacity: 0.8; font-family: monospace; }
+        
+        .v-body { padding: 25px 20px; }
+        
+        .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .v-badge { background: #f8fafc; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: bold; border: 1px solid #cbd5e1; color: #334155; }
+        .v-pass-info { text-align: right; max-width: 70%; }
+        .v-pass-label { font-size: 10px; color: #94a3b8; font-weight: bold; margin-bottom: 2px; text-transform: uppercase; }
+        .v-pass-name { font-size: 20px; font-weight: 900; color: #1e293b; line-height: 1.1; word-wrap: break-word; }
+        
+        .v-status-box { padding: 20px 15px; border-radius: 16px; text-align: center; margin-bottom: 15px; border: 1px solid #86efac; background: #f0fdf4; color: #15803d; }
+        .v-status-label { font-size: 10px; font-weight: bold; opacity: 0.8; margin-bottom: 5px; text-transform: uppercase; }
+        .v-status-title { font-size: 22px; font-weight: 900; margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 5px; }
+        .v-status-desc { font-size: 14px; font-weight: bold; }
+        
+        .v-detail-row-single { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .v-detail-label { font-size: 10px; color: #94a3b8; font-weight: bold; text-transform: uppercase; }
+        .v-detail-value { font-size: 15px; font-weight: bold; color: #1e293b; }
+        
+        .v-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .v-grid-box { background: white; border: 1px solid #e2e8f0; padding: 12px; border-radius: 12px; text-align: center; }
+        .v-grid-box.red-box { border-color: #fca5a5; }
+        .v-grid-label { font-size: 9px; font-weight: bold; margin-bottom: 5px; color: #94a3b8; }
+        .v-grid-label.red-text { color: #ef4444; }
+        .v-grid-value { font-size: 15px; font-weight: bold; font-family: monospace; color: #334155; }
+        .v-grid-value.red-text { color: #b91c1c; }
+        
+        .dashed-line { border-top: 2px dashed #cbd5e1; position: relative; margin: 10px 0 20px 0; }
+        .dashed-line::before, .dashed-line::after { content: ''; position: absolute; width: 20px; height: 20px; background: #f8fafc; border-radius: 50%; top: -10px; }
+        .dashed-line::before { right: -30px; }
+        .dashed-line::after { left: -30px; }
+        
+        .v-footer { display: flex; justify-content: space-between; align-items: center; }
+        .qr-container { background: white; padding: 5px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .v-pass-num-box { text-align: right; }
+        .v-pass-num-label { font-size: 10px; color: #94a3b8; font-weight: bold; margin-bottom: 2px; }
+        .v-pass-num-value { font-size: 24px; font-weight: 900; font-family: monospace; color: #1e293b; letter-spacing: 1px; }
+        
+        .v-bottom-bar { height: 16px; background: #0f172a; border-radius: 0 0 20px 20px; }
+        .highlight { border-color: #22c55e !important; background-color: #f0fdf4 !important; }
     </style>
 </head>
-<body class="p-4 md:p-6">
+<body>
 
-    <div class="max-w-md mx-auto space-y-6">
-        
-        <div class="bg-white p-6 rounded-3xl shadow-lg border border-slate-100">
-            <h1 class="text-2xl font-black text-center text-slate-800 mb-6 tracking-tight">فحص الجواز الذكي ⚡</h1>
+    <div class="container">
+        <div class="card">
+            <h1 class="title">التدقيق الذكي للجوازات ⚡</h1>
+            <p class="subtitle">أداة فحص صلاحية السفر</p>
             
-            <div class="mb-6">
-                <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="loadFile(event)">
-                
-                <div class="preview-container" id="previewBox">
-                    <div id="placeholder" class="text-center text-slate-400 cursor-pointer p-10 w-full h-full flex flex-col items-center justify-center" onclick="document.getElementById('fileInput').click()">
-                        <span class="text-5xl mb-3 opacity-50">📷</span>
-                        <p class="font-bold text-sm">اضغط لرفع صورة الجواز</p>
-                    </div>
-                    <img id="previewImg" class="hidden">
-                    <div id="loader" class="hidden scan-overlay">
-                        <div class="scan-line"></div>
-                        <p class="mt-6 font-bold text-lg animate-pulse text-blue-100">جاري قراءة البيانات...</p>
-                    </div>
+            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="loadFile(event)">
+            
+            <div class="preview-box" id="previewBox" onclick="document.getElementById('fileInput').click()">
+                <div class="placeholder" id="placeholder">
+                    <span>📸</span>
+                    <p>اضغط لالتقاط أو اختيار صورة الجواز</p>
                 </div>
-
-                <div class="flex gap-3" id="tools" style="display:none;">
-                    <button class="control-btn btn-rotate flex-1" onclick="rotateImage(90)"><span>↩️ تدوير</span></button>
-                    <button class="control-btn btn-scan flex-[2]" onclick="processImage()"><span>🔍 فحص شامل</span></button>
+                <img id="previewImg">
+                <div class="overlay" id="loader">
+                    <div class="scan-line"></div>
+                    <p>جاري استخراج البيانات...</p>
                 </div>
             </div>
 
-            <div class="space-y-4">
-                <div class="flex gap-2">
-                    <div class="w-2/3">
-                         <label class="text-xs font-bold text-slate-500 mr-1">الاسم</label>
-                         <input type="text" id="nameInput" placeholder="-- --" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold uppercase outline-none focus:ring-2 focus:ring-blue-500 transition dir-ltr text-left">
-                    </div>
-                    <div class="w-1/3">
-                        <label class="text-xs font-bold text-slate-500 mr-1">رقم الجواز</label>
-                        <input type="text" id="passNumInput" placeholder="--" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold uppercase outline-none text-center">
-                   </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <div class="w-1/2">
-                        <label class="text-xs font-bold text-slate-500 mr-1">تاريخ الميلاد</label>
-                        <input type="date" id="dobInput" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-800 outline-none">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="text-xs font-bold text-red-500 mr-1">تاريخ النفاذ (Expiry)</label>
-                        <input type="date" id="expiryInput" class="w-full bg-red-50 border border-red-200 rounded-xl p-3 text-sm font-bold text-red-900 outline-none focus:ring-2 focus:ring-red-500">
-                    </div>
-                </div>
-
-                <button onclick="generateTicket()" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-slate-800 transition transform active:scale-[0.98]">
-                    إصدار تقرير الصلاحية
-                </button>
+            <div class="tools" id="tools">
+                <button class="btn btn-rotate" onclick="rotateImage(90)">🔄 تدوير</button>
+                <button class="btn btn-scan" onclick="processImage()">🔍 مسح ضوئي</button>
             </div>
+
+            <div class="form-row">
+                <div class="form-group w-2-3">
+                    <label>الاسم الكامل (English)</label>
+                    <input type="text" id="nameInput" placeholder="-- --" class="text-left">
+                </div>
+                <div class="form-group w-1-3">
+                    <label>رقم الجواز</label>
+                    <input type="text" id="passNumInput" placeholder="--" class="text-center">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>تاريخ الميلاد</label>
+                    <input type="date" id="dobInput">
+                </div>
+                <div class="form-group">
+                    <label class="label-red">تاريخ النفاذ (Expiry)</label>
+                    <input type="date" id="expiryInput" class="input-red">
+                </div>
+            </div>
+            
+            <button class="btn btn-main" onclick="generateTicket()">إصدار تقرير الصلاحية</button>
         </div>
 
-        <div id="ticketArea" class="hidden">
-            <div id="finalVoucher" class="voucher-card">
-                <div class="v-header">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-                            <span class="text-2xl">✈️</span>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg leading-tight tracking-wide">TRAVEL ELIGIBILITY</h3>
-                            <p class="text-[10px] text-blue-200 font-medium">DOCUMENT STATUS CHECK</p>
-                        </div>
-                    </div>
-                    <div class="text-left">
-                        <p class="text-[10px] text-blue-200 font-medium">REPORT DATE</p>
-                        <p class="font-bold text-sm font-mono" id="vDate">--</p>
-                    </div>
+        <div id="ticketArea">
+            <div class="voucher" id="finalVoucher">
+                <div class="v-head">
+                    <div class="v-date-corner" id="vDate">--</div>
+                    <h3 class="v-title-main">ELIGIBILITY</h3>
+                    <p class="v-title-sub">DOCUMENT STATUS CHECK</p>
                 </div>
-
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex-1">
-                            <p class="text-[10px] text-slate-400 font-bold tracking-wider mb-1">PASSENGER</p>
-                            <h2 class="text-lg font-black text-slate-800 uppercase tracking-tight leading-tight" id="vName">GUEST</h2>
+                
+                <div class="v-body">
+                    <div class="v-passenger-row">
+                        <div class="v-badge" id="vTypeBadge">--</div>
+                        <div class="v-pass-info">
+                            <p class="v-pass-label">PASSENGER</p>
+                            <h2 class="v-pass-name" id="vName">GUEST</h2>
                         </div>
-                        <div id="vTypeBadge" class="px-3 py-1.5 rounded-lg bg-slate-100 text-xs font-bold border border-slate-200 ml-2 whitespace-nowrap">--</div>
                     </div>
 
-                    <div id="validityBox" class="p-4 rounded-2xl border mb-4 text-center">
-                        <p class="text-[10px] uppercase font-bold mb-1 opacity-70">Travel Validity Status</p>
-                        <h3 class="text-xl font-black mb-1" id="vStatusTitle">--</h3>
-                        <p class="text-sm font-bold dir-rtl" id="vRemaining">--</p>
+                    <div class="v-status-box" id="validityBox">
+                        <p class="v-status-label">Travel Validity Status</p>
+                        <h3 class="v-status-title" id="vStatusTitle">--</h3>
+                        <p class="v-status-desc" id="vRemaining">--</p>
                     </div>
 
-                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4">
-                         <div class="flex justify-between items-center">
-                            <span class="text-[10px] text-slate-400 font-bold">AGE DETAILS</span>
-                            <span class="font-bold text-slate-800 text-sm" id="vAge">--</span>
-                         </div>
+                    <div class="v-detail-row-single">
+                        <p class="v-detail-value" id="vAge">--</p>
+                        <p class="v-detail-label">AGE DETAILS</p>
                     </div>
 
-                    <div class="flex gap-2 mb-2">
-                         <div class="flex-1 bg-white p-2 border rounded-xl">
-                            <p class="text-[10px] text-slate-400 font-bold mb-1">BIRTH DATE</p>
-                            <p class="font-bold text-slate-700 font-mono text-sm" id="vDob">--</p>
-                         </div>
-                         <div class="flex-1 bg-white p-2 border rounded-xl">
-                            <p class="text-[10px] text-red-400 font-bold mb-1">EXPIRY DATE</p>
-                            <p class="font-bold text-red-700 font-mono text-sm" id="vExpiry">--</p>
-                         </div>
-                    </div>
-
-                    <div class="dashed-cut"></div>
-
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] text-slate-400 font-bold mb-1">PASSPORT NO</p>
-                            <p class="text-2xl font-black text-slate-900 tracking-tighter font-mono" id="vPassNum">--</p>
+                    <div class="v-details-grid">
+                        <div class="v-grid-box red-box">
+                            <p class="v-grid-label red-text">EXPIRY DATE</p>
+                            <p class="v-grid-value red-text" id="vExpiry">--</p>
                         </div>
-                        <div class="bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="v-grid-box">
+                            <p class="v-grid-label">BIRTH DATE</p>
+                            <p class="v-grid-value" id="vDob">--</p>
+                        </div>
+                    </div>
+
+                    <div class="dashed-line"></div>
+
+                    <div class="v-footer">
+                        <div class="qr-container">
                             <canvas id="qr"></canvas>
                         </div>
+                        <div class="v-pass-num-box">
+                            <p class="v-pass-num-label">PASSPORT NO</p>
+                            <p class="v-pass-num-value" id="vPassNum">--</p>
+                        </div>
                     </div>
                 </div>
-                <div class="h-3 w-full bg-slate-900"></div>
+                <div class="v-bottom-bar"></div>
             </div>
-
-            <button onclick="downloadImage()" class="w-full mt-5 bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl flex justify-center items-center gap-3 shadow-lg transition transform active:scale-[0.98]">
-                <span class="text-xl">💾</span> 
-                <span>حفظ التقرير كصورة</span>
-            </button>
-            <button onclick="resetAll()" class="w-full mt-3 text-slate-400 font-bold text-sm py-3 hover:text-slate-600 transition">مسح وبدء جديد ↻</button>
+            
+            <button class="btn btn-success" onclick="downloadImage()">💾 حفظ التقرير كصورة</button>
+            <button class="btn btn-clear" onclick="location.reload()">مسح الحقول وبدء جديد ↻</button>
         </div>
-
     </div>
 
     <script>
         let currentRotation = 0;
-        let imageElement = document.getElementById('previewImg');
-        const qr = new QRious({ element: document.getElementById('qr'), size: 90 });
-        const API_KEY = 'helloworld'; 
+        const img = document.getElementById('previewImg');
+        const qr = new QRious({ element: document.getElementById('qr'), size: 85 });
 
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageElement.src = e.target.result;
-                    imageElement.classList.remove('hidden');
-                    document.getElementById('placeholder').classList.add('hidden');
+                reader.onload = (e) => {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    document.getElementById('placeholder').style.display = 'none';
                     document.getElementById('tools').style.display = 'flex';
                     currentRotation = 0;
-                    imageElement.style.transform = `rotate(0deg)`;
-                }
+                    img.style.transform = 'rotate(0deg)';
+                };
                 reader.readAsDataURL(file);
             }
         }
 
         function rotateImage(deg) {
             currentRotation = (currentRotation + deg) % 360;
-            imageElement.style.transform = `rotate(${currentRotation}deg)`;
+            img.style.transform = `rotate(${currentRotation}deg)`;
         }
 
         async function processImage() {
-            document.getElementById('loader').classList.remove('hidden');
+            document.getElementById('loader').style.display = 'flex';
             try {
-                const rotatedBase64 = await getRotatedImage();
+                const base64 = await getRotatedBase64();
                 const formData = new FormData();
-                formData.append("base64Image", rotatedBase64);
-                formData.append("language", "eng"); 
-                formData.append("isOverlayRequired", "false");
-                formData.append("detectOrientation", "true");
-                formData.append("scale", "true");
-                formData.append("OCREngine", "2"); 
-                formData.append("apikey", API_KEY);
+                formData.append("base64Image", base64);
+                formData.append("apikey", "K83236313788957");
+                formData.append("OCREngine", "2");
 
-                const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
-                const data = await response.json();
-
-                if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) { throw new Error("فشل"); }
+                const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                if (!res.ok) throw new Error("مشكلة بالاتصال.");
+                
+                const data = await res.json();
+                if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) {
+                     throw new Error("لم يتمكن السيرفر من قراءة الجواز بوضوح.");
+                }
 
                 const text = data.ParsedResults[0].ParsedText;
-                extractDates(text); // دالة التواريخ الجديدة
-                extractNameFromText(text);
-                extractPassportNumber(text);
-
-            } catch (error) {
-                console.error(error);
-                alert("يرجى إدخال البيانات يدوياً.");
-            } finally { document.getElementById('loader').classList.add('hidden'); }
+                
+                if(text) {
+                    const pMatch = text.match(/\b([A-Z][0-9]{7,8})\b/);
+                    if(pMatch) {
+                        document.getElementById('passNumInput').value = pMatch[1];
+                        highlightField('passNumInput');
+                    }
+                    
+                    const nameMatch = text.match(/P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/);
+                    if(nameMatch) {
+                        let s = nameMatch[1].replace(/</g, ' ').trim();
+                        let g = nameMatch[2].replace(/</g, ' ').trim();
+                        document.getElementById('nameInput').value = `${g} ${s}`;
+                        highlightField('nameInput');
+                    }
+                    extractDates(text);
+                }
+            } catch (e) {
+                console.error(e);
+                alert("تنبيه: " + e.message + "\nيرجى إدخال البيانات يدوياً.");
+            } finally {
+                document.getElementById('loader').style.display = 'none';
+            }
         }
 
-        function getRotatedImage() {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                const img = new Image();
-                img.src = imageElement.src;
-                img.onload = () => {
-                    if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } 
-                    else { canvas.width = img.width; canvas.height = img.height; }
-                    ctx.translate(canvas.width / 2, canvas.height / 2);
-                    ctx.rotate(currentRotation * Math.PI / 180);
-                    ctx.drawImage(img, -img.width / 2, -img.height / 2);
-                    resolve(canvas.toDataURL('image/jpeg', 0.8));
-                };
-            });
-        }
-
-        // استخراج التواريخ (ميلاد + نفاذ)
         function extractDates(text) {
             const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g];
             let dates = [];
@@ -315,19 +289,14 @@
             let matches2 = [...text.matchAll(datePatterns[1])];
             matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
 
-            // تنظيف التواريخ وفرزها
             dates = dates.filter(d => {
                 let y = parseInt(d.split('-')[0]);
-                return y > 1920 && y < 2050; // تواريخ منطقية
+                return y > 1920 && y < 2050;
             }).sort();
 
             if (dates.length > 0) {
-                // أصغر تاريخ عادة هو الميلاد
                 document.getElementById('dobInput').value = dates[0];
                 highlightField('dobInput');
-                
-                // أكبر تاريخ عادة هو النفاذ (Expiry)
-                // بشرط أن يكون أكبر من تاريخ اليوم أو قريب منه
                 let lastDate = dates[dates.length - 1];
                 if (lastDate !== dates[0]) {
                     document.getElementById('expiryInput').value = lastDate;
@@ -336,44 +305,38 @@
             }
         }
 
-        function extractNameFromText(text) {
-            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g;
-            const matches = [...text.matchAll(mrzRegex)];
-            if (matches.length > 0) {
-                let s = matches[0][1].replace(/</g, ' ').trim();
-                let g = matches[0][2].replace(/</g, ' ').trim();
-                document.getElementById('nameInput').value = `${g} ${s}`;
-                highlightField('nameInput');
-            } else {
-                const lines = text.split('\n');
-                for (let line of lines) {
-                    if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) {
-                        document.getElementById('nameInput').value = line.trim(); break;
-                    }
-                }
-            }
-        }
-
-        function extractPassportNumber(text) {
-            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g;
-            const matchesMRZ = [...text.matchAll(mrzPattern)];
-            if (matchesMRZ.length > 0) {
-                document.getElementById('passNumInput').value = matchesMRZ[0][1];
-                highlightField('passNumInput');
-            } else {
-                const visualPattern = /\b[A-Z][0-9]{7,8}\b/g;
-                const visualMatches = [...text.matchAll(visualPattern)];
-                if (visualMatches.length > 0) document.getElementById('passNumInput').value = visualMatches[0][0];
-            }
-        }
-
         function highlightField(id) {
             const el = document.getElementById(id);
-            el.classList.add('bg-green-100', 'border-green-500');
-            setTimeout(()=> el.classList.remove('bg-green-100', 'border-green-500'), 1500);
+            el.classList.add('highlight');
+            setTimeout(()=> el.classList.remove('highlight'), 1500);
         }
 
-        // دالة حساب الفرق بين تاريخين
+        function getRotatedBase64() {
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const tempImg = new Image();
+                tempImg.onload = () => {
+                    let MAX_WIDTH = 800;
+                    let width = tempImg.width;
+                    let height = tempImg.height;
+                    if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
+                    else { if (height > MAX_WIDTH) { width *= MAX_WIDTH / height; height = MAX_WIDTH; } }
+
+                    const is90 = currentRotation === 90 || currentRotation === 270;
+                    canvas.width = is90 ? height : width;
+                    canvas.height = is90 ? width : height;
+                    
+                    ctx.translate(canvas.width/2, canvas.height/2);
+                    ctx.rotate(currentRotation * Math.PI / 180);
+                    ctx.drawImage(tempImg, -width/2, -height/2, width, height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.5));
+                };
+                tempImg.onerror = () => reject(new Error("فشل المعالجة."));
+                tempImg.src = img.src;
+            });
+        }
+
         function calculateDiff(startDate, endDate) {
             let years = endDate.getFullYear() - startDate.getFullYear();
             let months = endDate.getMonth() - startDate.getMonth();
@@ -389,80 +352,90 @@
             const nameVal = document.getElementById('nameInput').value || "GUEST";
             const passNum = document.getElementById('passNumInput').value || "---";
 
-            if (!dobVal) { alert("تاريخ الميلاد مطلوب"); return; }
-            // إذا لم يتم ادخال تاريخ نفاذ، نعتبره غير موجود
+            if (!dobVal) return alert("يرجى تحديد تاريخ الميلاد على الأقل");
             
             const today = new Date();
             const dob = new Date(dobVal);
-            
-            // 1. حساب العمر
             const ageDiff = calculateDiff(dob, today);
             
-            // تصنيف العمر
             let type = "ADULT", code = "ADT";
             if (ageDiff.years < 2) { type = "INFANT"; code = "INF"; }
             else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
 
-            // 2. حساب صلاحية الجواز
-            let validityHTML = "";
-            let remainingText = "لم يتم تحديد تاريخ النفاذ";
-            let boxClass = "bg-gray-100 text-gray-600 border-gray-200";
             let statusTitle = "UNKNOWN";
+            let remainingText = "لم يتم تحديد تاريخ النفاذ";
+            let boxColor = "#f8fafc", borderColor = "#e2e8f0", textColor = "#334155";
 
             if (expiryVal) {
                 const expiryDate = new Date(expiryVal);
-                // الفرق بين اليوم وتاريخ النفاذ
                 const validDiff = calculateDiff(today, expiryDate);
                 
-                // التحقق هل الجواز منتهي أصلاً؟
                 if (expiryDate < today) {
-                    statusTitle = "⛔ EXPIRED (منتهي)";
+                    statusTitle = "EXPIRED (منتهي) ⛔";
                     remainingText = "الجواز منتهي الصلاحية";
-                    boxClass = "bg-red-100 text-red-700 border-red-300";
+                    boxColor = "#fef2f2"; borderColor = "#fca5a5"; textColor = "#b91c1c";
                 } else {
                     remainingText = `باقي: ${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم`;
-                    
-                    // القاعدة: يجب أن يكون المتبقي أكثر من 6 أشهر
                     if (validDiff.totalMonths < 6) {
-                        statusTitle = "⚠️ INVALID (غير صالح للسفر)";
-                        boxClass = "bg-red-50 text-red-600 border-red-200"; // تحذير
+                        statusTitle = "INVALID (غير صالح) ⚠️";
+                        boxColor = "#fff7ed"; borderColor = "#fdba74"; textColor = "#c2410c";
                     } else {
-                        statusTitle = "✅ VALID FOR TRAVEL (صالح)";
-                        boxClass = "bg-green-100 text-green-700 border-green-300"; // صالح
+                        statusTitle = "VALID FOR TRAVEL ✅<br><span style='font-size:16px;'>(صالح)</span>";
+                        boxColor = "#f0fdf4"; borderColor = "#86efac"; textColor = "#15803d";
                     }
                 }
             }
 
-            // ملء البيانات
             document.getElementById('vName').innerText = nameVal.toUpperCase();
             document.getElementById('vPassNum').innerText = passNum;
             document.getElementById('vDob').innerText = dobVal;
             document.getElementById('vExpiry').innerText = expiryVal || "--";
-            document.getElementById('vAge').innerText = `${ageDiff.years} سنة, ${ageDiff.months} شهر, ${ageDiff.days} يوم`;
+            
+            // تنسيق العمر مثل الصورة
+            document.getElementById('vAge').innerText = `${ageDiff.years} سنة، ${ageDiff.months} شهر، ${ageDiff.days} يوم`;
+            
             document.getElementById('vTypeBadge').innerText = type;
             document.getElementById('vDate').innerText = today.toISOString().split('T')[0];
             
-            // تحديث صندوق الصلاحية
             const vBox = document.getElementById('validityBox');
-            vBox.className = `p-4 rounded-2xl border mb-4 text-center ${boxClass}`;
-            document.getElementById('vStatusTitle').innerText = statusTitle;
+            vBox.style.backgroundColor = boxColor;
+            vBox.style.borderColor = borderColor;
+            vBox.style.color = textColor;
+            document.getElementById('vStatusTitle').innerHTML = statusTitle;
             document.getElementById('vRemaining').innerText = remainingText;
 
-            qr.set({ value: `${nameVal}|${passNum}|EXP:${expiryVal}|${code}` });
+            qr.set({ value: `NAME:${nameVal}|PASS:${passNum}|EXP:${expiryVal||'N/A'}|AGE:${ageDiff.years}` });
 
-            document.getElementById('ticketArea').classList.remove('hidden');
+            document.getElementById('ticketArea').style.display = 'block';
             setTimeout(() => document.getElementById('ticketArea').scrollIntoView({behavior: 'smooth'}), 100);
         }
 
+        // تم تحسين دالة الحفظ لتتوافق مع التطبيقات المغلفة مثل AppsGeyser
         function downloadImage() {
-            html2canvas(document.getElementById('finalVoucher'), { scale: 3 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `Report_${Date.now()}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
+            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f8fafc" }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                
+                // محاولة التنزيل المباشر (تنجح في بعض متصفحات الأندرويد واللابتوب)
+                try {
+                    const link = document.createElement('a');
+                    link.download = `Passport_Check_${Date.now()}.png`;
+                    link.href = imgData;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch(e) {
+                    console.log("التحميل المباشر غير مدعوم في هذا التطبيق.");
+                }
+
+                // فتح الصورة كنافذة كاحتياط (للايفون والتطبيقات المقفلة)
+                setTimeout(() => {
+                    const newWin = window.open('');
+                    if(newWin) {
+                        newWin.document.write(`<body style="margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#1e293b; min-height:100vh; font-family:sans-serif;"><p style="color:white; margin-bottom:20px; font-weight:bold; text-align:center; padding:10px;">اذا لم يتم التحميل تلقائياً،<br>اضغط مطولاً على الصورة لحفظها 👇</p><img src="${imgData}" style="max-width:90%; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);"></body>`);
+                    }
+                }, 300);
             });
         }
-        function resetAll() { location.reload(); }
     </script>
 </body>
 </html>
