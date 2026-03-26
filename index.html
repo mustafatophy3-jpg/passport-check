@@ -10,77 +10,81 @@
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: #f4f7fa; color: #1e293b; padding: 20px 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; color: #1e293b; padding: 20px 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
         
         .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
         
-        /* Card Premium Look */
-        .card { background: #ffffff; border-radius: 24px; padding: 25px; box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06); border: 1px solid rgba(226, 232, 240, 0.8); }
+        /* Premium Card - Modern Glassmorphism effect */
+        .card { background: rgba(255, 255, 255, 0.9); border-radius: 24px; padding: 25px; box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.1); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         
         .header-section { text-align: center; margin-bottom: 25px; }
         .title { font-size: 24px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; }
         .subtitle { font-size: 13px; color: #64748b; font-weight: 600; letter-spacing: 0.5px; }
         
-        /* Premium Scanner Box */
-        .preview-box { position: relative; background: linear-gradient(145deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; border: 2px dashed #3b82f6; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: all 0.3s ease; box-shadow: inset 0 4px 20px rgba(0,0,0,0.3); }
+        /* Modernized Scanner Box */
+        .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; border: 2px solid #3b82f6; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: all 0.2s ease-in-out; box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); }
         .preview-box:active { transform: scale(0.98); border-color: #60a5fa; }
         .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; z-index: 5; position: relative; }
         
         .placeholder { text-align: center; color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; }
-        .placeholder svg { width: 48px; height: 48px; fill: none; stroke: #60a5fa; stroke-width: 1.5; margin-bottom: 12px; opacity: 0.9; }
+        .placeholder svg { width: 44px; height: 44px; fill: none; stroke: #60a5fa; stroke-width: 1.5; margin-bottom: 12px; opacity: 0.8; }
         .placeholder p { font-size: 14px; font-weight: 700; color: #e2e8f0; }
         .placeholder span { font-size: 11px; color: #94a3b8; font-weight: 600; margin-top: 4px; }
         
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); }
-        .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 20px #3b82f6, 0 0 40px #60a5fa; animation: scan 2s infinite linear; position: absolute; top: 0; }
+        /* Scanning overlay with glassmorphism */
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+        .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 15px #3b82f6; animation: scan 1.8s infinite linear; position: absolute; top: 0; }
         .overlay p { color: #ffffff; font-weight: 700; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; }
         @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
         .tools { display: none; gap: 12px; margin-bottom: 20px; }
-        .btn { padding: 16px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; font-family: inherit; }
-        .btn-rotate { background: #f1f5f9; color: #475569; flex: 1; }
-        .btn-rotate:active { background: #e2e8f0; }
+        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-rotate { background: #e2e8f0; color: #475569; flex: 1; }
+        .btn-rotate:active { background: #cbd5e1; }
         .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; box-shadow: 0 8px 20px rgba(37,99,235,0.25); }
-        .btn-scan:active, .btn-main:active { transform: translateY(2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-scan:active, .btn-main:active { transform: translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        /* Fixed Forms with CSS Grid */
-        .input-grid-2-1 { display: grid; grid-template-columns: 1.7fr 1.3fr; gap: 12px; margin-bottom: 12px; }
-        .input-grid-1-1 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        /* Modern Inputs Grid System - SOLVES OVERLAP on Android */
+        .input-row { display: grid; gap: 12px; margin-bottom: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
         
-        .form-group { display: flex; flex-direction: column; }
-        label { font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .label-red { color: #ef4444; }
+        .form-group { display: flex; flex-direction: column; width: 100%; }
+        label { font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+        .label-red { color: #dc2626; }
         
-        input { padding: 14px 16px; border-radius: 14px; border: 1.5px solid #e2e8f0; background: #f8fafc; font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.3s; width: 100%; }
-        input:focus { border-color: #3b82f6; background: #ffffff; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
-        input.input-red { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+        /* Icons inside labels */
+        label svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+        input { padding: 14px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #ffffff; font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.2s; width: 100%; }
+        input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        input.input-red { background: #fff1f2; border-color: #fca5a5; color: #991b1b; }
         input.input-red:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
         
         .text-center { text-align: center; }
         .text-left { text-align: left; direction: ltr; text-transform: uppercase; }
         
         .btn-main { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; width: 100%; margin-top: 10px; box-shadow: 0 8px 25px rgba(15,23,42,0.2); }
-        .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 20px; box-shadow: 0 8px 25px rgba(22,163,74,0.25); }
+        .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 15px; box-shadow: 0 8px 25px rgba(22,163,74,0.25); }
         .btn-clear { background: transparent; color: #94a3b8; width: 100%; margin-top: 10px; box-shadow: none; font-size: 14px; font-weight: 700; }
 
-        /* Report Styles - Premium Version */
+        /* Report Styles (Voucher) - Restored and modernized */
         #ticketArea { display: none; }
-        .voucher { background: #ffffff; border-radius: 24px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; }
+        .voucher { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.08); position: relative; }
         
-        .v-head { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 25px 20px; text-align: center; position: relative; }
+        .v-head { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 20px; text-align: center; position: relative; }
         .v-title-main { font-size: 24px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; }
         .v-title-sub { font-size: 10px; color: #93c5fd; font-weight: 700; letter-spacing: 1px; opacity: 0.9; }
         .v-date-corner { position: absolute; top: 12px; left: 15px; font-size: 10px; opacity: 0.7; font-family: monospace; font-weight: 600; }
         
         .v-body { padding: 25px 20px; }
         
-        .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+        .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .v-badge { background: #f1f5f9; padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: 900; border: 1px solid #e2e8f0; color: #475569; letter-spacing: 0.5px; }
         .v-pass-info { text-align: right; max-width: 70%; }
         .v-pass-label { font-size: 10px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .v-pass-name { font-size: 20px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
         
-        .v-status-box { padding: 20px 15px; border-radius: 18px; text-align: center; margin-bottom: 20px; border: 2px solid #86efac; background: #f0fdf4; color: #15803d; position: relative; overflow: hidden; }
+        .v-status-box { padding: 20px 15px; border-radius: 18px; text-align: center; margin-bottom: 15px; border: 2px solid #86efac; background: #f0fdf4; color: #15803d; position: relative; overflow: hidden; }
         .v-status-label { font-size: 10px; font-weight: 800; opacity: 0.8; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
         .v-status-title { font-size: 22px; font-weight: 900; margin-bottom: 8px; display: flex; justify-content: center; align-items: center; gap: 6px; }
         .v-status-desc { font-size: 14px; font-weight: 800; }
@@ -89,16 +93,16 @@
         .v-detail-label { font-size: 10px; color: #64748b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .v-detail-value { font-size: 16px; font-weight: 900; color: #0f172a; }
         
-        .v-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .v-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
         .v-grid-box { background: white; border: 1px solid #e2e8f0; padding: 15px; border-radius: 14px; text-align: center; }
-        .v-grid-box.red-box { border-color: #fca5a5; background: #fff5f5; }
+        .v-grid-box.red-box { border-color: #fca5a5; background: #fff1f2; }
         .v-grid-label { font-size: 9px; font-weight: 800; margin-bottom: 6px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
         .v-grid-label.red-text { color: #dc2626; }
         .v-grid-value { font-size: 16px; font-weight: 900; font-family: monospace; color: #0f172a; }
         .v-grid-value.red-text { color: #991b1b; }
         
         .dashed-line { border-top: 2px dashed #cbd5e1; position: relative; margin: 15px 0 25px 0; }
-        .dashed-line::before, .dashed-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #f4f7fa; border-radius: 50%; top: -12px; }
+        .dashed-line::before, .dashed-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #f1f5f9; border-radius: 50%; top: -12px; }
         .dashed-line::before { right: -32px; border-left: 1px solid #e2e8f0; }
         .dashed-line::after { left: -32px; border-right: 1px solid #e2e8f0; }
         
@@ -109,6 +113,17 @@
         .v-pass-num-value { font-size: 26px; font-weight: 900; font-family: monospace; color: #0f172a; letter-spacing: 2px; }
         
         .v-bottom-bar { height: 16px; background: #0f172a; }
+
+        /* SAVING OVERLAY with GLASSMORPHISM (Solves Android Crash) */
+        .save-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .save-overlay.active { display: flex; }
+        .save-overlay .card-inner { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; max-width: 90%; }
+        .save-overlay img { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+        .save-title { font-size: 16px; font-weight: 900; color: #0f172a; margin-bottom: 5px; }
+        .save-subtitle { font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.4; margin-bottom: 15px; }
+        .btn-save-confirm { background: #16a34a; color: white; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; }
+        .btn-save-close { background: #cbd5e1; color: #475569; border-radius: 12px; padding: 10px 20px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; }
+        
         .highlight { border-color: #22c55e !important; background-color: #f0fdf4 !important; box-shadow: 0 0 0 4px rgba(34,197,94,0.1) !important; }
     </style>
 </head>
@@ -143,7 +158,7 @@
                 <button class="btn btn-scan" onclick="processImage()">مسح ضوئي 🔍</button>
             </div>
 
-            <div class="input-grid-2-1">
+            <div class="input-row input-row-1-2">
                 <div class="form-group">
                     <label>الاسم الكامل (English)</label>
                     <input type="text" id="nameInput" placeholder="JOHN DOE" class="text-left">
@@ -154,7 +169,7 @@
                 </div>
             </div>
 
-            <div class="input-grid-1-1">
+            <div class="input-row">
                 <div class="form-group">
                     <label>تاريخ الميلاد</label>
                     <input type="date" id="dobInput">
@@ -223,7 +238,17 @@
             </div>
             
             <button class="btn btn-success" onclick="downloadImage()">حفظ التقرير كصورة 💾</button>
-            <button class="btn btn-clear" onclick="location.reload()">مسح الحقول وبدء جديد ↻</button>
+            <button class="btn btn-clear" onclick="location.reload()">مسح وبدء جديد ↻</button>
+        </div>
+    </div>
+
+    <div class="save-overlay" id="saveOverlay">
+        <div class="card-inner">
+            <h3 class="save-title">التقرير جاهز!</h3>
+            <p class="save-subtitle">المس مطولاً على الصورة في الأسفل، ثم اختر 'حفظ الصورة'.</p>
+            <img id="finalImage" alt="Passport Report">
+            <button class="btn-save-confirm" onclick="downloadImageLink()">اضغط هنا إذا لم يفتح (احتياط)</button>
+            <button class="btn-save-close" onclick="closeSaveOverlay()">إغلاق</button>
         </div>
     </div>
 
@@ -388,7 +413,7 @@
                 if (expiryDate < today) {
                     statusTitle = "EXPIRED (منتهي) ⛔";
                     remainingText = "الجواز منتهي الصلاحية";
-                    boxColor = "#fef2f2"; borderColor = "#fca5a5"; textColor = "#b91c1c";
+                    boxColor = "#fff1f2"; borderColor = "#fecaca"; textColor = "#991b1b";
                 } else {
                     remainingText = `باقي: ${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم`;
                     if (validDiff.totalMonths < 6) {
@@ -424,28 +449,37 @@
             setTimeout(() => document.getElementById('ticketArea').scrollIntoView({behavior: 'smooth'}), 100);
         }
 
+        // --- NEW DOWNLOAD LOGIC for ANDROID/APPSGEYSER ---
         function downloadImage() {
-            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f4f7fa" }).then(canvas => {
+            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f1f5f9" }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 
-                try {
-                    const link = document.createElement('a');
-                    link.download = `PassCheck_${Date.now()}.png`;
-                    link.href = imgData;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                } catch(e) {
-                    console.log("التحميل المباشر غير مدعوم.");
-                }
-
-                setTimeout(() => {
-                    const newWin = window.open('');
-                    if(newWin) {
-                        newWin.document.write(`<body style="margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0f172a; min-height:100vh; font-family:sans-serif;"><p style="color:white; margin-bottom:20px; font-weight:bold; text-align:center; padding:10px; font-size:18px;">اذا لم يتم التحميل تلقائياً،<br>اضغط مطولاً على الصورة لحفظها 👇</p><img src="${imgData}" style="max-width:92%; border-radius:16px; box-shadow:0 15px 35px rgba(0,0,0,0.6);"></body>`);
-                    }
-                }, 300);
+                // 1. Set the image in the overlay
+                document.getElementById('finalImage').src = imgData;
+                
+                // 2. Open the modern save overlay
+                document.getElementById('saveOverlay').classList.add('active');
             });
+        }
+
+        // Backup download button inside overlay if long-press fails
+        function downloadImageLink() {
+            try {
+                const imgData = document.getElementById('finalImage').src;
+                const link = document.createElement('a');
+                link.download = `PassCheck_${Date.now()}.png`;
+                link.href = imgData;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                alert("جاري التحميل... إذا فشل، استخدم المس المطول.");
+            } catch(e) {
+                alert("تنبيه: متصفح هذا التطبيق يمنع التحميل المباشر. يرجى المس مطولاً على الصورة لحفظها بالهاتف.");
+            }
+        }
+
+        function closeSaveOverlay() {
+            document.getElementById('saveOverlay').classList.remove('active');
         }
     </script>
 </body>
