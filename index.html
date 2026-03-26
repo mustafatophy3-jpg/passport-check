@@ -180,8 +180,8 @@
         
         .v-bottom-bar { height: 16px; background: #0f172a; }
 
-        /* نوافذ الانبثاق (Modal) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
+        /* تعديل جوهري لنوافذ الانبثاق حتى تشتغل بكل الأجهزة */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); }
         .modal-overlay.active .modal-card { transform: translateY(0); }
@@ -197,9 +197,13 @@
         .info-content ul { padding-right: 20px; margin-bottom: 15px; }
         .info-content li { margin-bottom: 8px; }
 
+        /* تعديل جذري لنافذة الحفظ لتجنب مشاكل الأندرويد القديم */
+        .save-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 1000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .save-overlay.active { display: flex; }
+        .save-overlay .card-inner { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; max-width: 90%; }
         .save-title { font-size: 16px; font-weight: 900; color: #0f172a; margin-bottom: 5px; text-align: center;}
         .save-subtitle { font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.4; margin-bottom: 15px; text-align: center;}
-        #finalImage { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; }
+        #finalImage { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; display: none; }
         .btn-save-confirm { background: #16a34a; color: white; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; margin-bottom: 10px;}
         .btn-save-close { background: #cbd5e1; color: #475569; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: bold; border: none; cursor: pointer; }
         
@@ -453,7 +457,6 @@
                 if (el) el.innerHTML = dict[id][currentLang];
             }
 
-            // تحديث التقرير إذا كان مفتوح حتى يترجم التواريخ والأعمار
             if (document.getElementById('ticketArea').style.display === 'block') {
                 generateTicket();
             }
@@ -699,11 +702,20 @@
         }
 
         function downloadImage() {
-            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f0f4fd" }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                document.getElementById('finalImage').src = imgData;
-                document.getElementById('saveOverlay').classList.add('active');
-            });
+            document.getElementById('loader').style.display = 'flex';
+            setTimeout(() => {
+                html2canvas(document.getElementById('finalVoucher'), { scale: 2, backgroundColor: "#f0f4fd", useCORS: true }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    document.getElementById('finalImage').src = imgData;
+                    document.getElementById('finalImage').style.display = 'block';
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('saveOverlay').classList.add('active');
+                }).catch(err => {
+                    console.error(err);
+                    document.getElementById('loader').style.display = 'none';
+                    alert(currentLang === 'ar' ? "حدث خطأ أثناء حفظ الصورة." : "Error saving image.");
+                });
+            }, 500);
         }
 
         function downloadImageLink() {
@@ -726,3 +738,4 @@
     </script>
 </body>
 </html>
+
