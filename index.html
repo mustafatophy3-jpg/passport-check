@@ -10,62 +10,106 @@
     
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; color: #1e293b; padding: 20px 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
         
-        .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        /* الخلفية العالمية الجديدة (Modern Gradient & Orbs) */
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* تدرج لوني هادئ فخم */
+            color: #1e293b; 
+            padding: 20px 15px; 
+            padding-bottom: 80px; 
+            -webkit-tap-highlight-color: transparent; 
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* الكرات الملونة العائمة بالخلفية */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(70px);
+            opacity: 0.7;
+            animation: float 10s ease-in-out infinite alternate;
+        }
+        body::before {
+            width: 350px; height: 350px;
+            background: #93c5fd; /* أزرق فاتح */
+            top: -50px; left: -100px;
+        }
+        body::after {
+            width: 300px; height: 300px;
+            background: #e8b2c1; /* وردي خفيف */
+            bottom: 10%; right: -50px;
+            animation-delay: -5s;
+        }
+        @keyframes float { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(30px) scale(1.1); } }
+
+        .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; z-index: 1; position: relative; }
         
-        .card { background: rgba(255, 255, 255, 0.9); border-radius: 24px; padding: 25px; box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.1); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        /* تأثير الزجاج العالمي للبطاقة (Glassmorphism) */
+        .card { 
+            background: rgba(255, 255, 255, 0.75); 
+            border-radius: 28px; 
+            padding: 25px; 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px); 
+        }
         
         .header-section { text-align: center; margin-bottom: 25px; }
-        .title { font-size: 24px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; }
-        .subtitle { font-size: 13px; color: #64748b; font-weight: 600; letter-spacing: 0.5px; }
+        .title { font-size: 24px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.5); }
+        .subtitle { font-size: 13px; color: #64748b; font-weight: 700; letter-spacing: 0.5px; }
         
-        /* زر تحميل التطبيق الجديد */
-        .download-app-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(59, 130, 246, 0.1); color: #2563eb; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 800; font-size: 13px; margin-top: 15px; border: 1px solid rgba(59, 130, 246, 0.2); transition: all 0.2s; }
-        .download-app-btn:active { transform: translateY(2px); background: rgba(59, 130, 246, 0.2); }
+        /* زر التحميل */
+        .download-app-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); color: #2563eb; padding: 10px 20px; border-radius: 14px; text-decoration: none; font-weight: 800; font-size: 13px; margin-top: 15px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1); transition: all 0.2s; }
+        .download-app-btn:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(37, 99, 235, 0.1); }
         
-        .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; border: 2px solid #3b82f6; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: all 0.2s ease-in-out; box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); }
+        .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; border: 2px solid #3b82f6; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: all 0.2s ease-in-out; box-shadow: inset 0 2px 20px rgba(0,0,0,0.5), 0 10px 30px rgba(15,23,42,0.15); }
         .preview-box:active { transform: scale(0.98); border-color: #60a5fa; }
         .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; z-index: 5; position: relative; }
         
         .placeholder { text-align: center; color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; }
-        .placeholder svg { width: 44px; height: 44px; fill: none; stroke: #60a5fa; stroke-width: 1.5; margin-bottom: 12px; opacity: 0.8; }
+        .placeholder svg { width: 44px; height: 44px; fill: none; stroke: #60a5fa; stroke-width: 1.5; margin-bottom: 12px; opacity: 0.9; filter: drop-shadow(0 0 8px rgba(96,165,250,0.5)); }
         .placeholder p { font-size: 14px; font-weight: 700; color: #e2e8f0; }
         .placeholder span { font-size: 11px; color: #94a3b8; font-weight: 600; margin-top: 4px; }
         
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
-        .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 15px #3b82f6; animation: scan 1.8s infinite linear; position: absolute; top: 0; }
-        .overlay p { color: #ffffff; font-weight: 700; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+        .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 20px #60a5fa, 0 0 40px #3b82f6; animation: scan 1.8s infinite linear; position: absolute; top: 0; }
+        .overlay p { color: #ffffff; font-weight: 800; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; }
         @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
         .tools { display: none; gap: 12px; margin-bottom: 20px; }
-        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .btn-rotate { background: #e2e8f0; color: #475569; flex: 1; }
-        .btn-rotate:active { background: #cbd5e1; }
-        .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; box-shadow: 0 8px 20px rgba(37,99,235,0.25); }
-        .btn-scan:active, .btn-main:active { transform: translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .btn-rotate { background: rgba(255,255,255,0.9); color: #475569; flex: 1; border: 1px solid rgba(0,0,0,0.05); }
+        .btn-rotate:active { background: #e2e8f0; }
+        .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; box-shadow: 0 8px 25px rgba(37,99,235,0.3); }
+        .btn-scan:active, .btn-main:active { transform: translateY(2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
         .input-row { display: grid; gap: 12px; margin-bottom: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
         
         .form-group { display: flex; flex-direction: column; width: 100%; }
-        label { font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
+        label { font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .label-red { color: #dc2626; }
         
-        input { padding: 14px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #ffffff; font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.2s; width: 100%; }
-        input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
-        input.input-red { background: #fff1f2; border-color: #fca5a5; color: #991b1b; }
-        input.input-red:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.1); }
+        input { padding: 14px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.8); font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.3s; width: 100%; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); backdrop-filter: blur(10px); }
+        input:focus { border-color: #3b82f6; background: #ffffff; box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
+        input.input-red { background: rgba(255,241,242,0.8); border-color: rgba(252,165,165,0.5); color: #991b1b; }
+        input.input-red:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.15); }
         
         .text-center { text-align: center; }
         .text-left { text-align: left; direction: ltr; text-transform: uppercase; }
         
-        .btn-main { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; width: 100%; margin-top: 10px; box-shadow: 0 8px 25px rgba(15,23,42,0.2); }
-        .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 15px; box-shadow: 0 8px 25px rgba(22,163,74,0.25); }
-        .btn-clear { background: transparent; color: #94a3b8; width: 100%; margin-top: 10px; box-shadow: none; font-size: 14px; font-weight: 700; }
+        .btn-main { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; width: 100%; margin-top: 10px; box-shadow: 0 10px 30px rgba(15,23,42,0.25); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 15px; box-shadow: 0 10px 30px rgba(22,163,74,0.25); }
+        .btn-clear { background: rgba(255,255,255,0.5); color: #475569; width: 100%; margin-top: 10px; font-size: 14px; font-weight: 800; border: 1px solid rgba(255,255,255,0.8); }
 
         #ticketArea { display: none; }
-        .voucher { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.08); position: relative; }
+        .voucher { background: rgba(255, 255, 255, 0.95); border-radius: 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 20px 50px rgba(0,0,0,0.1); position: relative; backdrop-filter: blur(10px); }
         
         .v-head { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 20px; text-align: center; position: relative; }
         .v-title-main { font-size: 24px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; }
@@ -119,7 +163,7 @@
         .btn-save-confirm { background: #16a34a; color: white; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; }
         .btn-save-close { background: #cbd5e1; color: #475569; border-radius: 12px; padding: 10px 20px; font-size: 12px; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; }
         
-        .highlight { border-color: #22c55e !important; background-color: #f0fdf4 !important; box-shadow: 0 0 0 4px rgba(34,197,94,0.1) !important; }
+        .highlight { border-color: #22c55e !important; background-color: rgba(240, 253, 244, 0.9) !important; box-shadow: 0 0 0 4px rgba(34,197,94,0.2) !important; }
     </style>
 </head>
 <body>
@@ -130,7 +174,7 @@
                 <h1 class="title">التدقيق الذكي للجوازات</h1>
                 <p class="subtitle">النظام الشامل لفحص صلاحية السفر</p>
                 
-                <a href="PassCheck.apk" class="download-app-btn" download>
+                <a href="PassCheck.apk" id="downloadAppBtn" class="download-app-btn" download>
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M17.523 15.3414C17.523 15.3414 17.523 15.3414 17.522 15.3414C16.812 15.3414 16.237 15.9164 16.237 16.6264C16.237 17.3364 16.812 17.9114 17.522 17.9114C18.232 17.9114 18.807 17.3364 18.807 16.6264C18.807 15.9174 18.232 15.3414 17.523 15.3414ZM6.477 15.3414C5.767 15.3414 5.192 15.9164 5.192 16.6264C5.192 17.3364 5.767 17.9114 6.477 17.9114C7.187 17.9114 7.762 17.3364 7.762 16.6264C7.762 15.9174 7.187 15.3414 6.477 15.3414ZM18.168 11.2334L19.983 8.08942C20.106 7.87642 20.033 7.60442 19.82 7.48142C19.607 7.35742 19.336 7.43142 19.212 7.64342L17.362 10.8464C15.82 10.1364 14.011 9.71542 12.001 9.71542C9.99 9.71542 8.18 10.1364 6.638 10.8464L4.788 7.64342C4.664 7.43042 4.393 7.35742 4.18 7.48142C3.967 7.60442 3.894 7.87642 4.017 8.08942L5.832 11.2334C2.531 13.0654 0.287003 16.3264 0.0240021 20.2154H23.976C23.713 16.3264 21.469 13.0654 18.168 11.2334Z"/></svg>
                     تحميل تطبيق الأندرويد
                 </a>
@@ -253,6 +297,16 @@
     </div>
 
     <script>
+        // الكود الذكي لإخفاء الزر داخل التطبيق
+        document.addEventListener("DOMContentLoaded", function() {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            const isWebView = userAgent.includes('wv') || (userAgent.includes('android') && userAgent.includes('version/'));
+            if (isWebView || window.matchMedia('(display-mode: standalone)').matches) {
+                const btn = document.getElementById('downloadAppBtn');
+                if(btn) btn.style.display = 'none';
+            }
+        });
+
         let currentRotation = 0;
         let imageElement = document.getElementById('previewImg');
         const qr = new QRious({ element: document.getElementById('qr'), size: 90 });
@@ -422,7 +476,7 @@
 
             let statusTitle = "UNKNOWN";
             let remainingText = "لم يتم تحديد تاريخ النفاذ";
-            let boxColor = "#f8fafc", borderColor = "#e2e8f0", textColor = "#334155";
+            let boxColor = "rgba(255,255,255,0.8)", borderColor = "rgba(0,0,0,0.1)", textColor = "#334155";
 
             if (expiryVal) {
                 const expiryDate = new Date(expiryVal);
@@ -431,15 +485,15 @@
                 if (expiryDate < today) {
                     statusTitle = "EXPIRED (منتهي) ⛔";
                     remainingText = "الجواز منتهي الصلاحية";
-                    boxColor = "#fff1f2"; borderColor = "#fecaca"; textColor = "#991b1b";
+                    boxColor = "rgba(254,226,226,0.9)"; borderColor = "#fca5a5"; textColor = "#991b1b";
                 } else {
                     remainingText = `باقي: ${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم`;
                     if (validDiff.totalMonths < 6) {
                         statusTitle = "INVALID (غير صالح) ⚠️";
-                        boxColor = "#fff7ed"; borderColor = "#fdba74"; textColor = "#c2410c";
+                        boxColor = "rgba(255,237,213,0.9)"; borderColor = "#fdba74"; textColor = "#c2410c";
                     } else {
                         statusTitle = "VALID FOR TRAVEL ✅<br><span style='font-size:16px;'>(صالح)</span>";
-                        boxColor = "#f0fdf4"; borderColor = "#86efac"; textColor = "#15803d";
+                        boxColor = "rgba(220,252,231,0.9)"; borderColor = "#86efac"; textColor = "#15803d";
                     }
                 }
             }
