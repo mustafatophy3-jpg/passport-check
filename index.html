@@ -14,14 +14,12 @@
         
         .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
         
-        /* Premium Card - Modern Glassmorphism effect */
         .card { background: rgba(255, 255, 255, 0.9); border-radius: 24px; padding: 25px; box-shadow: 0 10px 40px -10px rgba(15, 23, 42, 0.1); border: 1px solid rgba(255, 255, 255, 0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         
         .header-section { text-align: center; margin-bottom: 25px; }
         .title { font-size: 24px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; }
         .subtitle { font-size: 13px; color: #64748b; font-weight: 600; letter-spacing: 0.5px; }
         
-        /* Modernized Scanner Box */
         .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; border: 2px solid #3b82f6; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: all 0.2s ease-in-out; box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); }
         .preview-box:active { transform: scale(0.98); border-color: #60a5fa; }
         .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; z-index: 5; position: relative; }
@@ -31,7 +29,6 @@
         .placeholder p { font-size: 14px; font-weight: 700; color: #e2e8f0; }
         .placeholder span { font-size: 11px; color: #94a3b8; font-weight: 600; margin-top: 4px; }
         
-        /* Scanning overlay with glassmorphism */
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
         .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 15px #3b82f6; animation: scan 1.8s infinite linear; position: absolute; top: 0; }
         .overlay p { color: #ffffff; font-weight: 700; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; }
@@ -44,7 +41,6 @@
         .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; box-shadow: 0 8px 20px rgba(37,99,235,0.25); }
         .btn-scan:active, .btn-main:active { transform: translateY(1px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        /* Modern Inputs Grid System - SOLVES OVERLAP on Android */
         .input-row { display: grid; gap: 12px; margin-bottom: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
         
@@ -52,9 +48,6 @@
         label { font-size: 11px; font-weight: 800; color: #64748b; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; }
         .label-red { color: #dc2626; }
         
-        /* Icons inside labels */
-        label svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; }
-
         input { padding: 14px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #ffffff; font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.2s; width: 100%; }
         input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
         input.input-red { background: #fff1f2; border-color: #fca5a5; color: #991b1b; }
@@ -67,7 +60,6 @@
         .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 15px; box-shadow: 0 8px 25px rgba(22,163,74,0.25); }
         .btn-clear { background: transparent; color: #94a3b8; width: 100%; margin-top: 10px; box-shadow: none; font-size: 14px; font-weight: 700; }
 
-        /* Report Styles (Voucher) - Restored and modernized */
         #ticketArea { display: none; }
         .voucher { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 10px 40px rgba(0,0,0,0.08); position: relative; }
         
@@ -114,7 +106,6 @@
         
         .v-bottom-bar { height: 16px; background: #0f172a; }
 
-        /* SAVING OVERLAY with GLASSMORPHISM (Solves Android Crash) */
         .save-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .save-overlay.active { display: flex; }
         .save-overlay .card-inner { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; max-width: 90%; }
@@ -278,6 +269,7 @@
             img.style.transform = `rotate(${currentRotation}deg)`;
         }
 
+        // تم استعادة قوة الفحص القديمة 100% مع أوامر السيرفر
         async function processImage() {
             document.getElementById('loader').style.display = 'flex';
             try {
@@ -285,6 +277,10 @@
                 const formData = new FormData();
                 formData.append("base64Image", base64);
                 formData.append("apikey", "K83236313788957");
+                formData.append("language", "eng");
+                formData.append("isOverlayRequired", "false");
+                formData.append("detectOrientation", "true");
+                formData.append("scale", "true");
                 formData.append("OCREngine", "2");
 
                 const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
@@ -298,19 +294,8 @@
                 const text = data.ParsedResults[0].ParsedText;
                 
                 if(text) {
-                    const pMatch = text.match(/\b([A-Z][0-9]{7,8})\b/);
-                    if(pMatch) {
-                        document.getElementById('passNumInput').value = pMatch[1];
-                        highlightField('passNumInput');
-                    }
-                    
-                    const nameMatch = text.match(/P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/);
-                    if(nameMatch) {
-                        let s = nameMatch[1].replace(/</g, ' ').trim();
-                        let g = nameMatch[2].replace(/</g, ' ').trim();
-                        document.getElementById('nameInput').value = `${g} ${s}`;
-                        highlightField('nameInput');
-                    }
+                    extractPassportNumber(text);
+                    extractNameFromText(text);
                     extractDates(text);
                 }
             } catch (e) {
@@ -318,6 +303,42 @@
                 alert("تنبيه: " + e.message + "\nيرجى إدخال البيانات يدوياً.");
             } finally {
                 document.getElementById('loader').style.display = 'none';
+            }
+        }
+
+        // استعادة كود استخراج الرقم الدقيق القديم
+        function extractPassportNumber(text) {
+            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g;
+            const matchesMRZ = [...text.matchAll(mrzPattern)];
+            if (matchesMRZ.length > 0) {
+                document.getElementById('passNumInput').value = matchesMRZ[0][1].replace(/</g, '');
+                highlightField('passNumInput');
+            } else {
+                const visualPattern = /\b[A-Z][0-9]{7,8}\b/g;
+                const visualMatches = [...text.matchAll(visualPattern)];
+                if (visualMatches.length > 0) {
+                    document.getElementById('passNumInput').value = visualMatches[0][0];
+                    highlightField('passNumInput');
+                }
+            }
+        }
+
+        // استعادة كود استخراج الاسم الدقيق القديم
+        function extractNameFromText(text) {
+            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g;
+            const matches = [...text.matchAll(mrzRegex)];
+            if (matches.length > 0) {
+                let s = matches[0][1].replace(/</g, ' ').trim();
+                let g = matches[0][2].replace(/</g, ' ').trim();
+                document.getElementById('nameInput').value = `${g} ${s}`;
+                highlightField('nameInput');
+            } else {
+                const lines = text.split('\n');
+                for (let line of lines) {
+                    if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) {
+                        document.getElementById('nameInput').value = line.trim(); break;
+                    }
+                }
             }
         }
 
@@ -351,13 +372,14 @@
             setTimeout(()=> el.classList.remove('highlight'), 1500);
         }
 
+        // تم التعديل للسماح بأحجام أكبر وجودة أعلى مثل الكود القديم
         function getRotatedBase64() {
             return new Promise((resolve, reject) => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const tempImg = new Image();
                 tempImg.onload = () => {
-                    let MAX_WIDTH = 800;
+                    let MAX_WIDTH = 1800; // حجم ممتاز يحافظ على الدقة
                     let width = tempImg.width;
                     let height = tempImg.height;
                     if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
@@ -370,7 +392,7 @@
                     ctx.translate(canvas.width/2, canvas.height/2);
                     ctx.rotate(currentRotation * Math.PI / 180);
                     ctx.drawImage(tempImg, -width/2, -height/2, width, height);
-                    resolve(canvas.toDataURL('image/jpeg', 0.5));
+                    resolve(canvas.toDataURL('image/jpeg', 0.8)); // جودة 80% بدل 50%
                 };
                 tempImg.onerror = () => reject(new Error("فشل المعالجة."));
                 tempImg.src = img.src;
@@ -449,20 +471,14 @@
             setTimeout(() => document.getElementById('ticketArea').scrollIntoView({behavior: 'smooth'}), 100);
         }
 
-        // --- NEW DOWNLOAD LOGIC for ANDROID/APPSGEYSER ---
         function downloadImage() {
             html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f1f5f9" }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                
-                // 1. Set the image in the overlay
                 document.getElementById('finalImage').src = imgData;
-                
-                // 2. Open the modern save overlay
                 document.getElementById('saveOverlay').classList.add('active');
             });
         }
 
-        // Backup download button inside overlay if long-press fails
         function downloadImageLink() {
             try {
                 const imgData = document.getElementById('finalImage').src;
@@ -472,9 +488,8 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                alert("جاري التحميل... إذا فشل، استخدم المس المطول.");
             } catch(e) {
-                alert("تنبيه: متصفح هذا التطبيق يمنع التحميل المباشر. يرجى المس مطولاً على الصورة لحفظها بالهاتف.");
+                alert("تنبيه: يرجى المس مطولاً على الصورة لحفظها بالهاتف.");
             }
         }
 
