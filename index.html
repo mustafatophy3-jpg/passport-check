@@ -11,10 +11,9 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* الخلفية العالمية الجديدة (Modern Gradient & Orbs) */
         body { 
             font-family: 'Cairo', sans-serif; 
-            background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* تدرج لوني هادئ فخم */
+            background: linear-gradient(135deg, #f0f4fd 0%, #d9e6f6 100%);
             color: #1e293b; 
             padding: 20px 15px; 
             padding-bottom: 80px; 
@@ -24,52 +23,51 @@
             overflow-x: hidden;
         }
 
-        /* الكرات الملونة العائمة بالخلفية */
+        /* الكرات والأشكال العائمة بالخلفية */
         body::before, body::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(70px);
-            opacity: 0.7;
-            animation: float 10s ease-in-out infinite alternate;
+            content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(60px); opacity: 0.6; animation: floatOrbs 12s ease-in-out infinite alternate;
         }
-        body::before {
-            width: 350px; height: 350px;
-            background: #93c5fd; /* أزرق فاتح */
-            top: -50px; left: -100px;
-        }
-        body::after {
-            width: 300px; height: 300px;
-            background: #e8b2c1; /* وردي خفيف */
-            bottom: 10%; right: -50px;
-            animation-delay: -5s;
-        }
-        @keyframes float { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(30px) scale(1.1); } }
+        body::before { width: 350px; height: 350px; background: #60a5fa; top: -50px; left: -100px; }
+        body::after { width: 300px; height: 300px; background: #c084fc; bottom: 5%; right: -50px; animation-delay: -5s; }
+        
+        @keyframes floatOrbs { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(40px) scale(1.1); } }
+
+        /* أيقونات السفر المتحركة خلف الزجاج */
+        .bg-icons { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .float-icon { position: absolute; font-size: 120px; opacity: 0.04; filter: blur(2px); animation: floatElements 20s linear infinite; }
+        .fi-1 { top: 10%; left: 10%; animation-duration: 25s; }
+        .fi-2 { top: 60%; right: 5%; animation-duration: 30s; animation-direction: reverse; font-size: 150px; }
+        .fi-3 { bottom: 10%; left: 20%; animation-duration: 22s; font-size: 100px; }
+        @keyframes floatElements { 0% { transform: translateY(10vh) rotate(0deg); } 50% { transform: translateY(-10vh) rotate(180deg); } 100% { transform: translateY(10vh) rotate(360deg); } }
 
         .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; z-index: 1; position: relative; }
         
-        /* تأثير الزجاج العالمي للبطاقة (Glassmorphism) */
         .card { 
-            background: rgba(255, 255, 255, 0.75); 
+            background: rgba(255, 255, 255, 0.65); 
             border-radius: 28px; 
             padding: 25px; 
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.6); 
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px); 
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px); 
         }
         
         .header-section { text-align: center; margin-bottom: 25px; }
-        .title { font-size: 24px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.5); }
-        .subtitle { font-size: 13px; color: #64748b; font-weight: 700; letter-spacing: 0.5px; }
+        .title { font-size: 26px; font-weight: 900; color: #0f172a; margin-bottom: 2px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
+        .subtitle { font-size: 12px; color: #3b82f6; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(59, 130, 246, 0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.2); }
         
-        /* زر التحميل */
-        .download-app-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); color: #2563eb; padding: 10px 20px; border-radius: 14px; text-decoration: none; font-weight: 800; font-size: 13px; margin-top: 15px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1); transition: all 0.2s; }
+        /* شريط التحميل الذكي القابل للإغلاق */
+        .download-banner-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
+        .download-app-btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); color: #2563eb; padding: 10px 15px; border-radius: 14px; text-decoration: none; font-weight: 800; font-size: 13px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1); transition: all 0.2s; }
         .download-app-btn:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(37, 99, 235, 0.1); }
+        .close-btn { background: rgba(15, 23, 42, 0.05); color: #64748b; border: none; width: 36px; height: 36px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .close-btn:active { background: rgba(15, 23, 42, 0.1); transform: scale(0.9); }
         
-        .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; border: 2px solid #3b82f6; overflow: hidden; margin-bottom: 20px; cursor: pointer; transition: all 0.2s ease-in-out; box-shadow: inset 0 2px 20px rgba(0,0,0,0.5), 0 10px 30px rgba(15,23,42,0.15); }
-        .preview-box:active { transform: scale(0.98); border-color: #60a5fa; }
+        /* التوهج المتحرك خلف مربع الكاميرا */
+        .preview-wrapper { position: relative; border-radius: 22px; padding: 3px; background: linear-gradient(45deg, #3b82f6, #8b5cf6, #3b82f6); background-size: 200% 200%; animation: glowingBorder 4s ease infinite; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); }
+        @keyframes glowingBorder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 230px; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+        .preview-box:active { transform: scale(0.98); }
         .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; z-index: 5; position: relative; }
         
         .placeholder { text-align: center; color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; }
@@ -96,9 +94,9 @@
         label { font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .label-red { color: #dc2626; }
         
-        input { padding: 14px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.8); font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.3s; width: 100%; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); backdrop-filter: blur(10px); }
+        input { padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.6); font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.3s; width: 100%; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); backdrop-filter: blur(10px); }
         input:focus { border-color: #3b82f6; background: #ffffff; box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
-        input.input-red { background: rgba(255,241,242,0.8); border-color: rgba(252,165,165,0.5); color: #991b1b; }
+        input.input-red { background: rgba(255,241,242,0.7); border-color: rgba(252,165,165,0.6); color: #991b1b; }
         input.input-red:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.15); }
         
         .text-center { text-align: center; }
@@ -168,32 +166,43 @@
 </head>
 <body>
 
+    <div class="bg-icons">
+        <div class="float-icon fi-1">✈️</div>
+        <div class="float-icon fi-2">🌍</div>
+        <div class="float-icon fi-3">🛂</div>
+    </div>
+
     <div class="container">
         <div class="card">
             <div class="header-section">
                 <h1 class="title">التدقيق الذكي للجوازات</h1>
-                <p class="subtitle">النظام الشامل لفحص صلاحية السفر</p>
+                <p class="subtitle">مقدم من شركة الشجن للسياحة والسفر</p>
                 
-                <a href="PassCheck.apk" id="downloadAppBtn" class="download-app-btn" download>
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M17.523 15.3414C17.523 15.3414 17.523 15.3414 17.522 15.3414C16.812 15.3414 16.237 15.9164 16.237 16.6264C16.237 17.3364 16.812 17.9114 17.522 17.9114C18.232 17.9114 18.807 17.3364 18.807 16.6264C18.807 15.9174 18.232 15.3414 17.523 15.3414ZM6.477 15.3414C5.767 15.3414 5.192 15.9164 5.192 16.6264C5.192 17.3364 5.767 17.9114 6.477 17.9114C7.187 17.9114 7.762 17.3364 7.762 16.6264C7.762 15.9174 7.187 15.3414 6.477 15.3414ZM18.168 11.2334L19.983 8.08942C20.106 7.87642 20.033 7.60442 19.82 7.48142C19.607 7.35742 19.336 7.43142 19.212 7.64342L17.362 10.8464C15.82 10.1364 14.011 9.71542 12.001 9.71542C9.99 9.71542 8.18 10.1364 6.638 10.8464L4.788 7.64342C4.664 7.43042 4.393 7.35742 4.18 7.48142C3.967 7.60442 3.894 7.87642 4.017 8.08942L5.832 11.2334C2.531 13.0654 0.287003 16.3264 0.0240021 20.2154H23.976C23.713 16.3264 21.469 13.0654 18.168 11.2334Z"/></svg>
-                    تحميل تطبيق الأندرويد
-                </a>
+                <div id="downloadBanner" class="download-banner-container">
+                    <a href="PassCheck.apk" class="download-app-btn" download>
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M17.523 15.3414C17.523 15.3414 17.523 15.3414 17.522 15.3414C16.812 15.3414 16.237 15.9164 16.237 16.6264C16.237 17.3364 16.812 17.9114 17.522 17.9114C18.232 17.9114 18.807 17.3364 18.807 16.6264C18.807 15.9174 18.232 15.3414 17.523 15.3414ZM6.477 15.3414C5.767 15.3414 5.192 15.9164 5.192 16.6264C5.192 17.3364 5.767 17.9114 6.477 17.9114C7.187 17.9114 7.762 17.3364 7.762 16.6264C7.762 15.9174 7.187 15.3414 6.477 15.3414ZM18.168 11.2334L19.983 8.08942C20.106 7.87642 20.033 7.60442 19.82 7.48142C19.607 7.35742 19.336 7.43142 19.212 7.64342L17.362 10.8464C15.82 10.1364 14.011 9.71542 12.001 9.71542C9.99 9.71542 8.18 10.1364 6.638 10.8464L4.788 7.64342C4.664 7.43042 4.393 7.35742 4.18 7.48142C3.967 7.60442 3.894 7.87642 4.017 8.08942L5.832 11.2334C2.531 13.0654 0.287003 16.3264 0.0240021 20.2154H23.976C23.713 16.3264 21.469 13.0654 18.168 11.2334Z"/></svg>
+                        تحميل تطبيق الأندرويد
+                    </a>
+                    <button onclick="hideDownloadBanner()" class="close-btn" title="إخفاء الزر نهائياً">✖</button>
+                </div>
             </div>
             
             <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="loadFile(event)">
             
-            <div class="preview-box" id="previewBox" onclick="document.getElementById('fileInput').click()">
-                <div class="placeholder" id="placeholder">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 8V6a2 2 0 0 1 2-2h2l1.5-1.5A1.5 1.5 0 0 1 10.56 2h2.88a1.5 1.5 0 0 1 1.06.44L16 4h2a2 2 0 0 1 2 2v2M4 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2M4 8h16M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <p>المس هنا لالتقاط أو إدراج الجواز</p>
-                    <span>يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
-                </div>
-                <img id="previewImg">
-                <div class="overlay" id="loader">
-                    <div class="scan-line"></div>
-                    <p>جاري تحليل البيانات ضوئياً...</p>
+            <div class="preview-wrapper">
+                <div class="preview-box" id="previewBox" onclick="document.getElementById('fileInput').click()">
+                    <div class="placeholder" id="placeholder">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 8V6a2 2 0 0 1 2-2h2l1.5-1.5A1.5 1.5 0 0 1 10.56 2h2.88a1.5 1.5 0 0 1 1.06.44L16 4h2a2 2 0 0 1 2 2v2M4 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2M4 8h16M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p>المس هنا لالتقاط أو إدراج الجواز</p>
+                        <span>يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
+                    </div>
+                    <img id="previewImg">
+                    <div class="overlay" id="loader">
+                        <div class="scan-line"></div>
+                        <p>جاري تحليل البيانات ضوئياً...</p>
+                    </div>
                 </div>
             </div>
 
@@ -297,13 +306,22 @@
     </div>
 
     <script>
-        // الكود الذكي لإخفاء الزر داخل التطبيق
+        // دالة الإخفاء القطعية للزر وحفظ القرار بالذاكرة
+        function hideDownloadBanner() {
+            document.getElementById('downloadBanner').style.display = 'none';
+            localStorage.setItem('hideAppBtn', 'true');
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
-            const userAgent = window.navigator.userAgent.toLowerCase();
-            const isWebView = userAgent.includes('wv') || (userAgent.includes('android') && userAgent.includes('version/'));
-            if (isWebView || window.matchMedia('(display-mode: standalone)').matches) {
-                const btn = document.getElementById('downloadAppBtn');
-                if(btn) btn.style.display = 'none';
+            // تحقق إذا كان المستخدم قد أغلق الزر مسبقاً
+            if (localStorage.getItem('hideAppBtn') === 'true') {
+                document.getElementById('downloadBanner').style.display = 'none';
+            } else {
+                // الكشف التلقائي كمحاولة إضافية
+                const ua = navigator.userAgent.toLowerCase();
+                if (ua.includes('wv') || (ua.includes('android') && ua.includes('version/'))) {
+                    document.getElementById('downloadBanner').style.display = 'none';
+                }
             }
         });
 
@@ -522,7 +540,7 @@
         }
 
         function downloadImage() {
-            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f1f5f9" }).then(canvas => {
+            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f0f4fd" }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 document.getElementById('finalImage').src = imgData;
                 document.getElementById('saveOverlay').classList.add('active');
