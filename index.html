@@ -188,12 +188,12 @@
     <div class="container">
         <div class="card">
             
-            <div class="top-btn-group">
-                <button onclick="openModal('settingsModal')" class="icon-btn" title="الإعدادات">⚙️</button>
-                <button onclick="openModal('appInfoModal')" class="icon-btn" title="دليل الاستخدام">ℹ️</button>
-            </div>
-
             <div id="homeSection">
+                <div class="top-btn-group">
+                    <button onclick="openModal('settingsModal')" class="icon-btn" title="الإعدادات">⚙️</button>
+                    <button onclick="openModal('appInfoModal')" class="icon-btn" title="دليل الاستخدام">ℹ️</button>
+                </div>
+
                 <div class="header-section" style="margin-top: 10px;">
                     <div class="home-logo">🛂</div>
                     <h1 class="title" data-i18n="appTitle">التدقيق الذكي للجوازات</h1>
@@ -362,7 +362,7 @@
     </div>
 
     <script>
-        /* === تعريف المتغيرات العامة (لحل مشكلة التوقف) === */
+        /* === تعريف المتغيرات العامة === */
         let currentLang = localStorage.getItem('appLang') || 'ar';
         let appMode = 'single'; 
         let ticketCount = 0;
@@ -448,7 +448,7 @@
         function hideDownloadBanner() { document.getElementById('downloadBanner').style.display = 'none'; localStorage.setItem('hideAppBtn', 'true'); }
         
         document.addEventListener("DOMContentLoaded", function() {
-            imageElement = document.getElementById('previewImg'); // ربط عنصر الصورة بعد تحميل الصفحة
+            imageElement = document.getElementById('previewImg');
             applyLanguage();
             
             if (localStorage.getItem('hideAppBtn') === 'true') { document.getElementById('downloadBanner').style.display = 'none'; } 
@@ -572,7 +572,7 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // --- إصدار التقرير (الديناميكي) ---
+        // --- إصدار التقرير ---
         function generateTicket() {
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
             const nameVal = document.getElementById('nameInput').value || "GUEST"; const passNum = document.getElementById('passNumInput').value || "---";
