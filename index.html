@@ -80,10 +80,10 @@
         .title { font-size: 24px; font-weight: 900; color: var(--text-main); margin-bottom: 2px; letter-spacing: -0.5px; }
         .subtitle { font-size: 11px; color: #3b82f6; font-weight: 800; background: rgba(59, 130, 246, 0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.2); }
         
-        /* شريط النصائح المتحرك */
-        .tips-marquee { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px; margin-top: 10px; overflow: hidden; white-space: nowrap; font-size: 11px; font-weight: 800; color: var(--text-sub); display: flex; align-items: center; }
-        .tips-marquee span { display: inline-block; animation: scrollMarquee 20s linear infinite; padding-left: 100%; }
-        [dir="ltr"] .tips-marquee span { animation: scrollMarqueeLtr 20s linear infinite; }
+        /* شريط النصائح المتحرك الموسع */
+        .tips-marquee { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px; margin-top: 10px; overflow: hidden; white-space: nowrap; font-size: 12px; font-weight: 800; color: var(--text-sub); display: flex; align-items: center; }
+        .tips-marquee span { display: inline-block; animation: scrollMarquee 30s linear infinite; padding-left: 100%; }
+        [dir="ltr"] .tips-marquee span { animation: scrollMarqueeLtr 30s linear infinite; }
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
         @keyframes scrollMarqueeLtr { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
@@ -113,8 +113,10 @@
         .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
         .form-group { display: flex; flex-direction: column; }
         label { font-size: 10px; font-weight: 800; color: var(--text-sub); margin-bottom: 4px; text-transform: uppercase; }
+        .label-blue { color: #2563eb; }
         input { padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); font-family: inherit; font-size: 13px; font-weight: 800; color: var(--text-main); outline: none; transition: 0.3s; }
         input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+        input.input-blue { background: rgba(239,246,255,0.7); border-color: rgba(147,197,253,0.6); color: #1e40af; }
         .text-center { text-align: center; } .text-left { text-align: left; direction: ltr; }
         
         .btn-main { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; width: 100%; margin-top: 15px; box-shadow: 0 10px 25px rgba(15,23,42,0.2); }
@@ -140,7 +142,6 @@
         .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
         .v-status-desc { font-size: 12px; font-weight: 800; margin-bottom: 8px;}
         
-        /* شريط العمر (Progress Bar) */
         .progress-bg { width: 100%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; }
         .progress-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
         
@@ -153,6 +154,8 @@
         .v-grid-label { font-size: 8px; font-weight: 800; margin-bottom: 4px; color: #64748b; }
         .v-grid-value { font-size: 14px; font-weight: 900; font-family: monospace; color: #0f172a; }
         
+        .age-alert { background: #fffbeb; color: #b45309; font-size: 11px; font-weight: 800; padding: 8px; border-radius: 8px; border: 1px dashed #fcd34d; text-align: center; margin-bottom: 15px; display: none; }
+
         .v-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 2px dashed #cbd5e1; padding-top: 15px; }
         .qr-container { background: white; padding: 4px; border-radius: 10px; border: 1px solid #e2e8f0; }
         .v-pass-num-box { text-align: left; }
@@ -192,6 +195,7 @@
 
     <div class="container">
         <div class="card">
+            
             <div class="top-status-bar">
                 <div id="greetingText">صباح الخير ☀️</div>
                 <div class="conn-indicator"><span class="conn-dot" id="connDot"></span><span id="connText">متصل بالسيرفر</span></div>
@@ -224,7 +228,7 @@
                 </div>
 
                 <div class="tips-marquee">
-                    <span id="tipsText">💡 نصيحة: تأكد من إضاءة الغرفة وعدم وجود انعكاس ضوئي (فلاش) على شريط الجواز لضمان قراءة سريعة ودقيقة 100%.</span>
+                    <span id="tipsText">💡 نصيحة: تجنب الانعكاس الضوئي على الجواز | ✈️ معلومة: دول الشينغن تطلب صلاحية 3 أشهر من تاريخ العودة | 🌍 معلومة: السفر لتركيا يتطلب صلاحية 150 يوماً | 👶 تنبيه: تأكد من حساب عمر الرضيع في يوم رحلة السفر | 🛂 نصيحة: تأكد من وضوح شريط البيانات (MRZ) أسفل الجواز لضمان الدقة.</span>
                 </div>
             </div>
 
@@ -274,6 +278,12 @@
                         <input type="date" id="expiryInput">
                     </div>
                 </div>
+                <div class="input-row" style="grid-template-columns: 1fr;">
+                    <div class="form-group">
+                        <label class="label-blue" data-i18n="lblTravel">تاريخ السفر المتوقع (اختياري لحساب العمر الدقيق)</label>
+                        <input type="date" id="travelDateInput" class="input-blue">
+                    </div>
+                </div>
                 
                 <button class="btn btn-main" onclick="generateTicket()" data-i18n="btnGen">إصدار تقرير الصلاحية</button>
             </div>
@@ -297,7 +307,7 @@
                 <button class="settings-item" onclick="openHistoryModal()"><span data-i18n="stgHist">🕒 سجل الفحص</span></button>
                 <button class="settings-item" onclick="toggleLanguage()"><span data-i18n="stgLang">🌐 English / عربي</span></button>
                 <button class="settings-item" onclick="openModal('aboutModal')"><span data-i18n="stgAbout">👨‍💻 نبذة عن المطور</span></button>
-                </div>
+            </div>
         </div>
     </div>
 
@@ -327,12 +337,12 @@
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
             <div class="info-content">
                 <p class="intro" data-i18n="helpIntro">أهلاً بك في النظام الذكي لفحص الجوازات. أداة متطورة لدعم شركات السياحة والمسافرين.</p>
-                <h4 data-i18n="helpH1">✨ الميزات الجديدة:</h4>
+                <h4 data-i18n="helpH1">✨ قدرات النظام الذكية:</h4>
                 <ul>
-                    <li data-i18n="helpN1"><b>الوضع المظلم 🌙:</b> لراحة العين أثناء العمل الليلي.</li>
-                    <li data-i18n="helpN2"><b>المصحح التلقائي 🧠:</b> تنظيف الأخطاء المطبعية التي قد تحدث أثناء المسح الضوئي.</li>
-                    <li data-i18n="helpN3"><b>مؤشر العمر 📊:</b> شريط لوني يوضح العمر المتبقي للجواز بصرياً.</li>
-                    <li data-i18n="helpN4"><b>كشف الجنسية 🌍:</b> طباعة علم واسم الدولة في التقرير تلقائياً.</li>
+                    <li data-i18n="helpN1"><b>• المصحح التلقائي:</b> يعالج أخطاء القراءة المطبعية بالخلفية فوراً.</li>
+                    <li data-i18n="helpN2"><b>• مؤشر العمر (Progress Bar):</b> يوضح لك شريط ملون يبين العمر المتبقي للجواز بصرياً أسفل التقرير.</li>
+                    <li data-i18n="helpN3"><b>• كشف الجنسية:</b> يقوم بالبحث في شريط الجواز واستخراج جنسية المسافر وطباعة علم بلده بالتقرير.</li>
+                    <li data-i18n="helpN4"><b>• تنبيهات الأعمار الدقيقة:</b> عند إدخالك "تاريخ السفر"، سيقوم النظام بحساب العمر الدقيق وإطلاق تحذير إذا كان الرضيع سيصبح طفلاً يوم السفر لتجنب الغرامات!</li>
                 </ul>
                 <h4 data-i18n="helpModesTitle">1️⃣ أوضاع الفحص:</h4>
                 <ul>
@@ -348,7 +358,7 @@
             <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
             <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
             <div class="info-content">
-                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر وتقليل الأخطاء البشرية.</p>
+                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
             </div>
         </div>
     </div>
@@ -361,11 +371,38 @@
             <div style="max-height: 65vh; overflow-y: auto; border-radius: 12px; border: 2px dashed #3b82f6; padding: 5px;">
                 <img id="finalImage" alt="Report" style="width: 100%; display: block; border-radius: 8px;">
             </div>
-            </div>
+        </div>
     </div>
 
     <script>
-        /* === متغيرات أساسية === */
+        /* === نظام الصوت (آمن 100% ويعمل بدون ملفات خارجية) === */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                if (type === 'success') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                }
+            } catch(e) { console.log("Audio not supported"); }
+        }
+
+        /* === المتغيرات الأساسية === */
         let currentLang = localStorage.getItem('appLang') || 'ar';
         let isDarkMode = localStorage.getItem('darkMode') === 'true';
         let appMode = 'single'; 
@@ -376,7 +413,7 @@
         let nationalityData = { flag: "🌍", name: "" };
         const API_KEY = 'helloworld';
 
-        /* === قاموس الجنسيات البسيط === */
+        /* === قاموس الجنسيات === */
         const countries = {
             'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
             'TUR': { ar: 'تركيا 🇹🇷', en: 'Turkey 🇹🇷' }, 'JOR': { ar: 'الأردن 🇯🇴', en: 'Jordan 🇯🇴' },
@@ -396,17 +433,18 @@
                 btnGroup: "فحص عائلي", descGroup: "فحص عدة جوازات وتقرير شامل",
                 btnHome: "الرئيسية", camTitle: "المس لالتقاط الجواز", scanning: "جاري القراءة والتصحيح...",
                 btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
-                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", btnGen: "إصدار تقرير الصلاحية",
+                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري لحساب العمر)", btnGen: "إصدار تقرير الصلاحية",
                 btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻",
                 stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور",
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
                 exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
-                helpTitle: "ℹ️ الدليل الشامل", helpIntro: "النظام الذكي لفحص الجوازات وتجنب مفاجآت المطار.",
-                helpH1: "✨ الميزات الجديدة:", helpN1: "<b>الوضع المظلم 🌙:</b> لراحة العين أثناء العمل الليلي.", helpN2: "<b>المصحح التلقائي 🧠:</b> تنظيف الأخطاء المطبعية التي قد تحدث أثناء المسح الضوئي.", helpN3: "<b>مؤشر العمر 📊:</b> شريط لوني يوضح العمر المتبقي للجواز بصرياً.", helpN4: "<b>كشف الجنسية 🌍:</b> طباعة علم واسم الدولة في التقرير تلقائياً.",
+                helpTitle: "ℹ️ الدليل الشامل", helpIntro: "النظام الذكي لفحص الجوازات لتجنب مفاجآت المطار.",
+                helpH1: "✨ قدرات النظام الذكية:", helpN1: "<b>• المصحح التلقائي:</b> يعالج أخطاء القراءة المطبعية بالخلفية فوراً.", helpN2: "<b>• مؤشر العمر:</b> شريط لوني يوضح العمر المتبقي للجواز بصرياً.", helpN3: "<b>• كشف الجنسية:</b> طباعة علم واسم الدولة في التقرير تلقائياً.", helpN4: "<b>• تنبيهات الأعمار الدقيقة:</b> حساب العمر بدقة ليوم السفر لتجنب غرامات (الرضيع/الطفل).",
                 helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفردي:</b> مسافر واحد.", helpModeG: "<b>• العائلي:</b> فحص عدة جوازات ونسخها كقائمة واحدة.",
-                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، يهدف لتسهيل إجراءات السفر وتقليل الأخطاء البشرية عبر الذكاء الاصطناعي.",
+                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID ✅", remText: "{y} سنة و {m} شهر و {d} يوم",
+                warnInfant: "⚠️ انتبه: المسافر سيصبح (طفل - Child) ويحتاج مقعد في تاريخ السفر!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغ (Adult) في تاريخ السفر المحدد!",
                 saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", btnReminder: "📅 إضافة تذكير بموعد التجديد"
             },
             en: {
@@ -415,17 +453,18 @@
                 btnGroup: "Group Scan", descGroup: "Scan multiple passports at once",
                 btnHome: "Home", camTitle: "Tap to capture passport", scanning: "Scanning & Auto-correcting...",
                 btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
-                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", btnGen: "Generate Report",
+                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
                 btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Save as Image 💾", btnClear: "Clear & Restart ↻",
                 stgTitle: "⚙️ Settings", stgHist: "🕒 History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ Guide", stgAbout: "👨‍💻 About Developer",
                 histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
                 exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
                 helpTitle: "ℹ️ User Guide", helpIntro: "Smart system to verify passports and avoid airport surprises.",
-                helpH1: "✨ New Features:", helpN1: "<b>Dark Mode 🌙:</b> Eye comfort for night work.", helpN2: "<b>Auto-Corrector 🧠:</b> Cleans up OCR typos instantly.", helpN3: "<b>Age Progress 📊:</b> Visual bar showing remaining passport life.", helpN4: "<b>Nationality 🌍:</b> Auto-detects and prints country flag.",
+                helpH1: "✨ Smart Capabilities:", helpN1: "<b>• Auto-Corrector:</b> Cleans up OCR typos instantly.", helpN2: "<b>• Age Progress:</b> Visual bar showing remaining passport life.", helpN3: "<b>• Nationality:</b> Auto-detects and prints country flag.", helpN4: "<b>• Age Alerts:</b> Calculates age on travel day to avoid Infant/Child fines.",
                 helpModesTitle: "1️⃣ Modes:", helpModeS: "<b>• Single:</b> One passenger.", helpModeG: "<b>• Group:</b> Multiple passports copied as one list.",
-                abtTitle: "👨‍💻 About", abtText: "Developed by a travel expert to streamline procedures and reduce human errors using AI.",
+                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool, aiming to streamline travel procedures, reduce human errors, and provide a seamless travel experience.",
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID ✅", remText: "{y}Y, {m}M, {d}D",
+                warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!",
                 saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", btnReminder: "📅 Add Renewal Reminder"
             }
         };
@@ -447,14 +486,13 @@
         }
         function toggleDarkMode() { isDarkMode = !isDarkMode; localStorage.setItem('darkMode', isDarkMode); applyDarkMode(); }
 
-        /* === التحية الذكية وحالة الاتصال === */
+        /* === التحية وحالة الاتصال === */
         function updateGreeting() {
             const h = new Date().getHours();
             let gAr = h < 12 ? "صباح الخير ☀️" : h < 18 ? "طاب مساؤك 🌤️" : "مساء الخير 🌙";
             let gEn = h < 12 ? "Good Morning ☀️" : h < 18 ? "Good Afternoon 🌤️" : "Good Evening 🌙";
             document.getElementById('greetingText').innerText = currentLang === 'ar' ? gAr : gEn;
         }
-        
         function updateConnectionStatus() {
             const dot = document.getElementById('connDot'); const txt = document.getElementById('connText');
             if (navigator.onLine) { dot.classList.remove('offline'); txt.innerText = currentLang === 'ar' ? 'متصل بالسيرفر' : 'Connected'; } 
@@ -469,29 +507,32 @@
             else if (type === 'error') navigator.vibrate([100, 50, 100]);
         }
 
-        /* === تهيئة التطبيق (OnLoad) === */
+        /* === OnLoad === */
         document.addEventListener("DOMContentLoaded", function() {
             imageElement = document.getElementById('previewImg');
+            document.getElementById('travelDateInput').valueAsDate = new Date(); // تعيين تاريخ السفر لليوم الافتراضي
             applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
             
-            // إخفاء شاشة الترحيب
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 splash.style.opacity = '0';
                 setTimeout(() => splash.remove(), 600);
             }, 1500);
+
+            if (localStorage.getItem('hideAppBtn') === 'true') { document.getElementById('downloadBanner').style.display = 'none'; } 
+            else { const ua = navigator.userAgent.toLowerCase(); if (ua.includes('wv') || (ua.includes('android') && ua.includes('version/'))) { document.getElementById('downloadBanner').style.display = 'none'; } }
         });
 
-        /* === إدارة النوافذ (Modals) === */
+        /* === النوافذ والسجل === */
         function openModal(id) { document.querySelectorAll('.modal-overlay').forEach(m => { m.classList.remove('active'); m.style.display = 'none'; }); document.getElementById(id).style.display = 'flex'; setTimeout(() => document.getElementById(id).classList.add('active'), 10); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); setTimeout(() => { document.getElementById(id).style.display = 'none'; }, 300); }
+        function hideDownloadBanner() { document.getElementById('downloadBanner').style.display = 'none'; localStorage.setItem('hideAppBtn', 'true'); }
 
-        /* === سجل الفحص والبحث الذكي === */
         function saveToHistory(name, pass) {
             let history = JSON.parse(localStorage.getItem('scanHistory') || '[]');
             const now = new Date(); const timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} - ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
             history.unshift({ name: name, pass: pass, time: timeStr });
-            if(history.length > 20) history.pop(); // زدت العدد لـ 20
+            if(history.length > 20) history.pop();
             localStorage.setItem('scanHistory', JSON.stringify(history));
         }
         function openHistoryModal() {
@@ -511,7 +552,7 @@
             renderHistory(filtered);
         }
 
-        /* === التنقل بالواجهات === */
+        /* === التحكم بالواجهات === */
         function startScanner(mode) {
             appMode = mode;
             document.getElementById('homeSection').style.display = 'none'; document.getElementById('scannerSection').style.display = 'flex';
@@ -529,7 +570,7 @@
             else { document.getElementById('scannerSection').scrollIntoView({behavior: 'smooth'}); }
         }
 
-        /* === الفحص (OCR) مع المصحح التلقائي واكتشاف الجنسية === */
+        /* === الفحص والمصحح والجنسية === */
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) { const reader = new FileReader(); reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; nationalityData = { flag: "🌍", name: "" }; }; reader.readAsDataURL(file); }
@@ -537,7 +578,7 @@
         function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
 
         async function processImage() {
-            if (!navigator.onLine) { vibrate('error'); return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); }
+            if (!navigator.onLine) { vibrate('error'); playSound('error'); return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); }
             document.getElementById('loader').style.display = 'flex';
             try {
                 const rotatedBase64 = await getRotatedImage();
@@ -548,7 +589,6 @@
                 
                 const text = data.ParsedResults[0].ParsedText;
                 
-                // اكتشاف الجنسية (Nationality Detection)
                 const mrzMatch = text.match(/P<([A-Z]{3})/);
                 if (mrzMatch && mrzMatch[1]) {
                     const code = mrzMatch[1];
@@ -556,8 +596,8 @@
                 }
 
                 extractDates(text); extractNameFromText(text); extractPassportNumber(text);
-                vibrate('success'); // اهتزاز النجاح
-            } catch (error) { vibrate('error'); alert(currentLang === 'ar' ? "الرجاء إدخال البيانات يدوياً." : "Please enter data manually."); } 
+                vibrate('success'); playSound('success');
+            } catch (error) { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرجاء إدخال البيانات يدوياً." : "Please enter data manually."); } 
             finally { document.getElementById('loader').style.display = 'none'; }
         }
 
@@ -588,7 +628,6 @@
             let rawName = "";
             if (matches.length > 0) { rawName = `${matches[0][2].replace(/</g, ' ').trim()} ${matches[0][1].replace(/</g, ' ').trim()}`; } 
             else { const lines = text.split('\n'); for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { rawName = line.trim(); break; } } }
-            // المصحح التلقائي للاسم (تحويل الأرقام إلى حروف إن وجدت بالخطأ)
             if(rawName) { rawName = rawName.replace(/0/g, 'O').replace(/1/g, 'I'); document.getElementById('nameInput').value = rawName; }
         }
 
@@ -597,7 +636,6 @@
             let rawPass = "";
             if (matchesMRZ.length > 0) { rawPass = matchesMRZ[0][1].replace(/</g, ''); } 
             else { const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) rawPass = visualMatches[0][0]; }
-            // المصحح التلقائي لرقم الجواز (تحويل الحرف O إلى صفر إذا كان بنص الأرقام)
             if(rawPass) { rawPass = rawPass.replace(/O/g, '0'); document.getElementById('passNumInput').value = rawPass; }
         }
 
@@ -607,16 +645,30 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        /* === إصدار التقرير النهائي === */
+        /* === إصدار التقرير النهائي (مع الصوت والتنبيهات الدقيقة) === */
         function generateTicket() {
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
             const nameVal = document.getElementById('nameInput').value || "GUEST"; const passNum = document.getElementById('passNumInput').value || "---";
+            const travelVal = document.getElementById('travelDateInput').value;
 
-            if (!dobVal) { vibrate('error'); return alert(dict[currentLang].valErr); }
+            if (!dobVal) { vibrate('error'); playSound('error'); return alert(dict[currentLang].valErr); }
             saveToHistory(nameVal, passNum); 
 
-            const today = new Date(); const dob = new Date(dobVal); const ageDiff = calculateDiff(dob, today);
-            let type = "ADULT"; if (ageDiff.years < 2) { type = "INFANT"; } else if (ageDiff.years < 12) { type = "CHILD"; }
+            const today = new Date(); 
+            const dob = new Date(dobVal); 
+            const travelDate = travelVal ? new Date(travelVal) : today;
+
+            const ageToday = calculateDiff(dob, today);
+            const ageTravel = calculateDiff(dob, travelDate);
+            
+            let type = "ADULT"; if (ageTravel.years < 2) { type = "INFANT"; } else if (ageTravel.years < 12) { type = "CHILD"; }
+
+            let ageAlertHTML = '';
+            if (ageToday.years < 2 && ageTravel.years >= 2) {
+                ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnInfant}</div>`;
+            } else if (ageToday.years < 12 && ageTravel.years >= 12) {
+                ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnChild}</div>`;
+            }
 
             let statusTitle = "UNKNOWN"; let remainingText = dict[currentLang].remainErr;
             let boxColor = "var(--input-bg)", borderColor = "var(--border-color)", textColor = "var(--text-main)";
@@ -625,24 +677,23 @@
             if (expiryVal) {
                 const expiryDate = new Date(expiryVal); const validDiff = calculateDiff(today, expiryDate);
                 if (expiryDate < today) {
-                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.1)"; borderColor = "#ef4444"; textColor = "#ef4444"; vibrate('error');
+                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.1)"; borderColor = "#ef4444"; textColor = "#ef4444"; vibrate('error'); playSound('error');
                 } else {
                     remainingText = dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
-                    progressPct = Math.min(100, (validDiff.totalMonths / 120) * 100); // نسبة من 10 سنوات
-                    if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.1)"; borderColor = "#f59e0b"; textColor = "#f59e0b"; progressColor = "#f59e0b"; vibrate('error'); } 
-                    else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.1)"; borderColor = "#22c55e"; textColor = "#22c55e"; progressColor = "#22c55e"; vibrate('success'); }
+                    progressPct = Math.min(100, (validDiff.totalMonths / 120) * 100); 
+                    if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.1)"; borderColor = "#f59e0b"; textColor = "#f59e0b"; progressColor = "#f59e0b"; vibrate('error'); playSound('error'); } 
+                    else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.1)"; borderColor = "#22c55e"; textColor = "#22c55e"; progressColor = "#22c55e"; vibrate('success'); playSound('success'); }
                 }
-            }
+            } else { vibrate('success'); playSound('success'); }
             
-            const ageStr = currentLang === 'ar' ? `<span dir="rtl" style="display:inline-block;">${ageDiff.years} سنة، ${ageDiff.months} شهر</span>` : `${ageDiff.years}Y, ${ageDiff.months}M`;
+            const ageStr = currentLang === 'ar' ? `<span dir="rtl" style="display:inline-block;">${ageTravel.years} سنة، ${ageTravel.months} شهر، ${ageTravel.days} يوم</span>` : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
             const dateStr = today.toISOString().split('T')[0];
 
-            // كود إنشاء رابط التذكير بـ Google Calendar (قبل 6 أشهر من الانتهاء)
             let reminderBtnHTML = '';
             if (expiryVal && new Date(expiryVal) > today) {
                 const remindDate = new Date(expiryVal); remindDate.setMonth(remindDate.getMonth() - 6);
-                const dStr = remindDate.toISOString().replace(/-|:|\.\d\d\d/g,""); // صيغة ical
-                const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تجديد جواز ' + nameVal)}&dates=${dStr}/${dStr}&details=${encodeURIComponent('تذكير للاتصال بالزبون وتجديد الجواز')}`;
+                const dStr = remindDate.toISOString().replace(/-|:|\.\d\d\d/g,"");
+                const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تجديد جواز ' + nameVal)}&dates=${dStr}/${dStr}&details=${encodeURIComponent('تذكير لتجديد الجواز')}`;
                 reminderBtnHTML = `<button class="btn-reminder" onclick="window.open('${calLink}', '_blank')">${dict[currentLang].btnReminder}</button>`;
             }
 
@@ -664,6 +715,8 @@
                         </div>
                     </div>
                     
+                    ${ageAlertHTML}
+
                     <div class="v-status-box" style="background-color:${boxColor}; border-color:${borderColor}; color:${textColor};">
                         <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '20px'};">${statusTitle}</h3>
                         <p class="v-status-desc">${remainingText}</p>
@@ -709,7 +762,7 @@
             ticketCount++;
         }
 
-        /* === نافذة الاستنساخ السريع (تمنع الكراش) === */
+        /* === تصدير ونسخ === */
         function openExportModal() {
             if(groupPassengersData.length === 0) return;
             let textContent = currentLang === 'ar' ? "الاسم | الجواز | الميلاد | النفاذ | الفئة\n" : "Name | Passport | DOB | EXP | Type\n";
@@ -724,15 +777,15 @@
             navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
         }
 
-        /* === حفظ الصورة بأمان تام === */
+        /* === حفظ الصورة الآمن === */
         function downloadAllImages() {
             const container = document.getElementById('ticketsContainer');
-            // إجبار لون الخلفية على أبيض حتى لو كان بالوضع المظلم لضمان وضوح الطباعة
             html2canvas(container, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
                 document.getElementById('finalImage').src = canvas.toDataURL('image/png');
-                openModal('saveOverlay'); // فتح النافذة بدون أمر تحميل إجباري لمنع الكراش
+                openModal('saveOverlay'); 
             });
         }
     </script>
 </body>
 </html>
+
