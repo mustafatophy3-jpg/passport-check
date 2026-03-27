@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlTag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -21,7 +21,7 @@
             position: relative;
             min-height: 100vh;
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         /* الكرات والأشكال العائمة بالخلفية */
@@ -33,7 +33,6 @@
         
         @keyframes floatOrbs { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(40px) scale(1.1); } }
 
-        /* أيقونات السفر المتحركة خلف الزجاج */
         .bg-icons { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
         .float-icon { position: absolute; font-size: 120px; opacity: 0.04; filter: blur(2px); animation: floatElements 20s linear infinite; }
         .fi-1 { top: 10%; left: 10%; animation-duration: 25s; }
@@ -53,45 +52,39 @@
             position: relative;
         }
 
-        /* الأزرار العلوية (اللغة والمعلومات) */
-        .top-btn {
+        /* أيقونة الإعدادات ⚙️ */
+        .settings-btn {
             position: absolute;
             top: 20px;
-            background: none;
-            border: none;
+            left: 20px;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
             color: #3b82f6;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
             z-index: 10;
-            padding: 5px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-        .top-btn:active { transform: scale(0.9); }
-        .top-btn svg { width: 26px; height: 26px; stroke-width: 2.2; opacity: 0.8; }
+        [dir="ltr"] .settings-btn { left: auto; right: 20px; }
+        .settings-btn:active { transform: scale(0.9) rotate(45deg); }
+        .settings-btn svg { width: 22px; height: 22px; stroke-width: 2; opacity: 0.9; }
         
-        /* دعم الاتجاهين LTR و RTL */
-        [dir="rtl"] .info-btn { left: 20px; }
-        [dir="rtl"] .lang-btn { right: 20px; }
-        [dir="ltr"] .info-btn { right: 20px; }
-        [dir="ltr"] .lang-btn { left: 20px; }
-        
-        [dir="ltr"] .info-content { text-align: left; }
-        [dir="ltr"] .info-content ul { padding-right: 0; padding-left: 20px; }
-        [dir="ltr"] .v-pass-info { text-align: left; }
-        [dir="ltr"] .v-pass-num-box { text-align: left; }
-
         .header-section { text-align: center; margin-bottom: 25px; margin-top: 10px; }
-        .title { font-size: 26px; font-weight: 900; color: #0f172a; margin-bottom: 4px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
+        .title { font-size: 26px; font-weight: 900; color: #0f172a; margin-bottom: 2px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
         .subtitle { font-size: 12px; color: #3b82f6; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(59, 130, 246, 0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.2); }
         
-        /* شريط التحميل الذكي القابل للإغلاق */
         .download-banner-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
         .download-app-btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); color: #2563eb; padding: 10px 15px; border-radius: 14px; text-decoration: none; font-weight: 800; font-size: 13px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1); transition: all 0.2s; }
-        .download-app-btn:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(37, 99, 235, 0.1); }
+        .download-app-btn:active { transform: translateY(2px); }
         .close-btn { background: rgba(15, 23, 42, 0.05); color: #64748b; border: none; width: 36px; height: 36px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
         .close-btn:active { background: rgba(15, 23, 42, 0.1); transform: scale(0.9); }
         
-        /* التوهج المتحرك خلف مربع الكاميرا */
         .preview-wrapper { position: relative; border-radius: 22px; padding: 3px; background: linear-gradient(45deg, #3b82f6, #8b5cf6, #3b82f6); background-size: 200% 200%; animation: glowingBorder 4s ease infinite; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2); }
         @keyframes glowingBorder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
@@ -106,11 +99,11 @@
         
         .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
         .scan-line { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 20px #60a5fa, 0 0 40px #3b82f6; animation: scan 1.8s infinite linear; position: absolute; top: 0; }
-        .overlay p { color: #ffffff; font-weight: 800; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; text-align: center; }
+        .overlay p { color: #ffffff; font-weight: 800; font-size: 15px; margin-top: 30px; letter-spacing: 0.5px; }
         @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
 
         .tools { display: none; gap: 12px; margin-bottom: 20px; }
-        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .btn { padding: 15px; border-radius: 16px; font-weight: 800; font-size: 15px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s; font-family: inherit; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .btn-rotate { background: rgba(255,255,255,0.9); color: #475569; flex: 1; border: 1px solid rgba(0,0,0,0.05); }
         .btn-rotate:active { background: #e2e8f0; }
         .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; box-shadow: 0 8px 25px rgba(37,99,235,0.3); }
@@ -120,7 +113,8 @@
         .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
         
         .form-group { display: flex; flex-direction: column; width: 100%; }
-        label { font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; margin-right: 4px; margin-left: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        label { font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; margin-right: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        [dir="ltr"] label { margin-right: 0; margin-left: 4px; }
         .label-red { color: #dc2626; }
         
         input { padding: 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.6); font-family: inherit; font-size: 14px; font-weight: 800; color: #0f172a; outline: none; transition: all 0.3s; width: 100%; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); backdrop-filter: blur(10px); }
@@ -145,9 +139,10 @@
         [dir="ltr"] .v-date-corner { left: auto; right: 15px; }
         
         .v-body { padding: 25px 20px; }
-        
         .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .v-badge { background: #f1f5f9; padding: 8px 16px; border-radius: 10px; font-size: 12px; font-weight: 900; border: 1px solid #e2e8f0; color: #475569; letter-spacing: 0.5px; }
+        .v-pass-info { text-align: right; max-width: 70%; }
+        [dir="ltr"] .v-pass-info { text-align: left; }
         .v-pass-label { font-size: 10px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
         .v-pass-name { font-size: 20px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
         
@@ -172,41 +167,52 @@
         .dashed-line::before, .dashed-line::after { content: ''; position: absolute; width: 24px; height: 24px; background: #f1f5f9; border-radius: 50%; top: -12px; }
         .dashed-line::before { right: -32px; border-left: 1px solid #e2e8f0; }
         .dashed-line::after { left: -32px; border-right: 1px solid #e2e8f0; }
+        [dir="ltr"] .dashed-line::before { left: -32px; right: auto; border-right: 1px solid #e2e8f0; border-left: none; }
+        [dir="ltr"] .dashed-line::after { right: -32px; left: auto; border-left: 1px solid #e2e8f0; border-right: none; }
         
         .v-footer { display: flex; justify-content: space-between; align-items: center; }
         .qr-container { background: white; padding: 6px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+        .v-pass-num-box { text-align: right; }
+        [dir="ltr"] .v-pass-num-box { text-align: left; }
         .v-pass-num-label { font-size: 10px; color: #94a3b8; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
         .v-pass-num-value { font-size: 26px; font-weight: 900; font-family: monospace; color: #0f172a; letter-spacing: 2px; }
         
         .v-bottom-bar { height: 16px; background: #0f172a; }
 
-        /* تعديل جوهري لنوافذ الانبثاق حتى تشتغل بكل الأجهزة */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
+        /* نوافذ الانبثاق (Modals) الشاملة */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); }
+        .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-card { transform: translateY(0); }
-        .modal-close-btn { position: absolute; top: 15px; background: rgba(15,23,42,0.05); border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .modal-close-btn { position: absolute; top: 15px; left: 15px; background: rgba(15,23,42,0.05); border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: bold; color: #475569; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; z-index: 5; }
+        [dir="ltr"] .modal-close-btn { left: auto; right: 15px; }
         .modal-close-btn:active { background: rgba(15,23,42,0.1); transform: scale(0.9); }
-        [dir="rtl"] .modal-close-btn { left: 15px; }
-        [dir="ltr"] .modal-close-btn { right: 15px; }
         
-        .info-title { font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 15px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .info-content { font-size: 13.5px; color: #475569; line-height: 1.7; font-weight: 600; text-align: right; }
+        /* تنسيق قائمة الإعدادات */
+        .modal-title { font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 20px; text-align: center; }
+        .settings-list { display: flex; flex-direction: column; gap: 10px; }
+        .settings-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 16px; display: flex; align-items: center; gap: 12px; font-family: inherit; font-size: 15px; font-weight: 800; color: #1e293b; cursor: pointer; transition: all 0.2s; width: 100%; text-align: right; }
+        [dir="ltr"] .settings-item { text-align: left; }
+        .settings-item:active { background: #e2e8f0; transform: scale(0.98); }
+        .settings-item.exit { color: #dc2626; background: #fef2f2; border-color: #fecaca; }
+        
+        /* تنسيق النصوص داخل النوافذ */
+        .info-content { font-size: 14px; color: #475569; line-height: 1.8; font-weight: 600; text-align: right; }
+        [dir="ltr"] .info-content { text-align: left; }
         .info-content p { margin-bottom: 15px; }
-        .info-content h4 { font-size: 15px; color: #1e40af; margin-bottom: 8px; font-weight: 800; margin-top: 15px; display: flex; align-items: center; gap: 5px; }
+        .info-content h4 { font-size: 15px; color: #1e40af; margin-bottom: 8px; font-weight: 800; margin-top: 15px; }
         .info-content ul { padding-right: 20px; margin-bottom: 15px; }
+        [dir="ltr"] .info-content ul { padding-right: 0; padding-left: 20px; }
         .info-content li { margin-bottom: 8px; }
-
-        /* تعديل جذري لنافذة الحفظ لتجنب مشاكل الأندرويد القديم */
-        .save-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 1000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        .save-overlay.active { display: flex; }
-        .save-overlay .card-inner { background: white; border-radius: 20px; padding: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; max-width: 90%; }
-        .save-title { font-size: 16px; font-weight: 900; color: #0f172a; margin-bottom: 5px; text-align: center;}
-        .save-subtitle { font-size: 13px; font-weight: 700; color: #64748b; line-height: 1.4; margin-bottom: 15px; text-align: center;}
-        #finalImage { max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 15px; border: 1px solid #e2e8f0; display: none; }
-        .btn-save-confirm { background: #16a34a; color: white; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; border: none; cursor: pointer; margin-bottom: 10px;}
-        .btn-save-close { background: #cbd5e1; color: #475569; width: 100%; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: bold; border: none; cursor: pointer; }
         
+        /* سجل الفحص */
+        .history-list { display: flex; flex-direction: column; gap: 10px; }
+        .history-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .history-info h4 { font-size: 14px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+        .history-info p { font-size: 11px; color: #64748b; font-weight: 700; }
+        .history-time { font-size: 10px; color: #94a3b8; font-weight: 800; text-align: left; }
+        .empty-history { text-align: center; padding: 30px 0; color: #94a3b8; font-weight: 700; font-size: 14px; }
+
         .highlight { border-color: #22c55e !important; background-color: rgba(240, 253, 244, 0.9) !important; box-shadow: 0 0 0 4px rgba(34,197,94,0.2) !important; }
     </style>
 </head>
@@ -221,32 +227,23 @@
     <div class="container">
         <div class="card">
             
-            <button onclick="showAppInfo()" class="top-btn info-btn" title="دليل الاستخدام / User Guide">
-                <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-            </button>
-
-            <button onclick="toggleLanguage()" class="top-btn lang-btn" title="تغيير اللغة / Change Language">
-                <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            <button onclick="openModal('settingsModal')" class="settings-btn" title="الإعدادات">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
             </button>
 
             <div class="header-section">
-                <h1 class="title" id="t_title">التدقيق الذكي للجوازات</h1>
-                <p class="subtitle" id="t_subtitle">النظام الشامل لفحص صلاحية السفر</p>
+                <h1 class="title" data-i18n="appTitle">التدقيق الذكي للجوازات</h1>
+                <p class="subtitle" data-i18n="appSub">النظام الشامل لفحص صلاحية السفر</p>
                 
                 <div id="downloadBanner" class="download-banner-container">
                     <a href="PassCheck.apk" class="download-app-btn" download>
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"><path d="M17.523 15.3414C17.523 15.3414 17.523 15.3414 17.522 15.3414C16.812 15.3414 16.237 15.9164 16.237 16.6264C16.237 17.3364 16.812 17.9114 17.522 17.9114C18.232 17.9114 18.807 17.3364 18.807 16.6264C18.807 15.9174 18.232 15.3414 17.523 15.3414ZM6.477 15.3414C5.767 15.3414 5.192 15.9164 5.192 16.6264C5.192 17.3364 5.767 17.9114 6.477 17.9114C7.187 17.9114 7.762 17.3364 7.762 16.6264C7.762 15.9174 7.187 15.3414 6.477 15.3414ZM18.168 11.2334L19.983 8.08942C20.106 7.87642 20.033 7.60442 19.82 7.48142C19.607 7.35742 19.336 7.43142 19.212 7.64342L17.362 10.8464C15.82 10.1364 14.011 9.71542 12.001 9.71542C9.99 9.71542 8.18 10.1364 6.638 10.8464L4.788 7.64342C4.664 7.43042 4.393 7.35742 4.18 7.48142C3.967 7.60442 3.894 7.87642 4.017 8.08942L5.832 11.2334C2.531 13.0654 0.287003 16.3264 0.0240021 20.2154H23.976C23.713 16.3264 21.469 13.0654 18.168 11.2334Z"/></svg>
-                        <span id="t_dl_btn">تحميل تطبيق الأندرويد</span>
+                        <span data-i18n="dlApp">تحميل تطبيق الأندرويد</span>
                     </a>
-                    <button onclick="hideDownloadBanner()" class="close-btn" title="إخفاء">✖</button>
+                    <button onclick="hideDownloadBanner()" class="close-btn">✖</button>
                 </div>
             </div>
             
@@ -258,45 +255,45 @@
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 8V6a2 2 0 0 1 2-2h2l1.5-1.5A1.5 1.5 0 0 1 10.56 2h2.88a1.5 1.5 0 0 1 1.06.44L16 4h2a2 2 0 0 1 2 2v2M4 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2M4 8h16M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <p id="t_cam_p">المس هنا لالتقاط أو إدراج الجواز</p>
-                        <span id="t_cam_span">يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
+                        <p data-i18n="camTitle">المس هنا لالتقاط أو إدراج الجواز</p>
+                        <span data-i18n="camSub">يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
                     </div>
                     <img id="previewImg">
                     <div class="overlay" id="loader">
                         <div class="scan-line"></div>
-                        <p id="t_loader">جاري تحليل البيانات ضوئياً...</p>
+                        <p data-i18n="scanning">جاري تحليل البيانات ضوئياً...</p>
                     </div>
                 </div>
             </div>
 
             <div class="tools" id="tools">
-                <button class="btn btn-rotate" onclick="rotateImage(90)"><span id="t_btn_rotate">تعديل الاتجاه</span> ⟳</button>
-                <button class="btn btn-scan" onclick="processImage()"><span id="t_btn_scan">مسح ضوئي</span> 🔍</button>
+                <button class="btn btn-rotate" onclick="rotateImage(90)"><span data-i18n="btnRot">تعديل الاتجاه ⟳</span></button>
+                <button class="btn btn-scan" onclick="processImage()"><span data-i18n="btnScan">مسح ضوئي 🔍</span></button>
             </div>
 
             <div class="input-row input-row-1-2">
                 <div class="form-group">
-                    <label id="t_lbl_name">الاسم الكامل (English)</label>
+                    <label data-i18n="lblName">الاسم الكامل (English)</label>
                     <input type="text" id="nameInput" placeholder="JOHN DOE" class="text-left">
                 </div>
                 <div class="form-group">
-                    <label id="t_lbl_pass">رقم الجواز</label>
+                    <label data-i18n="lblPass">رقم الجواز</label>
                     <input type="text" id="passNumInput" placeholder="A1234567" class="text-center text-left">
                 </div>
             </div>
 
             <div class="input-row">
                 <div class="form-group">
-                    <label id="t_lbl_dob">تاريخ الميلاد</label>
+                    <label data-i18n="lblDob">تاريخ الميلاد</label>
                     <input type="date" id="dobInput">
                 </div>
                 <div class="form-group">
-                    <label class="label-red" id="t_lbl_exp">تاريخ النفاذ (Expiry)</label>
+                    <label class="label-red" data-i18n="lblExp">تاريخ النفاذ (Expiry)</label>
                     <input type="date" id="expiryInput" class="input-red">
                 </div>
             </div>
             
-            <button class="btn btn-main" onclick="generateTicket()" id="t_btn_gen">إصدار تقرير الصلاحية</button>
+            <button class="btn btn-main" onclick="generateTicket()" data-i18n="btnGen">إصدار تقرير الصلاحية</button>
         </div>
 
         <div id="ticketArea">
@@ -306,7 +303,6 @@
                     <h3 class="v-title-main">ELIGIBILITY</h3>
                     <p class="v-title-sub">DOCUMENT STATUS CHECK</p>
                 </div>
-                
                 <div class="v-body">
                     <div class="v-passenger-row">
                         <div class="v-badge" id="vTypeBadge">--</div>
@@ -315,18 +311,15 @@
                             <h2 class="v-pass-name" id="vName">GUEST</h2>
                         </div>
                     </div>
-
                     <div class="v-status-box" id="validityBox">
-                        <p class="v-status-label" id="t_v_status">Travel Validity Status</p>
+                        <p class="v-status-label">Travel Validity Status</p>
                         <h3 class="v-status-title" id="vStatusTitle">--</h3>
                         <p class="v-status-desc" id="vRemaining">--</p>
                     </div>
-
                     <div class="v-detail-row-single">
                         <p class="v-detail-value" id="vAge">--</p>
-                        <p class="v-detail-label" id="t_v_age">AGE DETAILS</p>
+                        <p class="v-detail-label">AGE DETAILS</p>
                     </div>
-
                     <div class="v-details-grid">
                         <div class="v-grid-box red-box">
                             <p class="v-grid-label red-text">EXPIRY DATE</p>
@@ -337,13 +330,9 @@
                             <p class="v-grid-value" id="vDob">--</p>
                         </div>
                     </div>
-
                     <div class="dashed-line"></div>
-
                     <div class="v-footer">
-                        <div class="qr-container">
-                            <canvas id="qr"></canvas>
-                        </div>
+                        <div class="qr-container"><canvas id="qr"></canvas></div>
                         <div class="v-pass-num-box">
                             <p class="v-pass-num-label">PASSPORT NO</p>
                             <p class="v-pass-num-value" id="vPassNum">--</p>
@@ -353,142 +342,180 @@
                 <div class="v-bottom-bar"></div>
             </div>
             
-            <button class="btn btn-success" onclick="downloadImage()">
-                <span id="t_btn_save">حفظ التقرير كصورة</span> 💾
-            </button>
-            <button class="btn btn-clear" onclick="location.reload()">
-                <span id="t_btn_clear">مسح وبدء جديد</span> ↻
-            </button>
+            <button class="btn btn-success" onclick="downloadImage()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
+            <button class="btn btn-clear" onclick="location.reload()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('settingsModal')">✖</button>
+            <h3 class="modal-title" data-i18n="stgTitle">⚙️ الإعدادات</h3>
+            <div class="settings-list">
+                <button class="settings-item" onclick="openHistoryModal()"><span data-i18n="stgHist">🕒 سجل الفحص</span></button>
+                <button class="settings-item" onclick="toggleLanguage()"><span data-i18n="stgLang">🌐 English / عربي</span></button>
+                <button class="settings-item" onclick="openModal('appInfoModal')"><span data-i18n="stgHelp">ℹ️ دليل الاستخدام</span></button>
+                <button class="settings-item" onclick="openModal('aboutModal')"><span data-i18n="stgAbout">👨‍💻 نبذة عن المطور</span></button>
+                <button class="settings-item exit" onclick="exitApp()"><span data-i18n="stgExit">🚪 خروج</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('historyModal')">✖</button>
+            <h3 class="modal-title" data-i18n="histTitle">🕒 آخر عمليات الفحص</h3>
+            <div class="history-list" id="historyListContainer">
+                </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="appInfoModal">
         <div class="modal-card">
-            <button class="modal-close-btn" onclick="hideAppInfo()">✖</button>
-            <h3 class="info-title" id="t_info_title">ℹ️ دليل استخدام النظام</h3>
+            <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
+            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ دليل الاستخدام</h3>
             <div class="info-content">
-                <p id="t_info_desc">هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر باستخدام تقنيات الذكاء الاصطناعي.</p>
-                
-                <h4 id="t_info_h1">⚙️ كيف يعمل النظام؟</h4>
+                <p data-i18n="helpP1">هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر باستخدام تقنيات الذكاء الاصطناعي.</p>
+                <h4 data-i18n="helpH1">⚙️ كيف يعمل النظام؟</h4>
                 <ul>
-                    <li id="t_info_l1"><strong>إدراج الجواز:</strong> المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة من الاستوديو.</li>
-                    <li id="t_info_l2"><strong>الفحص التلقائي:</strong> سيقوم النظام باستخراج (الاسم، رقم الجواز، وتاريخ النفاذ) فوراً من الصورة.</li>
-                    <li id="t_info_l3"><strong>التقرير الذكي:</strong> سيقوم النظام بحساب عمر المسافر، وتحديد ما إذا كان الجواز (صالح للسفر، غير صالح، أو منتهي) بناءً على شرط الـ 6 أشهر المعتمد دولياً.</li>
+                    <li data-i18n="helpL1"><strong>إدراج الجواز:</strong> المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة.</li>
+                    <li data-i18n="helpL2"><strong>الفحص التلقائي:</strong> سيقوم النظام باستخراج البيانات فوراً من الصورة.</li>
+                    <li data-i18n="helpL3"><strong>التقرير الذكي:</strong> سيقوم بحساب عمر المسافر، وتحديد صلاحية الجواز للسفر.</li>
                 </ul>
-
-                <h4 id="t_info_h2">💡 نصائح للحصول على قراءة دقيقة:</h4>
+                <h4 data-i18n="helpH2">💡 نصائح للحصول على قراءة دقيقة:</h4>
                 <ul>
-                    <li id="t_info_l4">تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء (تجنب استخدام الفلاش القوي).</li>
-                    <li id="t_info_l5">يجب أن يظهر الشريط السفلي للجواز (الشريط المليء بالحروف والأرقام MRZ) بالكامل ويكون مقروءاً بوضوح.</li>
+                    <li data-i18n="helpL4">تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء.</li>
+                    <li data-i18n="helpL5">يجب أن يظهر الشريط السفلي للجواز (MRZ) بالكامل بوضوح.</li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="save-overlay" id="saveOverlay">
-        <div class="card-inner">
-            <h3 class="save-title" id="t_save_title">التقرير جاهز!</h3>
-            <p class="save-subtitle" id="t_save_sub">المس مطولاً على الصورة في الأسفل، ثم اختر 'حفظ الصورة'.</p>
-            <img id="finalImage" alt="Passport Report">
-            <button class="btn-save-confirm" onclick="downloadImageLink()" id="t_save_btn1">اضغط هنا إذا لم يفتح (احتياط)</button>
-            <button class="btn-save-close" onclick="closeSaveOverlay()" id="t_save_btn2">إغلاق</button>
+    <div class="modal-overlay" id="aboutModal">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
+            <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
+            <div class="info-content">
+                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // ---------------- قاموس الترجمة ---------------- //
-        let currentLang = 'ar';
+        /* === نظام الترجمة (عربي/إنجليزي) === */
         const dict = {
-            t_title: { ar: "التدقيق الذكي للجوازات", en: "Smart Passport Check" },
-            t_subtitle: { ar: "النظام الشامل لفحص صلاحية السفر", en: "Comprehensive Travel Eligibility System" },
-            t_dl_btn: { ar: "تحميل تطبيق الأندرويد", en: "Download Android App" },
-            t_cam_p: { ar: "المس هنا لالتقاط أو إدراج الجواز", en: "Tap here to capture or upload passport" },
-            t_cam_span: { ar: "يدعم الفحص التلقائي بالذكاء الاصطناعي", en: "Powered by AI Auto-Scan" },
-            t_loader: { ar: "جاري تحليل البيانات ضوئياً...", en: "Scanning passport data..." },
-            t_btn_rotate: { ar: "تعديل الاتجاه", en: "Rotate" },
-            t_btn_scan: { ar: "مسح ضوئي", en: "Scan" },
-            t_lbl_name: { ar: "الاسم الكامل (English)", en: "Full Name (English)" },
-            t_lbl_pass: { ar: "رقم الجواز", en: "Passport Number" },
-            t_lbl_dob: { ar: "تاريخ الميلاد", en: "Date of Birth" },
-            t_lbl_exp: { ar: "تاريخ النفاذ (Expiry)", en: "Expiry Date" },
-            t_btn_gen: { ar: "إصدار تقرير الصلاحية", en: "Generate Eligibility Report" },
-            t_btn_save: { ar: "حفظ التقرير كصورة", en: "Save Report as Image" },
-            t_btn_clear: { ar: "مسح وبدء جديد", en: "Clear & Start Over" },
-            t_v_status: { ar: "حالة صلاحية السفر", en: "Travel Validity Status" },
-            t_v_age: { ar: "تفاصيل العمر", en: "AGE DETAILS" },
-            t_info_title: { ar: "ℹ️ دليل استخدام النظام", en: "ℹ️ System User Guide" },
-            t_info_desc: { ar: "هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر باستخدام تقنيات الذكاء الاصطناعي.", en: "This system is designed to facilitate and speed up the process of checking passport validity for travel using AI technology." },
-            t_info_h1: { ar: "⚙️ كيف يعمل النظام؟", en: "⚙️ How does it work?" },
-            t_info_l1: { ar: "<strong>إدراج الجواز:</strong> المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة من الاستوديو.", en: "<strong>Insert Passport:</strong> Tap the camera box to take a photo or select one from the gallery." },
-            t_info_l2: { ar: "<strong>الفحص التلقائي:</strong> سيقوم النظام باستخراج (الاسم، رقم الجواز، وتاريخ النفاذ) فوراً من الصورة.", en: "<strong>Auto Scan:</strong> The system extracts (Name, Passport Number, Expiry Date) instantly." },
-            t_info_l3: { ar: "<strong>التقرير الذكي:</strong> سيقوم النظام بحساب عمر المسافر، وتحديد ما إذا كان الجواز (صالح للسفر، غير صالح، أو منتهي) بناءً على شرط الـ 6 أشهر المعتمد دولياً.", en: "<strong>Smart Report:</strong> Calculates passenger age and checks passport validity (Valid, Invalid, Expired) based on the international 6-month rule." },
-            t_info_h2: { ar: "💡 نصائح للحصول على قراءة دقيقة:", en: "💡 Tips for accurate scanning:" },
-            t_info_l4: { ar: "تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء (تجنب استخدام الفلاش القوي).", en: "Ensure the photo is clear without strong glare or flash." },
-            t_info_l5: { ar: "يجب أن يظهر الشريط السفلي للجواز (الشريط المليء بالحروف والأرقام MRZ) بالكامل ويكون مقروءاً بوضوح.", en: "The bottom MRZ code (letters and numbers) must be fully visible and readable." },
-            t_save_title: { ar: "التقرير جاهز!", en: "Report is Ready!" },
-            t_save_sub: { ar: "المس مطولاً على الصورة في الأسفل، ثم اختر 'حفظ الصورة'.", en: "Long press the image below, then choose 'Save Image'." },
-            t_save_btn1: { ar: "اضغط هنا إذا لم يفتح (احتياط)", en: "Tap here to download (Backup)" },
-            t_save_btn2: { ar: "إغلاق", en: "Close" }
+            ar: {
+                appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", dlApp: "تحميل تطبيق الأندرويد",
+                camTitle: "المس هنا لالتقاط أو إدراج الجواز", camSub: "يدعم الفحص التلقائي بالذكاء الاصطناعي", scanning: "جاري تحليل البيانات ضوئياً...",
+                btnRot: "تعديل الاتجاه ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
+                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", btnGen: "إصدار تقرير الصلاحية", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻",
+                stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور", stgExit: "🚪 خروج",
+                histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.",
+                helpTitle: "ℹ️ دليل الاستخدام", helpP1: "هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات باستخدام الذكاء الاصطناعي.", helpH1: "⚙️ كيف يعمل النظام؟",
+                helpL1: "إدراج الجواز: المس مربع الكاميرا لتصوير الجواز أو لاختيار صورة.", helpL2: "الفحص التلقائي: سيقوم النظام باستخراج البيانات فوراً.", helpL3: "التقرير الذكي: سيقوم بحساب عمر المسافر وتحديد الصلاحية.",
+                helpH2: "💡 نصائح للقراءة الدقيقة:", helpL4: "تأكد من وضوح الصورة وعدم وجود انعكاس قوي للضوء.", helpL5: "يجب أن يظهر الشريط السفلي للجواز (MRZ) بالكامل بوضوح.",
+                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع."
+            },
+            en: {
+                appTitle: "Smart Passport Check", appSub: "Comprehensive Travel Validity System", dlApp: "Download Android App",
+                camTitle: "Tap here to capture or upload passport", camSub: "Supports AI automatic scanning", scanning: "Scanning document...",
+                btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
+                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", btnGen: "Generate Eligibility Report", btnSave: "Save Report as Image 💾", btnClear: "Clear and Restart ↻",
+                stgTitle: "⚙️ Settings", stgHist: "🕒 Scan History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ User Guide", stgAbout: "👨‍💻 About Developer", stgExit: "🚪 Exit",
+                histTitle: "🕒 Recent Scans", histEmpty: "No recent scans available.",
+                helpTitle: "ℹ️ User Guide", helpP1: "This system is designed to facilitate and speed up passport checking using AI.", helpH1: "⚙️ How it works?",
+                helpL1: "Insert Passport: Tap the camera box to take a photo or upload.", helpL2: "Auto Scan: The system extracts data instantly.", helpL3: "Smart Report: Calculates age and determines travel eligibility.",
+                helpH2: "💡 Tips for accurate reading:", helpL4: "Ensure clear photo without strong glare.", helpL5: "The bottom MRZ line must be fully visible.",
+                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool, aiming to streamline travel procedures, reduce human errors, and provide a seamless travel experience."
+            }
         };
 
-        const dynamicTexts = {
-            err_dob: { ar: "يرجى تحديد تاريخ الميلاد على الأقل", en: "Please set the Date of Birth at least" },
-            err_manual: { ar: "يرجى إدخال البيانات يدوياً.", en: "Please enter data manually." },
-            err_fail: { ar: "فشل استخراج البيانات", en: "Failed to extract data" },
-            rem_not_set: { ar: "لم يتم تحديد تاريخ النفاذ", en: "Expiry date not specified" },
-            rem_expired: { ar: "الجواز منتهي الصلاحية", en: "Passport is expired" },
-            status_expired: { ar: "EXPIRED (منتهي) ⛔", en: "EXPIRED ⛔" },
-            status_invalid: { ar: "INVALID (غير صالح) ⚠️", en: "INVALID ⚠️" },
-            status_valid: { ar: "VALID FOR TRAVEL ✅<br><span style='font-size:16px;'>(صالح)</span>", en: "VALID FOR TRAVEL ✅" },
-            age_y: { ar: "سنة", en: "Years" },
-            age_m: { ar: "شهر", en: "Months" },
-            age_d: { ar: "يوم", en: "Days" },
-            rem_prefix: { ar: "باقي:", en: "Remaining:" },
-            and: { ar: "و", en: "," }
-        };
+        let currentLang = localStorage.getItem('appLang') || 'ar';
+        
+        function applyLanguage() {
+            document.getElementById('htmlTag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[currentLang][key]) el.innerHTML = dict[currentLang][key];
+            });
+        }
+        applyLanguage();
 
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.documentElement.lang = currentLang;
-            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            localStorage.setItem('appLang', currentLang);
+            applyLanguage();
+            closeModal('settingsModal');
+        }
 
-            for (let id in dict) {
-                const el = document.getElementById(id);
-                if (el) el.innerHTML = dict[id][currentLang];
+        /* === نظام النوافذ المنبثقة === */
+        function openModal(id) {
+            if(id !== 'settingsModal') closeModal('settingsModal');
+            document.getElementById(id).style.display = 'flex';
+            setTimeout(() => document.getElementById(id).classList.add('active'), 10);
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            setTimeout(() => document.getElementById(id).style.display = 'none', 300);
+        }
+
+        /* === نظام سجل الفحص (Local Storage) === */
+        function saveToHistory(name, pass) {
+            let history = JSON.parse(localStorage.getItem('scanHistory') || '[]');
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} - ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+            history.unshift({ name: name, pass: pass, time: timeStr });
+            if(history.length > 5) history.pop(); // يحفظ اخر 5 عمليات فقط
+            localStorage.setItem('scanHistory', JSON.stringify(history));
+        }
+
+        function openHistoryModal() {
+            const history = JSON.parse(localStorage.getItem('scanHistory') || '[]');
+            const container = document.getElementById('historyListContainer');
+            container.innerHTML = '';
+            
+            if(history.length === 0) {
+                container.innerHTML = `<div class="empty-history">${dict[currentLang].histEmpty}</div>`;
+            } else {
+                history.forEach(item => {
+                    container.innerHTML += `
+                        <div class="history-item">
+                            <div class="history-info">
+                                <h4>${item.name}</h4>
+                                <p>${item.pass}</p>
+                            </div>
+                            <div class="history-time">${item.time}</div>
+                        </div>`;
+                });
             }
+            openModal('historyModal');
+        }
 
-            if (document.getElementById('ticketArea').style.display === 'block') {
-                generateTicket();
+        /* === نظام الخروج === */
+        function exitApp() {
+            if (navigator.app) { navigator.app.exitApp(); } 
+            else if (navigator.device) { navigator.device.exitApp(); } 
+            else {
+                window.close();
+                alert(currentLang === 'ar' ? "للخروج، يرجى الضغط على زر الشاشة الرئيسية في هاتفك." : "To exit, please press your phone's home button.");
             }
         }
 
-        // ---------------- دوال النظام ---------------- //
-        function showAppInfo() {
-            document.getElementById('appInfoModal').style.display = 'flex';
-            setTimeout(() => document.getElementById('appInfoModal').classList.add('active'), 10);
-        }
-
-        function hideAppInfo() {
-            document.getElementById('appInfoModal').classList.remove('active');
-            setTimeout(() => document.getElementById('appInfoModal').style.display = 'none', 300);
-        }
-
+        /* === الكود الذكي لزر التحميل === */
         function hideDownloadBanner() {
             document.getElementById('downloadBanner').style.display = 'none';
             localStorage.setItem('hideAppBtn', 'true');
         }
-
         document.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem('hideAppBtn') === 'true') {
-                document.getElementById('downloadBanner').style.display = 'none';
-            } else {
+            if (localStorage.getItem('hideAppBtn') === 'true') { document.getElementById('downloadBanner').style.display = 'none'; } 
+            else {
                 const ua = navigator.userAgent.toLowerCase();
-                if (ua.includes('wv') || (ua.includes('android') && ua.includes('version/'))) {
-                    document.getElementById('downloadBanner').style.display = 'none';
-                }
+                if (ua.includes('wv') || (ua.includes('android') && ua.includes('version/'))) { document.getElementById('downloadBanner').style.display = 'none'; }
             }
         });
 
+        /* === دوال الفحص ومعالجة الجواز (الكود السريع) === */
         let currentRotation = 0;
         let imageElement = document.getElementById('previewImg');
         const qr = new QRious({ element: document.getElementById('qr'), size: 90 });
@@ -531,21 +558,15 @@
                 const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
                 const data = await response.json();
 
-                if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) { 
-                    throw new Error(dynamicTexts.err_fail[currentLang]); 
-                }
+                if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) { throw new Error("فشل"); }
 
                 const text = data.ParsedResults[0].ParsedText;
                 extractDates(text);
                 extractNameFromText(text);
                 extractPassportNumber(text);
 
-            } catch (error) {
-                console.error(error);
-                alert(dynamicTexts.err_manual[currentLang]);
-            } finally { 
-                document.getElementById('loader').style.display = 'none'; 
-            }
+            } catch (error) { alert("يرجى إدخال البيانات يدوياً."); } 
+            finally { document.getElementById('loader').style.display = 'none'; }
         }
 
         function getRotatedImage() {
@@ -555,11 +576,8 @@
                 const img = new Image();
                 img.src = imageElement.src;
                 img.onload = () => {
-                    if (currentRotation === 90 || currentRotation === 270) { 
-                        canvas.width = img.height; canvas.height = img.width; 
-                    } else { 
-                        canvas.width = img.width; canvas.height = img.height; 
-                    }
+                    if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } 
+                    else { canvas.width = img.width; canvas.height = img.height; }
                     ctx.translate(canvas.width / 2, canvas.height / 2);
                     ctx.rotate(currentRotation * Math.PI / 180);
                     ctx.drawImage(img, -img.width / 2, -img.height / 2);
@@ -575,20 +593,11 @@
             matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
             let matches2 = [...text.matchAll(datePatterns[1])];
             matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
-
-            dates = dates.filter(d => {
-                let y = parseInt(d.split('-')[0]);
-                return y > 1920 && y < 2050;
-            }).sort();
-
+            dates = dates.filter(d => { let y = parseInt(d.split('-')[0]); return y > 1920 && y < 2050; }).sort();
             if (dates.length > 0) {
-                document.getElementById('dobInput').value = dates[0];
-                highlightField('dobInput');
+                document.getElementById('dobInput').value = dates[0]; highlightField('dobInput');
                 let lastDate = dates[dates.length - 1];
-                if (lastDate !== dates[0]) {
-                    document.getElementById('expiryInput').value = lastDate;
-                    highlightField('expiryInput');
-                }
+                if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; highlightField('expiryInput'); }
             }
         }
 
@@ -596,10 +605,8 @@
             const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g;
             const matches = [...text.matchAll(mrzRegex)];
             if (matches.length > 0) {
-                let s = matches[0][1].replace(/</g, ' ').trim();
-                let g = matches[0][2].replace(/</g, ' ').trim();
-                document.getElementById('nameInput').value = `${g} ${s}`;
-                highlightField('nameInput');
+                let s = matches[0][1].replace(/</g, ' ').trim(); let g = matches[0][2].replace(/</g, ' ').trim();
+                document.getElementById('nameInput').value = `${g} ${s}`; highlightField('nameInput');
             } else {
                 const lines = text.split('\n');
                 for (let line of lines) {
@@ -613,10 +620,8 @@
         function extractPassportNumber(text) {
             const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g;
             const matchesMRZ = [...text.matchAll(mrzPattern)];
-            if (matchesMRZ.length > 0) {
-                document.getElementById('passNumInput').value = matchesMRZ[0][1];
-                highlightField('passNumInput');
-            } else {
+            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1]; highlightField('passNumInput'); } 
+            else {
                 const visualPattern = /\b[A-Z][0-9]{7,8}\b/g;
                 const visualMatches = [...text.matchAll(visualPattern)];
                 if (visualMatches.length > 0) document.getElementById('passNumInput').value = visualMatches[0][0];
@@ -624,15 +629,12 @@
         }
 
         function highlightField(id) {
-            const el = document.getElementById(id);
-            el.classList.add('highlight');
+            const el = document.getElementById(id); el.classList.add('highlight');
             setTimeout(()=> el.classList.remove('highlight'), 1500);
         }
 
         function calculateDiff(startDate, endDate) {
-            let years = endDate.getFullYear() - startDate.getFullYear();
-            let months = endDate.getMonth() - startDate.getMonth();
-            let days = endDate.getDate() - startDate.getDate();
+            let years = endDate.getFullYear() - startDate.getFullYear(); let months = endDate.getMonth() - startDate.getMonth(); let days = endDate.getDate() - startDate.getDate();
             if (days < 0) { months--; days += new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate(); }
             if (months < 0) { years--; months += 12; }
             return { years, months, days, totalMonths: (years * 12) + months };
@@ -644,57 +646,39 @@
             const nameVal = document.getElementById('nameInput').value || "GUEST";
             const passNum = document.getElementById('passNumInput').value || "---";
 
-            if (!dobVal) return alert(dynamicTexts.err_dob[currentLang]);
+            if (!dobVal) return alert(currentLang === 'ar' ? "يرجى تحديد تاريخ الميلاد" : "Please select Date of Birth");
             
-            const today = new Date();
-            const dob = new Date(dobVal);
-            const ageDiff = calculateDiff(dob, today);
-            
-            let type = "ADULT", code = "ADT";
-            if (ageDiff.years < 2) { type = "INFANT"; code = "INF"; }
-            else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
+            saveToHistory(nameVal, passNum); // حفظ السجل فور إصدار التقرير
 
-            let statusTitle = "UNKNOWN";
-            let remainingText = dynamicTexts.rem_not_set[currentLang];
+            const today = new Date(); const dob = new Date(dobVal); const ageDiff = calculateDiff(dob, today);
+            let type = "ADULT", code = "ADT";
+            if (ageDiff.years < 2) { type = "INFANT"; code = "INF"; } else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
+
+            let statusTitle = "UNKNOWN"; let remainingText = currentLang === 'ar' ? "لم يتم تحديد تاريخ النفاذ" : "No expiry date set";
             let boxColor = "rgba(255,255,255,0.8)", borderColor = "rgba(0,0,0,0.1)", textColor = "#334155";
 
             if (expiryVal) {
-                const expiryDate = new Date(expiryVal);
-                const validDiff = calculateDiff(today, expiryDate);
-                
+                const expiryDate = new Date(expiryVal); const validDiff = calculateDiff(today, expiryDate);
                 if (expiryDate < today) {
-                    statusTitle = dynamicTexts.status_expired[currentLang];
-                    remainingText = dynamicTexts.rem_expired[currentLang];
+                    statusTitle = "EXPIRED ⛔"; remainingText = currentLang === 'ar' ? "الجواز منتهي الصلاحية" : "Passport is expired";
                     boxColor = "rgba(254,226,226,0.9)"; borderColor = "#fca5a5"; textColor = "#991b1b";
                 } else {
-                    remainingText = `${dynamicTexts.rem_prefix[currentLang]} ${validDiff.years} ${dynamicTexts.age_y[currentLang]} ${dynamicTexts.and[currentLang]} ${validDiff.months} ${dynamicTexts.age_m[currentLang]} ${dynamicTexts.and[currentLang]} ${validDiff.days} ${dynamicTexts.age_d[currentLang]}`;
+                    remainingText = currentLang === 'ar' ? `باقي: ${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم` : `Remaining: ${validDiff.years}Y, ${validDiff.months}M, ${validDiff.days}D`;
                     if (validDiff.totalMonths < 6) {
-                        statusTitle = dynamicTexts.status_invalid[currentLang];
-                        boxColor = "rgba(255,237,213,0.9)"; borderColor = "#fdba74"; textColor = "#c2410c";
+                        statusTitle = "INVALID ⚠️"; boxColor = "rgba(255,237,213,0.9)"; borderColor = "#fdba74"; textColor = "#c2410c";
                     } else {
-                        statusTitle = dynamicTexts.status_valid[currentLang];
-                        boxColor = "rgba(220,252,231,0.9)"; borderColor = "#86efac"; textColor = "#15803d";
+                        statusTitle = "VALID ✅"; boxColor = "rgba(220,252,231,0.9)"; borderColor = "#86efac"; textColor = "#15803d";
                     }
                 }
             }
 
-            document.getElementById('vName').innerText = nameVal.toUpperCase();
-            document.getElementById('vPassNum').innerText = passNum;
-            document.getElementById('vDob').innerText = dobVal;
-            document.getElementById('vExpiry').innerText = expiryVal || "--";
+            document.getElementById('vName').innerText = nameVal.toUpperCase(); document.getElementById('vPassNum').innerText = passNum;
+            document.getElementById('vDob').innerText = dobVal; document.getElementById('vExpiry').innerText = expiryVal || "--";
+            document.getElementById('vAge').innerText = currentLang === 'ar' ? `${ageDiff.years} سنة، ${ageDiff.months} شهر، ${ageDiff.days} يوم` : `${ageDiff.years}Y, ${ageDiff.months}M, ${ageDiff.days}D`;
+            document.getElementById('vTypeBadge').innerText = type; document.getElementById('vDate').innerText = today.toISOString().split('T')[0];
             
-            document.getElementById('vAge').innerText = `${ageDiff.years} ${dynamicTexts.age_y[currentLang]}، ${ageDiff.months} ${dynamicTexts.age_m[currentLang]}، ${ageDiff.days} ${dynamicTexts.age_d[currentLang]}`;
-            
-            document.getElementById('vTypeBadge').innerText = type;
-            document.getElementById('vDate').innerText = today.toISOString().split('T')[0];
-            
-            const vBox = document.getElementById('validityBox');
-            vBox.style.backgroundColor = boxColor;
-            vBox.style.borderColor = borderColor;
-            vBox.style.color = textColor;
-            document.getElementById('vStatusTitle').innerHTML = statusTitle;
-            document.getElementById('vRemaining').innerText = remainingText;
-
+            const vBox = document.getElementById('validityBox'); vBox.style.backgroundColor = boxColor; vBox.style.borderColor = borderColor; vBox.style.color = textColor;
+            document.getElementById('vStatusTitle').innerHTML = statusTitle; document.getElementById('vRemaining').innerText = remainingText;
             qr.set({ value: `NAME:${nameVal}|PASS:${passNum}|EXP:${expiryVal||'N/A'}|AGE:${ageDiff.years}` });
 
             document.getElementById('ticketArea').style.display = 'block';
@@ -702,40 +686,11 @@
         }
 
         function downloadImage() {
-            document.getElementById('loader').style.display = 'flex';
-            setTimeout(() => {
-                html2canvas(document.getElementById('finalVoucher'), { scale: 2, backgroundColor: "#f0f4fd", useCORS: true }).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    document.getElementById('finalImage').src = imgData;
-                    document.getElementById('finalImage').style.display = 'block';
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('saveOverlay').classList.add('active');
-                }).catch(err => {
-                    console.error(err);
-                    document.getElementById('loader').style.display = 'none';
-                    alert(currentLang === 'ar' ? "حدث خطأ أثناء حفظ الصورة." : "Error saving image.");
-                });
-            }, 500);
-        }
-
-        function downloadImageLink() {
-            try {
-                const imgData = document.getElementById('finalImage').src;
-                const link = document.createElement('a');
-                link.download = `PassCheck_${Date.now()}.png`;
-                link.href = imgData;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch(e) {
-                alert(currentLang === 'ar' ? "تنبيه: يرجى المس مطولاً على الصورة لحفظها بالهاتف." : "Notice: Please long press the image to save it.");
-            }
-        }
-
-        function closeSaveOverlay() {
-            document.getElementById('saveOverlay').classList.remove('active');
+            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: "#f0f4fd" }).then(canvas => {
+                const link = document.createElement('a'); link.download = `PassCheck_${Date.now()}.png`; link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link); link.click(); document.body.removeChild(link);
+            });
         }
     </script>
 </body>
 </html>
-
