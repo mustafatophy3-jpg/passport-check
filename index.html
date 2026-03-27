@@ -147,8 +147,9 @@
         .v-pass-num-value { font-size: 22px; font-weight: 900; font-family: monospace; color: #0f172a; letter-spacing: 1px; }
 
         /* النوافذ المنبثقة (Modals) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
-        .modal-overlay.active { display: flex; opacity: 1; }
+        /* التعديل هنا: إضافة pointer-events: none للنافذة المخفية حتى لا تعترض النقرات */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); max-height: 90vh; overflow-y: auto; }
         .modal-overlay.active .modal-card { transform: translateY(0); }
         .modal-close-btn { position: absolute; top: 15px; left: 15px; background: rgba(15,23,42,0.05); border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 14px; font-weight: bold; color: #475569; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5; }
@@ -281,7 +282,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="settingsModal">
+    <div class="modal-overlay" id="settingsModal" onclick="if(event.target === this) closeModal('settingsModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('settingsModal')">✖</button>
             <h3 class="modal-title" data-i18n="stgTitle">⚙️ الإعدادات</h3>
@@ -294,7 +295,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="historyModal">
+    <div class="modal-overlay" id="historyModal" onclick="if(event.target === this) closeModal('historyModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('historyModal')">✖</button>
             <h3 class="modal-title" data-i18n="histTitle">🕒 آخر عمليات الفحص</h3>
@@ -302,7 +303,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="appInfoModal">
+    <div class="modal-overlay" id="appInfoModal" onclick="if(event.target === this) closeModal('appInfoModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
@@ -339,7 +340,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="aboutModal">
+    <div class="modal-overlay" id="aboutModal" onclick="if(event.target === this) closeModal('aboutModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
             <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
@@ -349,7 +350,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="saveOverlay">
+    <div class="modal-overlay" id="saveOverlay" onclick="if(event.target === this) closeModal('saveOverlay')">
         <div class="modal-card" style="text-align: center;">
             <button class="modal-close-btn" onclick="closeModal('saveOverlay')">✖</button>
             <h3 class="modal-title" style="margin-bottom: 5px;">التقرير جاهز!</h3>
@@ -370,7 +371,7 @@
         let imageElement;
         const API_KEY = 'helloworld';
 
-        /* === نظام الترجمة (عربي/إنجليزي) بالمحتوى الشامل === */
+        /* === نظام الترجمة (عربي/إنجليزي) === */
         const dict = {
             ar: {
                 appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", dlApp: "📥 تحميل تطبيق الأندرويد",
@@ -432,16 +433,21 @@
             closeModal('settingsModal'); 
         }
 
-        // --- النوافذ (Modals) ---
+        /* === حل مشكلة تداخل النوافذ (Ghost Modals) === */
         function openModal(id) { 
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active')); 
+            // تأكد من إخفاء أي نافذة مفتوحة نهائياً قبل فتح وحدة جديدة
+            document.querySelectorAll('.modal-overlay').forEach(m => {
+                m.classList.remove('active');
+                m.style.display = 'none'; 
+            }); 
+            
             document.getElementById(id).style.display = 'flex'; 
             setTimeout(() => document.getElementById(id).classList.add('active'), 10); 
         }
         
         function closeModal(id) { 
             document.getElementById(id).classList.remove('active'); 
-            setTimeout(() => document.getElementById(id).style.display = 'none', 300); 
+            setTimeout(() => { document.getElementById(id).style.display = 'none'; }, 300); 
         }
 
         // --- الزر الذكي ---
