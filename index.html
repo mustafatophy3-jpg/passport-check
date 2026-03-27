@@ -39,13 +39,11 @@
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); position: relative;
         }
 
-        /* أزرار الهيدر (الإعدادات ودليل الاستخدام) */
         .top-btn-group { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 10; }
         [dir="ltr"] .top-btn-group { left: auto; right: 20px; }
         .icon-btn { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); color: #3b82f6; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 20px;}
         .icon-btn:active { transform: scale(0.9); }
 
-        /* شاشة الرئيسية (Home Screen) */
         #homeSection { display: flex; flex-direction: column; gap: 20px; align-items: center; padding-top: 20px; }
         .home-logo { font-size: 80px; filter: drop-shadow(0 10px 20px rgba(59,130,246,0.3)); margin-bottom: -10px; animation: floatLogo 3s ease-in-out infinite alternate; }
         @keyframes floatLogo { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
@@ -60,12 +58,10 @@
         .title { font-size: 24px; font-weight: 900; color: #0f172a; margin-bottom: 2px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
         .subtitle { font-size: 11px; color: #3b82f6; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(59, 130, 246, 0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.2); }
         
-        /* شريط التحميل */
         .download-banner-container { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px; }
         .download-app-btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255, 255, 255, 0.9); color: #2563eb; padding: 10px 15px; border-radius: 14px; font-weight: 800; font-size: 13px; border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1); text-decoration: none;}
         .close-btn { background: rgba(15, 23, 42, 0.05); color: #64748b; border: none; width: 36px; height: 36px; border-radius: 12px; font-weight: bold; cursor: pointer; }
         
-        /* قسم الكاميرا والفحص */
         #scannerSection { display: none; flex-direction: column; gap: 15px; }
         .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: -10px; }
         .back-btn { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); padding: 8px 15px; border-radius: 12px; color: #0f172a; font-weight: 800; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
@@ -96,18 +92,21 @@
         .form-group { display: flex; flex-direction: column; }
         label { font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 4px; text-transform: uppercase; }
         .label-red { color: #dc2626; }
+        .label-blue { color: #2563eb; }
         input { padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.8); background: rgba(255,255,255,0.6); font-family: inherit; font-size: 13px; font-weight: 800; color: #0f172a; outline: none; transition: 0.3s; }
         input:focus { border-color: #3b82f6; background: #fff; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
         input.input-red { background: rgba(255,241,242,0.7); border-color: rgba(252,165,165,0.6); color: #991b1b; }
+        input.input-blue { background: rgba(239,246,255,0.7); border-color: rgba(147,197,253,0.6); color: #1e40af; }
         
         .text-center { text-align: center; } .text-left { text-align: left; direction: ltr; }
         
         .btn-main { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; width: 100%; margin-top: 15px; box-shadow: 0 10px 25px rgba(15,23,42,0.2); }
         .btn-add-group { background: linear-gradient(135deg, #eab308, #d97706); color: white; width: 100%; margin-top: 10px; box-shadow: 0 8px 20px rgba(217, 119, 6, 0.2); display: none; }
+        .btn-export { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; width: 100%; margin-top: 10px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.2); display: none; }
         .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 10px; box-shadow: 0 10px 25px rgba(22,163,74,0.2); }
+        .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 8px; border-radius: 14px; padding: 10px; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; }
         .btn-clear { background: rgba(255,255,255,0.5); color: #475569; width: 100%; margin-top: 8px; font-size: 13px; font-weight: 800; border: 1px solid rgba(255,255,255,0.8); }
 
-        /* منطقة التقارير */
         #ticketArea { display: none; margin-top: 20px; }
         #ticketsContainer { display: flex; flex-direction: column; gap: 15px; }
 
@@ -128,6 +127,11 @@
         .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; display: flex; justify-content: center; align-items: center; gap: 6px; }
         .v-status-desc { font-size: 12px; font-weight: 800; }
         
+        .mrz-badge { font-size: 10px; background: #e0f2fe; color: #1e40af; padding: 6px 10px; border-radius: 8px; font-weight: 800; text-align: center; margin-bottom: 15px; display: none; align-items: center; justify-content: center; gap: 5px; border: 1px solid #bfdbfe; }
+        .mrz-badge.warning { background: #fef2f2; color: #991b1b; border-color: #fecaca; }
+
+        .age-alert { background: #fffbeb; color: #b45309; font-size: 11px; font-weight: 800; padding: 8px; border-radius: 8px; border: 1px dashed #fcd34d; text-align: center; margin-bottom: 15px; display: none; }
+
         .v-detail-row-single { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
         .v-detail-label { font-size: 9px; color: #64748b; font-weight: 800; text-transform: uppercase; }
         .v-detail-value { font-size: 14px; font-weight: 900; color: #0f172a; }
@@ -146,8 +150,6 @@
         .v-pass-num-label { font-size: 9px; color: #94a3b8; font-weight: 800; margin-bottom: 2px; }
         .v-pass-num-value { font-size: 22px; font-weight: 900; font-family: monospace; color: #0f172a; letter-spacing: 1px; }
 
-        /* النوافذ المنبثقة (Modals) */
-        /* التعديل هنا: إضافة pointer-events: none للنافذة المخفية حتى لا تعترض النقرات */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); max-height: 90vh; overflow-y: auto; }
@@ -161,7 +163,6 @@
         [dir="ltr"] .settings-item { text-align: left; }
         .settings-item.exit { color: #dc2626; background: #fef2f2; border-color: #fecaca; }
         
-        /* تنسيق الدليل الشامل */
         .info-content { font-size: 13.5px; color: #475569; line-height: 1.8; font-weight: 600; text-align: right; }
         [dir="ltr"] .info-content { text-align: left; }
         .info-content p.intro { font-size: 14px; color: #0f172a; font-weight: 800; margin-bottom: 20px; text-align: center; background: #f0f4fd; padding: 10px; border-radius: 12px; }
@@ -268,6 +269,12 @@
                         <input type="date" id="expiryInput" class="input-red">
                     </div>
                 </div>
+                <div class="input-row" style="grid-template-columns: 1fr;">
+                    <div class="form-group">
+                        <label class="label-blue" data-i18n="lblTravel">تاريخ السفر المتوقع (اختياري)</label>
+                        <input type="date" id="travelDateInput" class="input-blue">
+                    </div>
+                </div>
                 
                 <button class="btn btn-main" onclick="generateTicket()" data-i18n="btnGen">إصدار تقرير الصلاحية</button>
             </div>
@@ -277,6 +284,7 @@
             <div id="ticketsContainer"></div> 
             
             <button class="btn btn-add-group" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة جواز آخر للمجموعة</button>
+            <button class="btn btn-export" id="btnExportExcel" onclick="exportToExcel()" data-i18n="btnExport">📊 تصدير بيانات المجموعة (Excel)</button>
             <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
             <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
@@ -309,32 +317,17 @@
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
             <div class="info-content">
                 <p class="intro" data-i18n="helpIntro">أهلاً بك في النظام الذكي لفحص الجوازات. صُمم هذا النظام ليساعد المسافرين والشركات على التأكد من صلاحية الجواز للسفر وتجنب مفاجآت المطار.</p>
-                
                 <h4 data-i18n="helpModesTitle">1️⃣ أوضاع الفحص:</h4>
                 <ul>
                     <li data-i18n="helpModeS"><b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.</li>
                     <li data-i18n="helpModeG"><b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب.</li>
                 </ul>
-
                 <h4 data-i18n="helpStepsTitle">2️⃣ خطوات العمل:</h4>
                 <ul>
                     <li data-i18n="helpStep1"><b>• التقط صورة:</b> اضغط على الكاميرا وصور صفحة معلومات الجواز.</li>
                     <li data-i18n="helpStep2"><b>• مسح ضوئي:</b> اضغط على الزر ليقوم الذكاء الاصطناعي بقراءة البيانات.</li>
                     <li data-i18n="helpStep3"><b>• مراجعة:</b> تأكد من دقة البيانات (يمكنك التعديل يدوياً إذا لزم الأمر).</li>
                     <li data-i18n="helpStep4"><b>• إصدار التقرير:</b> اضغط الزر لرؤية النتيجة وحفظها.</li>
-                </ul>
-
-                <h4 data-i18n="helpTipsTitle">3️⃣ نصائح لتصوير دقيق:</h4>
-                <ul>
-                    <li data-i18n="helpTip1"><b>• الإضاءة:</b> تجنب الفلاش القوي أو انعكاس الضوء على الجواز.</li>
-                    <li data-i18n="helpTip2"><b>• الوضوح:</b> تأكد أن السطرين في أسفل الجواز (التي تحتوي أحرف وأرقام MRZ) تظهر بالكامل.</li>
-                </ul>
-
-                <h4 data-i18n="helpStatusTitle">4️⃣ معاني التقرير:</h4>
-                <ul>
-                    <li data-i18n="helpStatus1"><b>• ✅ صالح:</b> الجواز صالح (متبقي أكثر من 6 أشهر).</li>
-                    <li data-i18n="helpStatus2"><b>• ⚠️ غير صالح:</b> متبقي أقل من 6 أشهر (قد تُمنع من السفر).</li>
-                    <li data-i18n="helpStatus3"><b>• ⛔ منتهي:</b> الجواز منتهي الصلاحية تماماً.</li>
                 </ul>
             </div>
         </div>
@@ -369,9 +362,16 @@
         let ticketCount = 0;
         let currentRotation = 0;
         let imageElement;
+        let hasMrzData = false; // متغير لفحص التلاعب
+        let groupPassengersData = []; // مصفوفة لتخزين بيانات المجموعة للإكسل
         const API_KEY = 'helloworld';
 
-        /* === نظام الترجمة (عربي/إنجليزي) === */
+        /* === تعيين تاريخ السفر لليوم الحالي افتراضياً === */
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('travelDateInput').valueAsDate = new Date();
+        });
+
+        /* === نظام الترجمة (عربي/إنجليزي) بالمحتوى الشامل === */
         const dict = {
             ar: {
                 appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", dlApp: "📥 تحميل تطبيق الأندرويد",
@@ -379,20 +379,22 @@
                 btnGroup: "فحص عائلي (مجموعة)", descGroup: "فحص عدة جوازات وإصدار تقرير شامل للمجموعة",
                 btnHome: "الرئيسية", camTitle: "المس هنا لالتقاط الجواز", scanning: "جاري القراءة...",
                 btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
-                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", btnGen: "إصدار تقرير الصلاحية",
-                btnAddGroup: "➕ إضافة جواز آخر للمجموعة", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻",
+                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري)", btnGen: "إصدار تقرير الصلاحية",
+                btnAddGroup: "➕ إضافة جواز آخر للمجموعة", btnExport: "📊 تصدير بيانات المجموعة (Excel)", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻",
                 stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور", stgExit: "🚪 خروج",
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.",
                 helpTitle: "ℹ️ الدليل الشامل",
                 helpIntro: "أهلاً بك في النظام الذكي لفحص الجوازات. صُمم هذا النظام ليساعد المسافرين والشركات على التأكد من صلاحية الجواز للسفر وتجنب مفاجآت المطار.",
-                helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.", helpModeG: "<b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب.",
+                helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.", helpModeG: "<b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة.",
                 helpStepsTitle: "2️⃣ خطوات العمل:", helpStep1: "<b>• التقط صورة:</b> اضغط على الكاميرا وصور صفحة معلومات الجواز.", helpStep2: "<b>• مسح ضوئي:</b> اضغط على الزر ليقوم الذكاء الاصطناعي بقراءة البيانات.", helpStep3: "<b>• مراجعة:</b> تأكد من دقة البيانات (يمكنك التعديل يدوياً إذا لزم الأمر).", helpStep4: "<b>• إصدار التقرير:</b> اضغط الزر لرؤية النتيجة وحفظها.",
                 helpTipsTitle: "3️⃣ نصائح لتصوير دقيق:", helpTip1: "<b>• الإضاءة:</b> تجنب الفلاش القوي أو انعكاس الضوء على الجواز.", helpTip2: "<b>• الوضوح:</b> تأكد أن السطرين في أسفل الجواز (التي تحتوي أحرف وأرقام MRZ) تظهر بالكامل.",
                 helpStatusTitle: "4️⃣ معاني التقرير:", helpStatus1: "<b>• ✅ صالح:</b> الجواز صالح (متبقي أكثر من 6 أشهر).", helpStatus2: "<b>• ⚠️ غير صالح:</b> متبقي أقل من 6 أشهر (قد تُمنع من السفر).", helpStatus3: "<b>• ⛔ منتهي:</b> الجواز منتهي الصلاحية تماماً.",
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦",
                 valErr: "يرجى تحديد تاريخ الميلاد على الأقل", remainErr: "لم يتم تحديد تاريخ النفاذ",
-                expTitle: "EXPIRED (منتهي) ⛔", expSub: "الجواز منتهي الصلاحية", invTitle: "INVALID (غير صالح) ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم", ageText: "{y} سنة، {m} شهر، {d} يوم"
+                expTitle: "EXPIRED (منتهي) ⛔", expSub: "الجواز منتهي الصلاحية", invTitle: "INVALID (غير صالح) ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
+                warnInfant: "⚠️ انتبه: المسافر سيصبح (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغ (Adult) في تاريخ السفر المحدد!",
+                mrzOk: "✅ البيانات مطابقة للشريط الرسمي", mrzFail: "⚠️ تحذير: البيانات غير متطابقة (تأكد من الجواز)", btnWa: "مشاركة عبر واتساب"
             },
             en: {
                 appTitle: "Smart Passport Check", appSub: "Comprehensive Travel Validity System", dlApp: "📥 Download Android App",
@@ -400,20 +402,22 @@
                 btnGroup: "Group Scan (Family)", descGroup: "Scan multiple passports for a combined report",
                 btnHome: "Home", camTitle: "Tap here to capture passport", scanning: "Scanning...",
                 btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
-                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", btnGen: "Generate Report",
-                btnAddGroup: "➕ Add Another Passport", btnSave: "Save Report as Image 💾", btnClear: "Clear & Restart ↻",
+                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "EXPECTED TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
+                btnAddGroup: "➕ Add Another Passport", btnExport: "📊 Export Group Data (Excel)", btnSave: "Save Report as Image 💾", btnClear: "Clear & Restart ↻",
                 stgTitle: "⚙️ Settings", stgHist: "🕒 Scan History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ User Guide", stgAbout: "👨‍💻 About Developer", stgExit: "🚪 Exit",
                 histTitle: "🕒 Recent Scans", histEmpty: "No recent scans available.",
                 helpTitle: "ℹ️ User Guide", 
-                helpIntro: "Welcome to the Smart Passport System. Designed to help travelers and agencies verify passport validity and avoid airport surprises.",
-                helpModesTitle: "1️⃣ Scan Modes:", helpModeS: "<b>• Single Scan:</b> For one passenger.", helpModeG: "<b>• Group Scan:</b> Add multiple passports consecutively to generate one combined report.",
-                helpStepsTitle: "2️⃣ How to use:", helpStep1: "<b>• Capture:</b> Tap the camera and take a photo of the passport info page.", helpStep2: "<b>• Scan:</b> Tap the scan button to extract data using AI.", helpStep3: "<b>• Review:</b> Check the data (you can edit manually if needed).", helpStep4: "<b>• Generate:</b> Tap the button to see the result and save it.",
+                helpIntro: "Welcome to the Smart Passport System. Designed to help travelers and agencies verify passport validity.",
+                helpModesTitle: "1️⃣ Scan Modes:", helpModeS: "<b>• Single Scan:</b> For one passenger.", helpModeG: "<b>• Group Scan:</b> Add multiple passports consecutively.",
+                helpStepsTitle: "2️⃣ How to use:", helpStep1: "<b>• Capture:</b> Tap the camera and take a photo.", helpStep2: "<b>• Scan:</b> Tap the scan button.", helpStep3: "<b>• Review:</b> Check the data.", helpStep4: "<b>• Generate:</b> Tap the button to see the result.",
                 helpTipsTitle: "3️⃣ Tips for accurate scanning:", helpTip1: "<b>• Lighting:</b> Avoid strong flash or glare.", helpTip2: "<b>• Clarity:</b> Ensure the two lines at the bottom (MRZ) are fully visible.",
-                helpStatusTitle: "4️⃣ Report Meanings:", helpStatus1: "<b>• ✅ Valid:</b> Passport is valid (more than 6 months remaining).", helpStatus2: "<b>• ⚠️ Invalid:</b> Less than 6 months remaining (you might be denied boarding).", helpStatus3: "<b>• ⛔ Expired:</b> Passport is completely expired.",
-                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool, aiming to streamline travel procedures, reduce human errors, and provide a seamless travel experience.",
+                helpStatusTitle: "4️⃣ Report Meanings:", helpStatus1: "<b>• ✅ Valid:</b> Passport is valid.", helpStatus2: "<b>• ⚠️ Invalid:</b> Less than 6 months remaining.", helpStatus3: "<b>• ⛔ Expired:</b> Passport is completely expired.",
+                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies. Driven by this passion, he developed this smart system.",
                 modeS: "Single Mode 👤", modeG: "Group Mode 👨‍👩‍👧‍👦",
                 valErr: "Please select Date of Birth", remainErr: "No expiry date set",
-                expTitle: "EXPIRED ⛔", expSub: "Passport is expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D", ageText: "{y}Y, {m}M, {d}D"
+                expTitle: "EXPIRED ⛔", expSub: "Passport is expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
+                warnInfant: "⚠️ Note: Passenger will become a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger will become an Adult on travel date!",
+                mrzOk: "✅ Data matches official MRZ", mrzFail: "⚠️ Warning: Data mismatch (verify passport)", btnWa: "Share via WhatsApp"
             }
         };
 
@@ -433,37 +437,24 @@
             closeModal('settingsModal'); 
         }
 
-        /* === حل مشكلة تداخل النوافذ (Ghost Modals) === */
+        /* === حل مشكلة تداخل النوافذ === */
         function openModal(id) { 
-            // تأكد من إخفاء أي نافذة مفتوحة نهائياً قبل فتح وحدة جديدة
-            document.querySelectorAll('.modal-overlay').forEach(m => {
-                m.classList.remove('active');
-                m.style.display = 'none'; 
-            }); 
-            
-            document.getElementById(id).style.display = 'flex'; 
-            setTimeout(() => document.getElementById(id).classList.add('active'), 10); 
+            document.querySelectorAll('.modal-overlay').forEach(m => { m.classList.remove('active'); m.style.display = 'none'; }); 
+            document.getElementById(id).style.display = 'flex'; setTimeout(() => document.getElementById(id).classList.add('active'), 10); 
         }
-        
-        function closeModal(id) { 
-            document.getElementById(id).classList.remove('active'); 
-            setTimeout(() => { document.getElementById(id).style.display = 'none'; }, 300); 
-        }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); setTimeout(() => { document.getElementById(id).style.display = 'none'; }, 300); }
 
-        // --- الزر الذكي ---
         function hideDownloadBanner() { document.getElementById('downloadBanner').style.display = 'none'; localStorage.setItem('hideAppBtn', 'true'); }
         
         document.addEventListener("DOMContentLoaded", function() {
             imageElement = document.getElementById('previewImg');
             applyLanguage();
-            
             if (localStorage.getItem('hideAppBtn') === 'true') { document.getElementById('downloadBanner').style.display = 'none'; } 
             else { const ua = navigator.userAgent.toLowerCase(); if (ua.includes('wv') || (ua.includes('android') && ua.includes('version/'))) { document.getElementById('downloadBanner').style.display = 'none'; } }
         });
 
         function exitApp() { if (navigator.app) { navigator.app.exitApp(); } else if (navigator.device) { navigator.device.exitApp(); } else { window.close(); alert(currentLang === 'ar' ? "اضغط زر الشاشة الرئيسية للخروج." : "Press Home button to exit."); } }
 
-        // --- السجل (History) ---
         function saveToHistory(name, pass) {
             let history = JSON.parse(localStorage.getItem('scanHistory') || '[]');
             const now = new Date(); const timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} - ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
@@ -479,13 +470,14 @@
             openModal('historyModal');
         }
 
-        // --- نظام التحكم بالواجهات (فردي/مجموعة) ---
+        // --- نظام التحكم بالواجهات ---
         function startScanner(mode) {
             appMode = mode;
             document.getElementById('homeSection').style.display = 'none';
             document.getElementById('scannerSection').style.display = 'flex';
             document.getElementById('currentModeBadge').innerText = mode === 'single' ? dict[currentLang].modeS : dict[currentLang].modeG;
             document.getElementById('btnAddAnother').style.display = mode === 'group' ? 'block' : 'none';
+            document.getElementById('btnExportExcel').style.display = mode === 'group' ? 'block' : 'none';
             resetForNext(true);
         }
 
@@ -504,22 +496,24 @@
             document.getElementById('previewImg').style.display = 'none';
             document.getElementById('placeholder').style.display = 'flex';
             document.getElementById('tools').style.display = 'none';
+            hasMrzData = false;
             
             if (fullClear) {
                 document.getElementById('ticketsContainer').innerHTML = '';
                 document.getElementById('ticketArea').style.display = 'none';
                 ticketCount = 0;
+                groupPassengersData = [];
             } else {
                 document.getElementById('scannerSection').scrollIntoView({behavior: 'smooth'});
             }
         }
 
-        // --- الفحص (OCR) ---
+        // --- الفحص (OCR) وكشف التزوير ---
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; }
+                reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; hasMrzData = false; }
                 reader.readAsDataURL(file);
             }
         }
@@ -534,6 +528,10 @@
                 const data = await response.json();
                 if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) throw new Error("فشل");
                 const text = data.ParsedResults[0].ParsedText;
+                
+                // البحث عن شريط MRZ لكشف التلاعب
+                if(text.includes('P<') || text.match(/\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g)) { hasMrzData = true; } else { hasMrzData = false; }
+
                 extractDates(text); extractNameFromText(text); extractPassportNumber(text);
             } catch (error) { alert("يرجى إدخال البيانات يدوياً."); } 
             finally { document.getElementById('loader').style.display = 'none'; }
@@ -567,7 +565,7 @@
         }
         function extractPassportNumber(text) {
             const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g; const matchesMRZ = [...text.matchAll(mrzPattern)];
-            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1]; highlightField('passNumInput'); } 
+            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1].replace(/</g, ''); highlightField('passNumInput'); } 
             else { const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) document.getElementById('passNumInput').value = visualMatches[0][0]; }
         }
         function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
@@ -578,33 +576,74 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // --- إصدار التقرير ---
+        // --- إصدار التقرير مع حاسبة السفر وكشف التلاعب والواتساب ---
         function generateTicket() {
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
             const nameVal = document.getElementById('nameInput').value || "GUEST"; const passNum = document.getElementById('passNumInput').value || "---";
+            const travelVal = document.getElementById('travelDateInput').value;
 
             if (!dobVal) return alert(dict[currentLang].valErr);
             saveToHistory(nameVal, passNum); 
 
-            const today = new Date(); const dob = new Date(dobVal); const ageDiff = calculateDiff(dob, today);
-            let type = "ADULT", code = "ADT"; if (ageDiff.years < 2) { type = "INFANT"; code = "INF"; } else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
+            const today = new Date(); 
+            const dob = new Date(dobVal); 
+            const travelDate = travelVal ? new Date(travelVal) : today;
+
+            // حساب العمر اليوم
+            const ageToday = calculateDiff(dob, today);
+            // حساب العمر في تاريخ السفر المتوقع
+            const ageTravel = calculateDiff(dob, travelDate);
+            
+            let type = "ADULT", code = "ADT"; 
+            if (ageTravel.years < 2) { type = "INFANT"; code = "INF"; } else if (ageTravel.years < 12) { type = "CHILD"; code = "CHD"; }
+
+            // تنبيهات تغير العمر
+            let ageAlertHTML = '';
+            if (ageToday.years < 2 && ageTravel.years >= 2) {
+                ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnInfant}</div>`;
+            } else if (ageToday.years < 12 && ageTravel.years >= 12) {
+                ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnChild}</div>`;
+            }
 
             let statusTitle = "UNKNOWN"; let remainingText = dict[currentLang].remainErr;
             let boxColor = "rgba(255,255,255,0.8)", borderColor = "rgba(0,0,0,0.1)", textColor = "#334155", redBoxClass = "red-box", redTextClass = "red-text";
+            let rawStatus = "No Expiry";
 
             if (expiryVal) {
                 const expiryDate = new Date(expiryVal); const validDiff = calculateDiff(today, expiryDate);
                 if (expiryDate < today) {
-                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.9)"; borderColor = "#fca5a5"; textColor = "#991b1b";
+                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.9)"; borderColor = "#fca5a5"; textColor = "#991b1b"; rawStatus = "Expired";
                 } else {
                     remainingText = dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
-                    if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.9)"; borderColor = "#fdba74"; textColor = "#c2410c"; } 
-                    else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.9)"; borderColor = "#86efac"; textColor = "#15803d"; redBoxClass = ""; redTextClass = ""; }
+                    if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.9)"; borderColor = "#fdba74"; textColor = "#c2410c"; rawStatus = "Invalid (<6M)"; } 
+                    else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.9)"; borderColor = "#86efac"; textColor = "#15803d"; redBoxClass = ""; redTextClass = ""; rawStatus = "Valid"; }
                 }
             }
             
-            const ageStr = dict[currentLang].ageText.replace('{y}', ageDiff.years).replace('{m}', ageDiff.months).replace('{d}', ageDiff.days);
+            // حل مشكلة اتجاه النصوص العربية للأعمار
+            const ageStr = currentLang === 'ar' 
+                ? `<span dir="rtl" style="display:inline-block;">${ageTravel.years} سنة، ${ageTravel.months} شهر، ${ageTravel.days} يوم</span>` 
+                : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
+            
             const dateStr = today.toISOString().split('T')[0];
+
+            // كشف التلاعب
+            let mrzAlertHTML = '';
+            if(hasMrzData) {
+                // افتراض أن البيانات مطابقة لأن تم سحبها من MRZ مباشرة، وإذا مسحها المستخدم يدوياً تعتبر غير مطابقة
+                mrzAlertHTML = `<div class="mrz-badge" style="display:flex;">${dict[currentLang].mrzOk}</div>`;
+            } else if (document.getElementById('previewImg').src !== "") {
+                mrzAlertHTML = `<div class="mrz-badge warning" style="display:flex;">${dict[currentLang].mrzFail}</div>`;
+            }
+
+            // حفظ البيانات للتصدير لاحقاً
+            groupPassengersData.push({ name: nameVal.toUpperCase(), pass: passNum, dob: dobVal, exp: expiryVal || "N/A", type: code, status: rawStatus });
+
+            // رابط واتساب
+            const waMessage = currentLang === 'ar' 
+                ? `أهلاً بك، تم فحص جواز السفر الخاص بك (${nameVal}).\nالنتيجة: ${statusTitle.replace(/<[^>]*>?/gm, '')}\nالصلاحية: ${remainingText}`
+                : `Hello, passport checked for (${nameVal}).\nResult: ${statusTitle.replace(/<[^>]*>?/gm, '')}\nValidity: ${remainingText}`;
+            const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
 
             const ticketHTML = `
             <div class="voucher mb-4" id="ticket_${ticketCount}">
@@ -614,6 +653,7 @@
                     <p class="v-title-sub">DOCUMENT STATUS CHECK</p>
                 </div>
                 <div class="v-body">
+                    ${mrzAlertHTML}
                     <div class="v-passenger-row">
                         <div class="v-badge">${type}</div>
                         <div class="v-pass-info">
@@ -621,6 +661,7 @@
                             <h2 class="v-pass-name">${nameVal.toUpperCase()}</h2>
                         </div>
                     </div>
+                    ${ageAlertHTML}
                     <div class="v-status-box" style="background-color:${boxColor}; border-color:${borderColor}; color:${textColor};">
                         <p class="v-status-label">Travel Validity Status</p>
                         <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '22px'};">${statusTitle}</h3>
@@ -628,7 +669,7 @@
                     </div>
                     <div class="v-detail-row-single">
                         <p class="v-detail-value">${ageStr}</p>
-                        <p class="v-detail-label">AGE DETAILS</p>
+                        <p class="v-detail-label">AGE AT TRAVEL</p>
                     </div>
                     <div class="v-details-grid">
                         <div class="v-grid-box ${redBoxClass}">
@@ -648,22 +689,40 @@
                             <p class="v-pass-num-value">${passNum}</p>
                         </div>
                     </div>
+                    <button class="btn-wa" onclick="window.open('${waLink}', '_blank')">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        <span data-i18n="btnWa">مشاركة عبر واتساب</span>
+                    </button>
                 </div>
                 <div class="v-bottom-bar"></div>
             </div>`;
 
             const container = document.getElementById('ticketsContainer');
-            if (appMode === 'single') container.innerHTML = ''; 
+            if (appMode === 'single') { container.innerHTML = ''; groupPassengersData = [groupPassengersData.pop()]; } 
             
             container.insertAdjacentHTML('beforeend', ticketHTML);
             
             const canvases = container.querySelectorAll('.qr-canvas');
             const targetCanvas = canvases[canvases.length - 1];
-            new QRious({ element: targetCanvas, value: `NAME:${nameVal}|PASS:${passNum}|EXP:${expiryVal||'N/A'}|AGE:${ageDiff.years}`, size: 90 });
+            new QRious({ element: targetCanvas, value: `NAME:${nameVal}|PASS:${passNum}|EXP:${expiryVal||'N/A'}|AGE:${ageTravel.years}`, size: 90 });
 
             document.getElementById('ticketArea').style.display = 'block';
             setTimeout(() => targetCanvas.scrollIntoView({behavior: 'smooth', block: 'end'}), 100);
             ticketCount++;
+        }
+
+        // --- تصدير البيانات كملف Excel ---
+        function exportToExcel() {
+            if(groupPassengersData.length === 0) return;
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFFالاسم,رقم الجواز,تاريخ الميلاد,تاريخ النفاذ,الفئة,الحالة\n";
+            groupPassengersData.forEach(p => {
+                csvContent += `${p.name},${p.pass},${p.dob},${p.exp},${p.type},${p.status}\n`;
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Group_Report_${Date.now()}.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         function downloadAllImages() {
@@ -685,3 +744,4 @@
     </script>
 </body>
 </html>
+
