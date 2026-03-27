@@ -42,9 +42,8 @@
         /* أزرار الهيدر (الإعدادات ودليل الاستخدام) */
         .top-btn-group { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; z-index: 10; }
         [dir="ltr"] .top-btn-group { left: auto; right: 20px; }
-        .icon-btn { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); color: #3b82f6; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .icon-btn { background: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.8); color: #3b82f6; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 20px;}
         .icon-btn:active { transform: scale(0.9); }
-        .icon-btn svg { width: 22px; height: 22px; stroke-width: 2; opacity: 0.9; }
 
         /* شاشة الرئيسية (Home Screen) */
         #homeSection { display: flex; flex-direction: column; gap: 20px; align-items: center; padding-top: 20px; }
@@ -108,11 +107,10 @@
         .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 10px; box-shadow: 0 10px 25px rgba(22,163,74,0.2); }
         .btn-clear { background: rgba(255,255,255,0.5); color: #475569; width: 100%; margin-top: 8px; font-size: 13px; font-weight: 800; border: 1px solid rgba(255,255,255,0.8); }
 
-        /* منطقة التقارير (تدعم تقرير واحد أو مجموعة) */
+        /* منطقة التقارير */
         #ticketArea { display: none; margin-top: 20px; }
-        #ticketsContainer { display: flex; flex-direction: column; gap: 15px; } /* حاوية التقارير */
+        #ticketsContainer { display: flex; flex-direction: column; gap: 15px; }
 
-        /* تصميم التقرير */
         .voucher { background: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 15px 35px rgba(0,0,0,0.08); position: relative; direction: ltr; }
         .v-head { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 15px; text-align: center; position: relative; }
         .v-title-main { font-size: 20px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; }
@@ -148,7 +146,7 @@
         .v-pass-num-label { font-size: 9px; color: #94a3b8; font-weight: 800; margin-bottom: 2px; }
         .v-pass-num-value { font-size: 22px; font-weight: 900; font-family: monospace; color: #0f172a; letter-spacing: 1px; }
 
-        /* نوافذ الانبثاق (Modals) */
+        /* النوافذ المنبثقة (Modals) */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
         .modal-overlay.active { display: flex; opacity: 1; }
         .modal-card { background: rgba(255, 255, 255, 0.95); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.5); max-height: 90vh; overflow-y: auto; }
@@ -162,11 +160,14 @@
         [dir="ltr"] .settings-item { text-align: left; }
         .settings-item.exit { color: #dc2626; background: #fef2f2; border-color: #fecaca; }
         
-        .info-content { font-size: 14px; color: #475569; line-height: 1.8; font-weight: 600; text-align: right; }
+        /* تنسيق الدليل الشامل */
+        .info-content { font-size: 13.5px; color: #475569; line-height: 1.8; font-weight: 600; text-align: right; }
         [dir="ltr"] .info-content { text-align: left; }
-        .info-content h4 { font-size: 15px; color: #1e40af; margin-bottom: 8px; font-weight: 800; margin-top: 15px; }
-        .info-content ul { padding-right: 20px; margin-bottom: 15px; }
-        [dir="ltr"] .info-content ul { padding-right: 0; padding-left: 20px; }
+        .info-content p.intro { font-size: 14px; color: #0f172a; font-weight: 800; margin-bottom: 20px; text-align: center; background: #f0f4fd; padding: 10px; border-radius: 12px; }
+        .info-content h4 { font-size: 15px; color: #1e40af; margin-bottom: 8px; font-weight: 900; margin-top: 15px; }
+        .info-content ul { padding-right: 15px; margin-bottom: 15px; list-style-type: none; }
+        [dir="ltr"] .info-content ul { padding-right: 0; padding-left: 15px; }
+        .info-content li { margin-bottom: 8px; position: relative; }
         
         .history-list { display: flex; flex-direction: column; gap: 10px; }
         .history-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
@@ -272,7 +273,9 @@
         </div>
 
         <div id="ticketArea">
-            <div id="ticketsContainer"></div> <button class="btn btn-add-group" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة جواز آخر للمجموعة</button>
+            <div id="ticketsContainer"></div> 
+            
+            <button class="btn btn-add-group" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة جواز آخر للمجموعة</button>
             <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
             <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
@@ -302,14 +305,35 @@
     <div class="modal-overlay" id="appInfoModal">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
-            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ دليل الاستخدام</h3>
+            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
             <div class="info-content">
-                <p data-i18n="helpP1">هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر.</p>
-                <h4 data-i18n="helpH1">⚙️ كيف يعمل النظام؟</h4>
+                <p class="intro" data-i18n="helpIntro">أهلاً بك في النظام الذكي لفحص الجوازات. صُمم هذا النظام ليساعد المسافرين والشركات على التأكد من صلاحية الجواز للسفر وتجنب مفاجآت المطار.</p>
+                
+                <h4 data-i18n="helpModesTitle">1️⃣ أوضاع الفحص:</h4>
                 <ul>
-                    <li data-i18n="helpL1">اختر الوضع (فردي أو مجموعة).</li>
-                    <li data-i18n="helpL2">المس مربع الكاميرا لتصوير الجواز، ثم اضغط مسح ضوئي.</li>
-                    <li data-i18n="helpL3">في وضع المجموعة، يمكنك إضافة عدة أشخاص وسيتم دمجهم بتقرير واحد.</li>
+                    <li data-i18n="helpModeS"><b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.</li>
+                    <li data-i18n="helpModeG"><b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب.</li>
+                </ul>
+
+                <h4 data-i18n="helpStepsTitle">2️⃣ خطوات العمل:</h4>
+                <ul>
+                    <li data-i18n="helpStep1"><b>• التقط صورة:</b> اضغط على الكاميرا وصور صفحة معلومات الجواز.</li>
+                    <li data-i18n="helpStep2"><b>• مسح ضوئي:</b> اضغط على الزر ليقوم الذكاء الاصطناعي بقراءة البيانات.</li>
+                    <li data-i18n="helpStep3"><b>• مراجعة:</b> تأكد من دقة البيانات (يمكنك التعديل يدوياً إذا لزم الأمر).</li>
+                    <li data-i18n="helpStep4"><b>• إصدار التقرير:</b> اضغط الزر لرؤية النتيجة وحفظها.</li>
+                </ul>
+
+                <h4 data-i18n="helpTipsTitle">3️⃣ نصائح لتصوير دقيق:</h4>
+                <ul>
+                    <li data-i18n="helpTip1"><b>• الإضاءة:</b> تجنب الفلاش القوي أو انعكاس الضوء على الجواز.</li>
+                    <li data-i18n="helpTip2"><b>• الوضوح:</b> تأكد أن السطرين في أسفل الجواز (التي تحتوي أحرف وأرقام MRZ) تظهر بالكامل.</li>
+                </ul>
+
+                <h4 data-i18n="helpStatusTitle">4️⃣ معاني التقرير:</h4>
+                <ul>
+                    <li data-i18n="helpStatus1"><b>• ✅ صالح:</b> الجواز صالح (متبقي أكثر من 6 أشهر).</li>
+                    <li data-i18n="helpStatus2"><b>• ⚠️ غير صالح:</b> متبقي أقل من 6 أشهر (قد تُمنع من السفر).</li>
+                    <li data-i18n="helpStatus3"><b>• ⛔ منتهي:</b> الجواز منتهي الصلاحية تماماً.</li>
                 </ul>
             </div>
         </div>
@@ -338,7 +362,15 @@
     </div>
 
     <script>
-        // --- نظام الترجمة ---
+        /* === تعريف المتغيرات العامة (لحل مشكلة التوقف) === */
+        let currentLang = localStorage.getItem('appLang') || 'ar';
+        let appMode = 'single'; 
+        let ticketCount = 0;
+        let currentRotation = 0;
+        let imageElement;
+        const API_KEY = 'helloworld';
+
+        /* === نظام الترجمة (عربي/إنجليزي) بالمحتوى الشامل === */
         const dict = {
             ar: {
                 appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", dlApp: "📥 تحميل تطبيق الأندرويد",
@@ -350,8 +382,12 @@
                 btnAddGroup: "➕ إضافة جواز آخر للمجموعة", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻",
                 stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور", stgExit: "🚪 خروج",
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.",
-                helpTitle: "ℹ️ دليل الاستخدام", helpP1: "هذا النظام مصمم لتسهيل وتسريع عملية تدقيق الجوازات وفحص صلاحيتها للسفر.", helpH1: "⚙️ كيف يعمل النظام؟",
-                helpL1: "اختر الوضع (فردي أو مجموعة).", helpL2: "المس مربع الكاميرا لتصوير الجواز، ثم اضغط مسح ضوئي.", helpL3: "في وضع المجموعة، يمكنك إضافة عدة أشخاص وسيتم دمجهم بتقرير واحد.",
+                helpTitle: "ℹ️ الدليل الشامل",
+                helpIntro: "أهلاً بك في النظام الذكي لفحص الجوازات. صُمم هذا النظام ليساعد المسافرين والشركات على التأكد من صلاحية الجواز للسفر وتجنب مفاجآت المطار.",
+                helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.", helpModeG: "<b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب.",
+                helpStepsTitle: "2️⃣ خطوات العمل:", helpStep1: "<b>• التقط صورة:</b> اضغط على الكاميرا وصور صفحة معلومات الجواز.", helpStep2: "<b>• مسح ضوئي:</b> اضغط على الزر ليقوم الذكاء الاصطناعي بقراءة البيانات.", helpStep3: "<b>• مراجعة:</b> تأكد من دقة البيانات (يمكنك التعديل يدوياً إذا لزم الأمر).", helpStep4: "<b>• إصدار التقرير:</b> اضغط الزر لرؤية النتيجة وحفظها.",
+                helpTipsTitle: "3️⃣ نصائح لتصوير دقيق:", helpTip1: "<b>• الإضاءة:</b> تجنب الفلاش القوي أو انعكاس الضوء على الجواز.", helpTip2: "<b>• الوضوح:</b> تأكد أن السطرين في أسفل الجواز (التي تحتوي أحرف وأرقام MRZ) تظهر بالكامل.",
+                helpStatusTitle: "4️⃣ معاني التقرير:", helpStatus1: "<b>• ✅ صالح:</b> الجواز صالح (متبقي أكثر من 6 أشهر).", helpStatus2: "<b>• ⚠️ غير صالح:</b> متبقي أقل من 6 أشهر (قد تُمنع من السفر).", helpStatus3: "<b>• ⛔ منتهي:</b> الجواز منتهي الصلاحية تماماً.",
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦",
                 valErr: "يرجى تحديد تاريخ الميلاد على الأقل", remainErr: "لم يتم تحديد تاريخ النفاذ",
@@ -367,8 +403,12 @@
                 btnAddGroup: "➕ Add Another Passport", btnSave: "Save Report as Image 💾", btnClear: "Clear & Restart ↻",
                 stgTitle: "⚙️ Settings", stgHist: "🕒 Scan History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ User Guide", stgAbout: "👨‍💻 About Developer", stgExit: "🚪 Exit",
                 histTitle: "🕒 Recent Scans", histEmpty: "No recent scans available.",
-                helpTitle: "ℹ️ User Guide", helpP1: "System designed to facilitate and speed up passport checking.", helpH1: "⚙️ How it works?",
-                helpL1: "Choose mode (Single or Group).", helpL2: "Tap camera to capture, then tap Scan.", helpL3: "In group mode, you can add multiple people to one combined report.",
+                helpTitle: "ℹ️ User Guide", 
+                helpIntro: "Welcome to the Smart Passport System. Designed to help travelers and agencies verify passport validity and avoid airport surprises.",
+                helpModesTitle: "1️⃣ Scan Modes:", helpModeS: "<b>• Single Scan:</b> For one passenger.", helpModeG: "<b>• Group Scan:</b> Add multiple passports consecutively to generate one combined report.",
+                helpStepsTitle: "2️⃣ How to use:", helpStep1: "<b>• Capture:</b> Tap the camera and take a photo of the passport info page.", helpStep2: "<b>• Scan:</b> Tap the scan button to extract data using AI.", helpStep3: "<b>• Review:</b> Check the data (you can edit manually if needed).", helpStep4: "<b>• Generate:</b> Tap the button to see the result and save it.",
+                helpTipsTitle: "3️⃣ Tips for accurate scanning:", helpTip1: "<b>• Lighting:</b> Avoid strong flash or glare.", helpTip2: "<b>• Clarity:</b> Ensure the two lines at the bottom (MRZ) are fully visible.",
+                helpStatusTitle: "4️⃣ Report Meanings:", helpStatus1: "<b>• ✅ Valid:</b> Passport is valid (more than 6 months remaining).", helpStatus2: "<b>• ⚠️ Invalid:</b> Less than 6 months remaining (you might be denied boarding).", helpStatus3: "<b>• ⛔ Expired:</b> Passport is completely expired.",
                 abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool, aiming to streamline travel procedures, reduce human errors, and provide a seamless travel experience.",
                 modeS: "Single Mode 👤", modeG: "Group Mode 👨‍👩‍👧‍👦",
                 valErr: "Please select Date of Birth", remainErr: "No expiry date set",
@@ -376,7 +416,6 @@
             }
         };
 
-        let currentLang = localStorage.getItem('appLang') || 'ar';
         function applyLanguage() {
             document.getElementById('htmlTag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -385,17 +424,37 @@
             });
             if(appMode) document.getElementById('currentModeBadge').innerText = appMode === 'single' ? dict[currentLang].modeS : dict[currentLang].modeG;
         }
-        applyLanguage();
-        function toggleLanguage() { currentLang = currentLang === 'ar' ? 'en' : 'ar'; localStorage.setItem('appLang', currentLang); applyLanguage(); closeModal('settingsModal'); }
 
-        // --- النوافذ (Modals) والزر الذكي ---
-        function openModal(id) { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active')); document.getElementById(id).style.display = 'flex'; setTimeout(() => document.getElementById(id).classList.add('active'), 10); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); setTimeout(() => document.getElementById(id).style.display = 'none', 300); }
+        function toggleLanguage() { 
+            currentLang = currentLang === 'ar' ? 'en' : 'ar'; 
+            localStorage.setItem('appLang', currentLang); 
+            applyLanguage(); 
+            closeModal('settingsModal'); 
+        }
+
+        // --- النوافذ (Modals) ---
+        function openModal(id) { 
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active')); 
+            document.getElementById(id).style.display = 'flex'; 
+            setTimeout(() => document.getElementById(id).classList.add('active'), 10); 
+        }
+        
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('active'); 
+            setTimeout(() => document.getElementById(id).style.display = 'none', 300); 
+        }
+
+        // --- الزر الذكي ---
         function hideDownloadBanner() { document.getElementById('downloadBanner').style.display = 'none'; localStorage.setItem('hideAppBtn', 'true'); }
+        
         document.addEventListener("DOMContentLoaded", function() {
+            imageElement = document.getElementById('previewImg'); // ربط عنصر الصورة بعد تحميل الصفحة
+            applyLanguage();
+            
             if (localStorage.getItem('hideAppBtn') === 'true') { document.getElementById('downloadBanner').style.display = 'none'; } 
             else { const ua = navigator.userAgent.toLowerCase(); if (ua.includes('wv') || (ua.includes('android') && ua.includes('version/'))) { document.getElementById('downloadBanner').style.display = 'none'; } }
         });
+
         function exitApp() { if (navigator.app) { navigator.app.exitApp(); } else if (navigator.device) { navigator.device.exitApp(); } else { window.close(); alert(currentLang === 'ar' ? "اضغط زر الشاشة الرئيسية للخروج." : "Press Home button to exit."); } }
 
         // --- السجل (History) ---
@@ -415,9 +474,6 @@
         }
 
         // --- نظام التحكم بالواجهات (فردي/مجموعة) ---
-        let appMode = 'single'; // single or group
-        let ticketCount = 0;
-
         function startScanner(mode) {
             appMode = mode;
             document.getElementById('homeSection').style.display = 'none';
@@ -453,7 +509,6 @@
         }
 
         // --- الفحص (OCR) ---
-        let currentRotation = 0; let imageElement = document.getElementById('previewImg'); const API_KEY = 'helloworld';
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) {
@@ -523,7 +578,7 @@
             const nameVal = document.getElementById('nameInput').value || "GUEST"; const passNum = document.getElementById('passNumInput').value || "---";
 
             if (!dobVal) return alert(dict[currentLang].valErr);
-            saveToHistory(nameVal, passNum);
+            saveToHistory(nameVal, passNum); 
 
             const today = new Date(); const dob = new Date(dobVal); const ageDiff = calculateDiff(dob, today);
             let type = "ADULT", code = "ADT"; if (ageDiff.years < 2) { type = "INFANT"; code = "INF"; } else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
@@ -545,7 +600,6 @@
             const ageStr = dict[currentLang].ageText.replace('{y}', ageDiff.years).replace('{m}', ageDiff.months).replace('{d}', ageDiff.days);
             const dateStr = today.toISOString().split('T')[0];
 
-            // بناء HTML للتقرير
             const ticketHTML = `
             <div class="voucher mb-4" id="ticket_${ticketCount}">
                 <div class="v-head">
@@ -593,11 +647,10 @@
             </div>`;
 
             const container = document.getElementById('ticketsContainer');
-            if (appMode === 'single') container.innerHTML = ''; // مسح القديم بالفردي
+            if (appMode === 'single') container.innerHTML = ''; 
             
             container.insertAdjacentHTML('beforeend', ticketHTML);
             
-            // توليد QR
             const canvases = container.querySelectorAll('.qr-canvas');
             const targetCanvas = canvases[canvases.length - 1];
             new QRious({ element: targetCanvas, value: `NAME:${nameVal}|PASS:${passNum}|EXP:${expiryVal||'N/A'}|AGE:${ageDiff.years}`, size: 90 });
@@ -607,7 +660,6 @@
             ticketCount++;
         }
 
-        // --- حفظ الصور (يدعم حفظ كل تقارير العائلة بصورة وحدة) ---
         function downloadAllImages() {
             const container = document.getElementById('ticketsContainer');
             html2canvas(container, { scale: 3, backgroundColor: "#f0f4fd" }).then(canvas => {
