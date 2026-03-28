@@ -128,7 +128,6 @@
         .v-pass-name { font-size: 18px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
         
         .v-status-box { padding: 15px 10px; border-radius: 14px; text-align: center; margin-bottom: 15px; border: 2px solid #86efac; background: #f0fdf4; color: #15803d; }
-        .v-status-label { font-size: 9px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; }
         .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; display: flex; justify-content: center; align-items: center; gap: 6px; }
         .v-status-desc { font-size: 14px; font-weight: 800; margin-bottom: 8px;}
         
@@ -155,7 +154,6 @@
         .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 15px; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; }
         .btn-reminder { background: #f8fafc; color: #2563eb; border: 1px solid #bfdbfe; width: 100%; margin-top: 8px; border-radius: 12px; padding: 10px; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; }
 
-        /* النوافذ المنبثقة */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: var(--modal-bg); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; color: var(--text-main);}
@@ -178,6 +176,8 @@
         .info-content ul { padding-right: 15px; margin-bottom: 15px; list-style-type: none; }
         [dir="ltr"] .info-content ul { padding-left: 15px; padding-right: 0;}
         .info-content li { margin-bottom: 8px; position: relative; }
+        
+        .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
     </style>
 </head>
 <body>
@@ -349,7 +349,7 @@
                 <h4 data-i18n="helpTipsTitle">📸 نصائح هامة لنجاح الفحص:</h4>
                 <ul>
                     <li data-i18n="helpTip1"><b>1. تجنب الانعكاسات:</b> لا تستخدم الفلاش القوي للتلفون، وتأكد من عدم وجود إضاءة ساطعة تخفي الحروف والأرقام.</li>
-                    <li data-i18n="helpTip2"><b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز (المليئة بالأحرف والأرقام والأسهم <<) يظهران بالكامل، فهما المصدر الأساسي والوحيد للبيانات.</li>
+                    <li data-i18n="helpTip2"><b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز (المليئة بالأحرف والأرقام والأسهم) يظهران بالكامل، فهما المصدر الأساسي والوحيد للبيانات.</li>
                 </ul>
             </div>
         </div>
@@ -452,13 +452,13 @@
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
                 exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
                 helpTitle: "ℹ️ الدليل الشامل", helpIntro: "النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر والمطارات.",
-                helpH1: "🌟 المميزات والقدرات:", helpN1: "<b>• الفحص الفوري:</b> استخراج الاسم، رقم الجواز، وتواريخ الميلاد والنفاذ بثانية واحدة.", helpN2: "<b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز (أخضر=صالح، أصفر=تحذير أقل من 6 أشهر، أحمر=منتهي).", helpN3: "<b>• كشف الجنسية:</b> يقرأ الكود الدولي من الجواز ويطبع علم واسم الدولة بالتقرير.", helpN4: "<b>• حاسبة السفر الدقيقة:</b> النظام يتيح لك إدخال 'تاريخ السفر' لحساب العمر يوم السفر وتجنب غرامات المطار.",
+                helpH1: "🌟 المميزات والقدرات:", helpN1: "<b>• الفحص الفوري:</b> استخراج الاسم، رقم الجواز، وتواريخ الميلاد والنفاذ بثانية واحدة عبر الذكاء الاصطناعي.", helpN2: "<b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز (أخضر=صالح، أصفر=تحذير أقل من 6 أشهر، أحمر=منتهي).", helpN3: "<b>• كشف الجنسية:</b> يقرأ الكود الدولي من الجواز ويطبع علم واسم الدولة بالتقرير.", helpN4: "<b>• حاسبة السفر الدقيقة:</b> النظام يتيح لك إدخال 'تاريخ السفر' لحساب العمر يوم السفر وتجنب غرامات المطار.",
                 helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفردي:</b> مسافر واحد فقط.", helpModeG: "<b>• العائلي:</b> فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب كقائمة واحدة.",
                 helpTipsTitle: "📸 نصائح هامة لنجاح الفحص:", helpTip1: "<b>1. تجنب الانعكاسات:</b> لا تستخدم الفلاش، وتأكد من عدم وجود إضاءة ساطعة تخفي الحروف.", helpTip2: "<b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز يظهران بالكامل فهما المصدر الأساسي للبيانات.",
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
-                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
-                warnInfant: "⚠️ تنبيه: المسافر سيكمل سنتين (يصبح طفلا) يوم السفر ويحتاج مقعد!", warnChild: "⚠️ تنبيه: المسافر سيكمل 12 سنة (يصبح بالغا) يوم السفر!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
+                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم", ageText: "{y} سنة و {m} شهر و {d} يوم",
+                warnInfant: "⚠️ تنبيه: المسافر سيكمل سنتين (يصبح طفلاً) يوم السفر ويحتاج مقعد!", warnChild: "⚠️ تنبيه: المسافر سيكمل 12 سنة (يصبح بالغاً) يوم السفر!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
                 saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇",
                 ageLabel: "AGE DETAILS"
             },
@@ -479,7 +479,7 @@
                 helpTipsTitle: "📸 Scan Tips:", helpTip1: "<b>1. Lighting:</b> Avoid strong flash or glare.", helpTip2: "<b>2. MRZ Clarity:</b> Ensure bottom two lines are fully visible.",
                 abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool.",
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
-                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
+                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D", ageText: "{y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
                 saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇",
                 ageLabel: "AGE DETAILS"
@@ -580,7 +580,15 @@
             document.getElementById('loader').style.display = 'flex';
             try {
                 const rotatedBase64 = await getRotatedImage();
-                const formData = new FormData(); formData.append("base64Image", rotatedBase64); formData.append("language", "eng"); formData.append("detectOrientation", "true"); formData.append("scale", "true"); formData.append("OCREngine", "2"); formData.append("apikey", API_KEY);
+                const formData = new FormData(); 
+                formData.append("base64Image", rotatedBase64); 
+                formData.append("language", "eng"); 
+                formData.append("isOverlayRequired", "false"); 
+                formData.append("detectOrientation", "true"); 
+                formData.append("scale", "true"); 
+                formData.append("OCREngine", "2"); 
+                formData.append("apikey", API_KEY);
+                
                 const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
                 const data = await response.json();
                 if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) throw new Error("فشل");
@@ -615,6 +623,12 @@
             });
         }
 
+        function highlightField(id) {
+            const el = document.getElementById(id);
+            el.classList.add('highlight');
+            setTimeout(()=> el.classList.remove('highlight'), 1500);
+        }
+
         /* === دوال الاستخراج القديمة الأصلية 100% كما أرسلتها أنت === */
         function extractDates(text) {
             const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g];
@@ -633,11 +647,13 @@
             if (dates.length > 0) {
                 // أصغر تاريخ عادة هو الميلاد
                 document.getElementById('dobInput').value = dates[0];
+                highlightField('dobInput');
                 
                 // أكبر تاريخ عادة هو النفاذ (Expiry)
                 let lastDate = dates[dates.length - 1];
                 if (lastDate !== dates[0]) {
                     document.getElementById('expiryInput').value = lastDate;
+                    highlightField('expiryInput');
                 }
             }
         }
@@ -649,6 +665,7 @@
                 let s = matches[0][1].replace(/</g, ' ').trim();
                 let g = matches[0][2].replace(/</g, ' ').trim();
                 document.getElementById('nameInput').value = `${g} ${s}`;
+                highlightField('nameInput');
             } else {
                 const lines = text.split('\n');
                 for (let line of lines) {
@@ -664,10 +681,13 @@
             const matchesMRZ = [...text.matchAll(mrzPattern)];
             if (matchesMRZ.length > 0) {
                 document.getElementById('passNumInput').value = matchesMRZ[0][1];
+                highlightField('passNumInput');
             } else {
                 const visualPattern = /\b[A-Z][0-9]{7,8}\b/g;
                 const visualMatches = [...text.matchAll(visualPattern)];
-                if (visualMatches.length > 0) document.getElementById('passNumInput').value = visualMatches[0][0];
+                if (visualMatches.length > 0) {
+                    document.getElementById('passNumInput').value = visualMatches[0][0];
+                }
             }
         }
 
@@ -718,8 +738,11 @@
                 }
             } else { vibrate('success'); playSound('success'); }
             
-            /* تصحيح ترتيب الأرقام والكلمات العربية (سنة وشهر ويوم) بدقة متناهية عبر استخدام span dir=rtl */
-            const ageStrHTML = currentLang === 'ar' ? `<span dir="rtl">${ageTravel.years} سنة و ${ageTravel.months} شهر و ${ageTravel.days} يوم</span>` : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
+            /* تصحيح ترتيب الأرقام والكلمات العربية بدقة متناهية عبر Flexbox */
+            const ageStrHTML = currentLang === 'ar' 
+                ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` 
+                : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
+            
             const dateStr = today.toISOString().split('T')[0];
 
             let reminderBtnHTML = '';
@@ -754,13 +777,16 @@
                     ${ageAlertHTML}
 
                     <div class="v-status-box" style="background-color:${boxColor}; border-color:${borderColor}; color:${textColor};">
-                        <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '20px'};">${statusTitle}</h3>
-                        <p class="v-status-desc" style="direction: ${currentLang==='ar'?'rtl':'ltr'};">${remainingText}</p>
+                        <p class="v-status-label" style="font-size: 10px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase;">TRAVEL VALIDITY STATUS</p>
+                        <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '20px'}; margin-bottom: 6px;">${statusTitle}</h3>
+                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; direction: ${currentLang==='ar'?'rtl':'ltr'};">
+                            ${currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `<span>باقي:</span><span>${calculateDiff(today, new Date(expiryVal)).years}</span><span>سنة و</span><span>${calculateDiff(today, new Date(expiryVal)).months}</span><span>شهر و</span><span>${calculateDiff(today, new Date(expiryVal)).days}</span><span>يوم</span>` : remainingText}
+                        </div>
                         <div class="progress-bg"><div class="progress-fill" style="width: ${progressPct}%; background: ${progressColor};"></div></div>
                     </div>
 
                     <div class="v-detail-row-single">
-                        <p class="v-detail-value" dir="rtl" style="text-align: right;">${ageStrHTML}</p>
+                        <div class="v-detail-value" style="width: 100%;">${ageStrHTML}</div>
                         <p class="v-detail-label">${dict[currentLang].ageLabel}</p>
                     </div>
                     <div class="v-details-grid">
@@ -815,7 +841,7 @@
             navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
         }
 
-        /* === حفظ ومشاركة الصورة (تحديث آمن يمنع الخروج المفاجئ) === */
+        /* === حفظ ومشاركة الصورة (بدون كراش) === */
         function downloadAllImages() {
             const container = document.getElementById('ticketsContainer');
             html2canvas(container, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
