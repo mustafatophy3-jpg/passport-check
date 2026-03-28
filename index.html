@@ -126,44 +126,22 @@
         #ticketsContainer { display: flex; flex-direction: column; gap: 15px; }
 
         /* === 3D Flip Reveal === */
-        .voucher-3d {
-            animation: flipIn3D 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            transform-origin: center;
-            opacity: 0;
-            transform-style: preserve-3d;
-        }
-        @keyframes flipIn3D {
-            0% { transform: rotateY(-90deg) scale(0.9); opacity: 0; }
-            100% { transform: rotateY(0deg) scale(1); opacity: 1; }
-        }
+        .voucher-3d { animation: flipIn3D 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform-origin: center; opacity: 0; transform-style: preserve-3d; }
+        @keyframes flipIn3D { 0% { transform: rotateY(-90deg) scale(0.9); opacity: 0; } 100% { transform: rotateY(0deg) scale(1); opacity: 1; } }
 
         .voucher { background: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 15px 35px rgba(0,0,0,0.08); position: relative; direction: ltr; color: #0f172a; }
         .v-head { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 15px; text-align: center; position: relative; }
         .v-title-main { font-size: 20px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; }
         .v-title-sub { font-size: 9px; color: #93c5fd; font-weight: 700; letter-spacing: 1px; }
         .v-date-corner { position: absolute; top: 12px; right: 15px; font-size: 9px; opacity: 0.7; font-family: monospace; font-weight: 600; }
-        .v-body { padding: 20px 15px; position: relative; } /* position relative for the stamp */
+        .v-body { padding: 20px 15px; position: relative; }
         
-        /* === ختم المطار المتحرك (Animated Stamp) === */
-        .stamp {
-            position: absolute;
-            top: 40%; left: 50%;
-            font-size: 32px; font-weight: 900;
-            border: 4px solid; padding: 5px 20px; border-radius: 8px;
-            opacity: 0; z-index: 50; pointer-events: none;
-            letter-spacing: 2px; text-transform: uppercase;
-        }
+        /* === ختم المطار المتحرك === */
+        .stamp { position: absolute; top: 40%; left: 50%; font-size: 32px; font-weight: 900; border: 4px solid; padding: 5px 20px; border-radius: 8px; opacity: 0; z-index: 50; pointer-events: none; letter-spacing: 2px; text-transform: uppercase; }
         .stamp-valid { color: rgba(34, 197, 94, 0.5); border-color: rgba(34, 197, 94, 0.5); }
         .stamp-invalid { color: rgba(239, 68, 68, 0.5); border-color: rgba(239, 68, 68, 0.5); }
-        .stamp.animate-stamp {
-            animation: stampDrop 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-            animation-delay: 0.8s; /* يشتغل بعد ما تخلص الـ 3D */
-        }
-        @keyframes stampDrop {
-            0% { transform: translate(-50%, -50%) rotate(-25deg) scale(3); opacity: 0; }
-            50% { transform: translate(-50%, -50%) rotate(-25deg) scale(0.8); opacity: 0.8; }
-            100% { transform: translate(-50%, -50%) rotate(-25deg) scale(1); opacity: 1; }
-        }
+        .stamp.animate-stamp { animation: stampDrop 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; animation-delay: 0.8s; }
+        @keyframes stampDrop { 0% { transform: translate(-50%, -50%) rotate(-25deg) scale(3); opacity: 0; } 50% { transform: translate(-50%, -50%) rotate(-25deg) scale(0.8); opacity: 0.8; } 100% { transform: translate(-50%, -50%) rotate(-25deg) scale(1); opacity: 1; } }
 
         .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
         .v-badge { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 900; border: 1px solid #e2e8f0; color: #475569; display: flex; align-items: center; gap: 5px;}
@@ -172,6 +150,7 @@
         .v-pass-name { font-size: 18px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
         
         .v-status-box { padding: 15px 10px; border-radius: 14px; text-align: center; margin-bottom: 15px; border: 2px solid #86efac; background: #f0fdf4; color: #15803d; }
+        .v-status-label { font-size: 9px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; }
         .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; display: flex; justify-content: center; align-items: center; gap: 6px; }
         .v-status-desc { font-size: 14px; font-weight: 800; margin-bottom: 8px;}
         
@@ -221,6 +200,20 @@
         .info-content li { margin-bottom: 8px; position: relative; }
         
         .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
+
+        /* === ستايلات محفظة المستندات (معزولة تماماً) === */
+        .pin-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; direction: ltr; }
+        .pin-dot { width: 15px; height: 15px; border-radius: 50%; background: var(--border-color); border: 2px solid #3b82f6; transition: 0.2s; }
+        .pin-dot.filled { background: #3b82f6; }
+        .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 250px; margin: 0 auto; direction: ltr;}
+        .pin-btn { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: 900; color: var(--text-main); cursor: pointer; transition: 0.1s; margin: 0 auto;}
+        .pin-btn:active { transform: scale(0.9); background: #3b82f6; color: white; }
+        
+        .wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; max-height: 50vh; overflow-y: auto; padding: 5px;}
+        .doc-card { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+        .doc-card img { width: 100%; height: 100px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        .doc-card-title { padding: 8px; font-size: 11px; font-weight: 800; text-align: center; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .doc-delete { position: absolute; top: 5px; right: 5px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer; z-index: 5; display: flex; justify-content: center; align-items: center;}
     </style>
 </head>
 <body>
@@ -242,6 +235,7 @@
                     <button onclick="openModal('settingsModal')" class="icon-btn" title="الإعدادات">⚙️</button>
                     <button onclick="toggleDarkMode()" class="icon-btn" id="darkModeBtn" title="الوضع المظلم">🌙</button>
                     <button onclick="openModal('appInfoModal')" class="icon-btn" title="دليل الاستخدام">ℹ️</button>
+                    <button onclick="openWalletAuth()" class="icon-btn" style="color: #10b981; border-color: rgba(16,185,129,0.3);" title="المحفظة السرية">🪪</button>
                 </div>
 
                 <div class="header-section">
@@ -375,23 +369,13 @@
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر. يعتمد النظام على تقنيات الذكاء الاصطناعي لاستخراج بيانات المسافرين بدقة وسرعة.</p>
+                <p class="intro" data-i18n="helpIntro">النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر.</p>
                 <h4 data-i18n="helpH1">🌟 المميزات والقدرات:</h4>
                 <ul>
-                    <li data-i18n="helpN1"><b>• الفحص الفوري:</b> استخراج دقيق للاسم، رقم الجواز، وتواريخ الميلاد والنفاذ.</li>
-                    <li data-i18n="helpN2"><b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز (أخضر=صالح، أصفر=تحذير، أحمر=منتهي).</li>
-                    <li data-i18n="helpN3"><b>• كشف الجنسية:</b> يقرأ الكود الدولي من الجواز ويطبع علم واسم الدولة بالتقرير.</li>
-                    <li data-i18n="helpN4"><b>• حاسبة السفر الدقيقة:</b> حساب العمر يوم السفر لتجنب غرامات المطار للأطفال.</li>
-                </ul>
-                <h4 data-i18n="helpModesTitle">1️⃣ أوضاع الفحص:</h4>
-                <ul>
-                    <li data-i18n="helpModeS"><b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.</li>
-                    <li data-i18n="helpModeG"><b>• الفحص العائلي:</b> لجمع أفراد العائلة كقائمة واحدة قابلة للنسخ.</li>
-                </ul>
-                <h4 data-i18n="helpTipsTitle">📸 نصائح هامة لنجاح الفحص:</h4>
-                <ul>
-                    <li data-i18n="helpTip1"><b>1. الإضاءة الصحيحة:</b> لا تستخدم الفلاش القوي، وتجنب الإضاءة الساطعة.</li>
-                    <li data-i18n="helpTip2"><b>2. شريط البيانات (MRZ):</b> تأكد أن السطرين في أسفل الجواز يظهران بالكامل.</li>
+                    <li data-i18n="helpN1"><b>• الفحص الفوري:</b> استخراج دقيق للاسم، الجواز، والتواريخ.</li>
+                    <li data-i18n="helpN2"><b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز.</li>
+                    <li data-i18n="helpN3"><b>• كشف الجنسية:</b> يقرأ الكود الدولي ويطبع علم واسم الدولة.</li>
+                    <li data-i18n="helpN4"><b>• حاسبة السفر الدقيقة:</b> حساب دقيق للعمر لتجنب غرامات المطار.</li>
                 </ul>
             </div>
         </div>
@@ -419,8 +403,64 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="pinModal" onclick="if(event.target === this) closeWalletAuth()">
+        <div class="modal-card" style="text-align: center;">
+            <button class="modal-close-btn" onclick="closeWalletAuth()">✖</button>
+            <h3 class="modal-title" id="pinTitle" data-i18n="pinTitle">🔒 أدخل الرمز السري</h3>
+            <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 15px; font-weight: 800;" id="pinSub" data-i18n="pinSub">المحفظة محمية ومحفوظة بجهازك فقط</p>
+            <div class="pin-container">
+                <div class="pin-dot" id="dot1"></div><div class="pin-dot" id="dot2"></div><div class="pin-dot" id="dot3"></div><div class="pin-dot" id="dot4"></div>
+            </div>
+            <div class="pin-pad">
+                <div class="pin-btn" onclick="addPin(1)">1</div><div class="pin-btn" onclick="addPin(2)">2</div><div class="pin-btn" onclick="addPin(3)">3</div>
+                <div class="pin-btn" onclick="addPin(4)">4</div><div class="pin-btn" onclick="addPin(5)">5</div><div class="pin-btn" onclick="addPin(6)">6</div>
+                <div class="pin-btn" onclick="addPin(7)">7</div><div class="pin-btn" onclick="addPin(8)">8</div><div class="pin-btn" onclick="addPin(9)">9</div>
+                <div></div><div class="pin-btn" onclick="addPin(0)">0</div>
+                <div class="pin-btn" onclick="removePin()" style="background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.3);">⌫</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="walletModal" onclick="if(event.target === this) closeWalletModal()">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeWalletModal()">✖</button>
+            <h3 class="modal-title" data-i18n="walletTitle">🪪 محفظة المستندات</h3>
+            
+            <div style="background: var(--input-bg); border: 1px dashed #3b82f6; padding: 15px; border-radius: 16px; margin-bottom: 15px; text-align: center; cursor: pointer;" onclick="document.getElementById('walletUpload').click()">
+                <div style="font-size: 24px; margin-bottom: 5px;">➕</div>
+                <div style="font-size: 13px; font-weight: 800; color: #3b82f6;" data-i18n="walletAdd">إضافة مستند جديد</div>
+            </div>
+            <input type="file" id="walletUpload" style="display: none;" accept="image/*" onchange="handleWalletUpload(event)">
+            
+            <div class="wallet-grid" id="walletGallery">
+                </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="docViewModal">
+        <div class="modal-card" style="text-align: center; padding: 20px;">
+            <div style="max-height: 50vh; overflow-y: auto; border-radius: 12px; margin-bottom: 15px;">
+                <img id="docPreviewImg" style="width: 100%; border-radius: 8px;">
+            </div>
+            <input type="text" id="docNameInput" class="search-box" style="text-align: center; margin-bottom: 10px;" placeholder="اسم المستند (مثال: بطاقة وطنية)" data-i18n-ph="docNamePh">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-main" style="margin-top: 0; background: var(--btn-glass); border: 1px solid var(--border-color); color: var(--text-main);" onclick="closeDocView()" data-i18n="btnCancel">إلغاء</button>
+                <button class="btn btn-success" style="margin-top: 0;" onclick="saveDocToWallet()" data-i18n="btnSaveDoc">حفظ بالمحفظة 🔒</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="docFullModal" onclick="if(event.target === this) closeModal('docFullModal')">
+        <div class="modal-card" style="text-align: center; padding: 20px; background: transparent; border: none; box-shadow: none;">
+            <button class="modal-close-btn" style="background: rgba(0,0,0,0.5); color: white; border: none;" onclick="closeModal('docFullModal')">✖</button>
+            <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 80vh; object-fit: contain;">
+        </div>
+    </div>
+
+
     <script>
-        /* === نظام الصوت الآمن === */
+        /* === الكود الأصلي والمستقر الخاص بالجوازات والواجهة الأساسية === */
+        
         let audioCtx;
         let audioInitialized = false;
 
@@ -429,7 +469,6 @@
             if (audioCtx.state === 'suspended') { audioCtx.resume(); }
         }
 
-        /* === تحديث: إضافة صوت الـ Click الفخم للواجهة === */
         function playClickSound() {
             try {
                 if (!audioCtx) return;
@@ -447,11 +486,9 @@
             } catch(e) {}
         }
 
-        /* نظام التتبع لأزرار التطبيق لتشغيل صوت الـ Click (بدون التأثير على أزرار الفحص) */
         document.addEventListener('click', function(e) {
             if (!audioInitialized) { initAudio(); audioInitialized = true; }
-            if(e.target.closest('button') || e.target.closest('.mode-btn') || e.target.closest('.settings-item')) {
-                // استثناء أزرار الفحص والإصدار لأنها تحتوي على أصوات نجاح وخطأ خاصة بها
+            if(e.target.closest('button') || e.target.closest('.mode-btn') || e.target.closest('.settings-item') || e.target.closest('.pin-btn')) {
                 if(!e.target.closest('.btn-scan') && !e.target.closest('.btn-main[onclick="generateTicket()"]')) {
                     playClickSound();
                 }
@@ -489,7 +526,6 @@
             else if (type === 'error') navigator.vibrate([200, 100, 200]);
         }
 
-        /* === المتغيرات الأساسية === */
         let currentLang = localStorage.getItem('appLang') || 'ar';
         let isDarkMode = localStorage.getItem('darkMode') === 'true';
         let appMode = 'single'; 
@@ -531,7 +567,8 @@
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
-                saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED"
+                saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "🪪 محفظة المستندات", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒"
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -552,7 +589,8 @@
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
-                saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED"
+                saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "🪪 ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒"
             }
         };
 
@@ -589,6 +627,7 @@
             imageElement = document.getElementById('previewImg');
             document.getElementById('travelDateInput').valueAsDate = new Date();
             applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
+            initWalletDB(); // تهيئة قاعدة بيانات المحفظة
             
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -643,7 +682,6 @@
         }
         function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
 
-        /* === الفحص الكلاسيكي المضمون 100% (نفس الدوال الأصلية بدون تغيير) === */
         async function processImage() {
             initAudio(); 
             if (!navigator.onLine) { vibrate('error'); playSound('error'); return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); }
@@ -664,7 +702,6 @@
                     if (countries[code]) { nationalityData = { flag: countries[code][currentLang].slice(-2), name: countries[code][currentLang] }; }
                 }
 
-                // استخدام الدوال الأصلية فقط كما طلبت لحفظ دقة القراءة 100%
                 extractDates(text); 
                 extractNameFromText(text); 
                 extractPassportNumber(text);
@@ -691,7 +728,6 @@
             setTimeout(()=> el.classList.remove('highlight'), 1500);
         }
 
-        /* دوال الاستخراج الأصلية الدقيقة 100% التي طلبها المستخدم وحلفت عدم المساس بها */
         function extractDates(text) {
             const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g];
             let dates = [];
@@ -784,9 +820,7 @@
             let boxColor = "var(--input-bg)", borderColor = "var(--border-color)", textColor = "var(--text-main)";
             let progressPct = 0; let progressColor = "#94a3b8";
             
-            /* إعدادات ختم المطار */
-            let stampClass = "stamp-invalid";
-            let stampText = dict[currentLang].stampRejected;
+            let stampClass = "stamp-invalid"; let stampText = dict[currentLang].stampRejected;
 
             if (expiryVal) {
                 const expiryDate = new Date(expiryVal); const validDiff = calculateDiff(today, expiryDate);
@@ -829,7 +863,6 @@
 
             groupPassengersData.push({ name: nameVal.toUpperCase(), pass: passNum, dob: dobVal, exp: expiryVal || "N/A", type: type });
 
-            // === إضافة ميزة البطاقة الـ 3D والختم المتحرك للتقرير ===
             const ticketHTML = `
             <div class="voucher mb-4 voucher-3d" id="ticket_${ticketCount}">
                 <div class="v-head">
@@ -860,7 +893,7 @@
                     </div>
 
                     <div class="v-detail-row-single">
-                        <div class="v-detail-value" style="width: 100%;">${ageStrHTML}</div>
+                        <div class="v-detail-value" style="width: 100%; text-align: right;">${ageStrHTML}</div>
                         <p class="v-detail-label">${dict[currentLang].ageLabel}</p>
                     </div>
                     <div class="v-details-grid">
@@ -938,6 +971,208 @@
                     alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك، يرجى الضغط مطولاً على الصورة لحفظها." : "Sharing not supported, please long press the image to save.");
                 }
             } catch(e) { console.error("Share error", e); }
+        }
+
+        /* ========================================================================================= */
+        /* ==================== الكود الجديد المعزول 100%: محفظة المستندات (IndexedDB) ==================== */
+        /* ========================================================================================= */
+        
+        let walletDB;
+        let enteredPin = "";
+        let isPinSetupMode = false;
+        let setupPinStep = 1; 
+        let tempSetupPin = "";
+
+        // 1. تهيئة قاعدة البيانات العميقة (بدون التأثير على الرام)
+        function initWalletDB() {
+            const request = indexedDB.open("SmartPassWalletDB", 1);
+            request.onupgradeneeded = function(e) {
+                walletDB = e.target.result;
+                if(!walletDB.objectStoreNames.contains('documents')) {
+                    walletDB.createObjectStore('documents', { keyPath: 'id', autoIncrement: true });
+                }
+            };
+            request.onsuccess = function(e) { walletDB = e.target.result; };
+            request.onerror = function(e) { console.error("DB Error", e); };
+        }
+
+        // 2. نظام المصادقة وفتح النوافذ
+        function openWalletAuth() {
+            enteredPin = ""; updatePinDots();
+            const savedPin = localStorage.getItem("walletPIN");
+            
+            if (!savedPin) {
+                isPinSetupMode = true; setupPinStep = 1;
+                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "أدخل 4 أرقام لحماية مستمسكاتك" : "Enter 4 digits to secure your IDs";
+            } else {
+                isPinSetupMode = false;
+                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية بجهازك فقط" : "Wallet is secure locally";
+            }
+            openModal('pinModal');
+        }
+
+        function closeWalletAuth() { closeModal('pinModal'); }
+        function closeWalletModal() { closeModal('walletModal'); }
+        function closeDocView() { closeModal('docViewModal'); document.getElementById('docNameInput').value = ''; }
+
+        // 3. لوحة المفاتيح (PIN Pad)
+        function updatePinDots() {
+            for(let i=1; i<=4; i++) {
+                let dot = document.getElementById('dot'+i);
+                if(i <= enteredPin.length) dot.classList.add('filled');
+                else dot.classList.remove('filled');
+            }
+        }
+
+        function addPin(num) {
+            if (enteredPin.length < 4) {
+                enteredPin += num;
+                updatePinDots();
+                if (enteredPin.length === 4) setTimeout(checkPin, 200);
+            }
+        }
+
+        function removePin() {
+            if (enteredPin.length > 0) {
+                enteredPin = enteredPin.slice(0, -1);
+                updatePinDots();
+            }
+        }
+
+        function checkPin() {
+            if (isPinSetupMode) {
+                if (setupPinStep === 1) {
+                    tempSetupPin = enteredPin;
+                    enteredPin = ""; updatePinDots(); setupPinStep = 2;
+                    document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN";
+                } else if (setupPinStep === 2) {
+                    if (enteredPin === tempSetupPin) {
+                        localStorage.setItem("walletPIN", enteredPin);
+                        vibrate('success'); playSound('success');
+                        closeWalletAuth(); openWalletGallery();
+                    } else {
+                        vibrate('error'); playSound('error');
+                        alert(currentLang === 'ar' ? "الرمز غير متطابق، أعد المحاولة" : "PINs do not match, try again");
+                        enteredPin = ""; updatePinDots(); setupPinStep = 1; tempSetupPin = "";
+                        document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN";
+                    }
+                }
+            } else {
+                const savedPin = localStorage.getItem("walletPIN");
+                if (enteredPin === savedPin) {
+                    vibrate('success'); playSound('success');
+                    closeWalletAuth(); openWalletGallery();
+                } else {
+                    vibrate('error'); playSound('error');
+                    enteredPin = ""; updatePinDots();
+                    document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!";
+                    document.getElementById('pinTitle').style.color = "#ef4444";
+                    setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500);
+                }
+            }
+        }
+
+        // 4. فتح معرض المحفظة وقراءة الصور من DB
+        function openWalletGallery() {
+            openModal('walletModal');
+            loadDocsFromDB();
+        }
+
+        function loadDocsFromDB() {
+            const container = document.getElementById('walletGallery');
+            container.innerHTML = '';
+            
+            if(!walletDB) return;
+            const transaction = walletDB.transaction(["documents"], "readonly");
+            const store = transaction.objectStore("documents");
+            const request = store.getAll();
+            
+            request.onsuccess = function(e) {
+                const docs = e.target.result;
+                if(docs.length === 0) {
+                    container.innerHTML = `<div style="grid-column: span 2; text-align: center; color: var(--text-sub); padding: 20px; font-size: 13px; font-weight: 800;">${currentLang==='ar'?'لا توجد مستندات محفوظة بعد.':'No documents saved yet.'}</div>`;
+                } else {
+                    // عكس الترتيب حتى يظهر الأحدث أولاً
+                    docs.reverse().forEach(doc => {
+                        const card = document.createElement('div');
+                        card.className = 'doc-card';
+                        card.innerHTML = `
+                            <button class="doc-delete" onclick="deleteDoc(${doc.id}, event)">✖</button>
+                            <img src="${doc.image}" onclick="viewFullDoc('${doc.image}')">
+                            <div class="doc-card-title">${doc.name}</div>
+                        `;
+                        container.appendChild(card);
+                    });
+                }
+            };
+        }
+
+        // 5. ضغط الصور (السر لعدم تعليق التطبيق)
+        function handleWalletUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1200; // دقة ممتازة للقراءة ومناسبة للحجم
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    // ضغط الجودة إلى 0.7 
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    document.getElementById('docPreviewImg').src = compressedDataUrl;
+                    document.getElementById('docNameInput').value = '';
+                    openModal('docViewModal');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = ''; // تصفير الحقل
+        }
+
+        // 6. حفظ المستند في DB
+        function saveDocToWallet() {
+            const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc');
+            const imgData = document.getElementById('docPreviewImg').src;
+
+            if(!walletDB) return;
+            const transaction = walletDB.transaction(["documents"], "readwrite");
+            const store = transaction.objectStore("documents");
+            
+            const doc = { name: name, image: imgData, date: new Date().getTime() };
+            const request = store.add(doc);
+            
+            request.onsuccess = function() {
+                vibrate('success');
+                closeDocView();
+                loadDocsFromDB();
+            };
+        }
+
+        // 7. حذف وعرض المستند
+        function deleteDoc(id, event) {
+            event.stopPropagation();
+            if(confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح هذا المستند؟' : 'Are you sure you want to delete this document?')) {
+                const transaction = walletDB.transaction(["documents"], "readwrite");
+                const store = transaction.objectStore("documents");
+                store.delete(id);
+                transaction.oncomplete = function() { loadDocsFromDB(); vibrate('success'); };
+            }
+        }
+
+        function viewFullDoc(imgSrc) {
+            document.getElementById('docFullImg').src = imgSrc;
+            openModal('docFullModal');
         }
     </script>
 </body>
