@@ -90,7 +90,7 @@
         .placeholder p { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
         .placeholder span { font-size: 11px; color: #94a3b8; font-weight: 600; }
         
-        /* === Cyber UI - شاشة الفحص السينمائية === */
+        /* === Cyber UI - شاشة الفحص === */
         .cyber-scanner-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); overflow: hidden; }
         .cyber-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(59, 130, 246, 0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.25) 1px, transparent 1px); background-size: 20px 20px; z-index: 1; }
         .cyber-laser { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 25px 8px rgba(59, 130, 246, 0.8); position: absolute; top: 0; z-index: 2; animation: cyberScan 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate; }
@@ -122,7 +122,7 @@
         .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 10px; }
         .btn-clear { background: var(--btn-glass); color: var(--text-main); width: 100%; margin-top: 8px; font-size: 13px; font-weight: 800; border: 1px solid var(--border-color); }
 
-        #ticketArea { display: none; margin-top: 20px; perspective: 1000px; /* للـ 3D */ }
+        #ticketArea { display: none; margin-top: 20px; perspective: 1000px; }
         #ticketsContainer { display: flex; flex-direction: column; gap: 15px; }
 
         /* === 3D Flip Reveal === */
@@ -176,6 +176,7 @@
         .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 15px; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; }
         .btn-reminder { background: #f8fafc; color: #2563eb; border: 1px solid #bfdbfe; width: 100%; margin-top: 8px; border-radius: 12px; padding: 10px; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; }
 
+        /* === النوافذ المنبثقة === */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: var(--modal-bg); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; color: var(--text-main);}
@@ -201,7 +202,7 @@
         
         .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
 
-        /* === ستايلات محفظة المستندات (معزولة تماماً) === */
+        /* === ستايلات المحفظة (الخزنة) === */
         .pin-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; direction: ltr; }
         .pin-dot { width: 15px; height: 15px; border-radius: 50%; background: var(--border-color); border: 2px solid #3b82f6; transition: 0.2s; }
         .pin-dot.filled { background: #3b82f6; }
@@ -367,16 +368,21 @@
     <div class="modal-overlay" id="appInfoModal" onclick="if(event.target === this) closeModal('appInfoModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
-            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
+            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل والمفصل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر.</p>
-                <h4 data-i18n="helpH1">🌟 المميزات والقدرات:</h4>
-                <ul>
-                    <li data-i18n="helpN1"><b>• الفحص الفوري:</b> استخراج دقيق للاسم، الجواز، والتواريخ.</li>
-                    <li data-i18n="helpN2"><b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز.</li>
-                    <li data-i18n="helpN3"><b>• كشف الجنسية:</b> يقرأ الكود الدولي ويطبع علم واسم الدولة.</li>
-                    <li data-i18n="helpN4"><b>• حاسبة السفر الدقيقة:</b> حساب دقيق للعمر لتجنب غرامات المطار.</li>
-                </ul>
+                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
+                
+                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص (الماسح السينمائي)</h4>
+                <p data-i18n="helpSec1Text" style="margin-bottom: 15px;">يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية (الرادار والليزر) أثناء قيام النظام بتحليل الاسم، رقم الجواز، وتاريخ الانتهاء بثانية واحدة وبدون أخطاء. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة واحدة يمكن نسخها لبرامج الحجز (مثل سيابر وأماديوس).</p>
+
+                <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
+                <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة ثلاثية الأبعاد (3D Flip) وينزل عليه ختم المطار (APPROVED / REJECTED). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير: الصلاحية أقل من 6 أشهر)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة بالسنوات والأشهر والأيام. إذا أدخلت (تاريخ السفر)، سينبهك النظام إذا كان الرضيع سيصبح طفلاً (فوق سنتين) لتجنب غرامات شركات الطيران.<br><b>3. الجنسية:</b> استخراج تلقائي لدولة الإصدار مع العلم.</p>
+
+                <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
+                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN) من اختيارك. تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك ومستمسكاتك داخل ذاكرة المتصفح العميقة (بدون إنترنت وبأمان تام). يقوم النظام بضغط الصور تلقائياً للحفاظ على سرعة الهاتف. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (التنزيل المباشر ⬇️) لحفظها في الاستوديو، أو (المشاركة 🔗) لإرسالها عبر الواتساب والبريد.</p>
+
+                <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
+                <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب تماماً استخدام (الفلاش) أو التصوير تحت إضاءة ساطعة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل أفقي وواضح لضمان عمل الذكاء الاصطناعي بكفاءة.</p>
             </div>
         </div>
     </div>
@@ -451,102 +457,23 @@
     </div>
 
     <div class="modal-overlay" id="docFullModal" onclick="if(event.target === this) closeModal('docFullModal')">
-        <div class="modal-card" style="text-align: center; padding: 20px; background: transparent; border: none; box-shadow: none;">
-            <button class="modal-close-btn" style="background: rgba(0,0,0,0.5); color: white; border: none;" onclick="closeModal('docFullModal')">✖</button>
-            <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 80vh; object-fit: contain;">
+        <div class="modal-card" style="text-align: center; padding: 20px;">
+            <button class="modal-close-btn" onclick="closeModal('docFullModal')">✖</button>
+            <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 55vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()">
+                    <span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">تنزيل</span>
+                </button>
+                <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareDocImage()">
+                    <span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span>
+                </button>
+            </div>
         </div>
     </div>
 
-
     <script>
-        /* === الكود الأصلي والمستقر الخاص بالجوازات والواجهة الأساسية === */
-        
-        let audioCtx;
-        let audioInitialized = false;
-
-        function initAudio() {
-            if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-        }
-
-        function playClickSound() {
-            try {
-                if (!audioCtx) return;
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } catch(e) {}
-        }
-
-        document.addEventListener('click', function(e) {
-            if (!audioInitialized) { initAudio(); audioInitialized = true; }
-            if(e.target.closest('button') || e.target.closest('.mode-btn') || e.target.closest('.settings-item') || e.target.closest('.pin-btn')) {
-                if(!e.target.closest('.btn-scan') && !e.target.closest('.btn-main[onclick="generateTicket()"]')) {
-                    playClickSound();
-                }
-            }
-        });
-
-        function playSound(type) {
-            try {
-                if (!audioCtx) return;
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                osc.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                if (type === 'success') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-                } else if (type === 'error') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                }
-            } catch(e) {}
-        }
-
-        function vibrate(type) {
-            if (!navigator.vibrate) return;
-            if (type === 'success') navigator.vibrate([50, 50, 50]);
-            else if (type === 'error') navigator.vibrate([200, 100, 200]);
-        }
-
-        let currentLang = localStorage.getItem('appLang') || 'ar';
-        let isDarkMode = localStorage.getItem('darkMode') === 'true';
-        let appMode = 'single'; 
-        let ticketCount = 0;
-        let currentRotation = 0;
-        let imageElement;
-        let groupPassengersData = []; 
-        let nationalityData = { flag: "🌍", name: "" };
-        const API_KEY = 'helloworld';
-
-        const countries = {
-            'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
-            'TUR': { ar: 'تركيا 🇹🇷', en: 'Turkey 🇹🇷' }, 'JOR': { ar: 'الأردن 🇯🇴', en: 'Jordan 🇯🇴' },
-            'LBN': { ar: 'لبنان 🇱🇧', en: 'Lebanon 🇱🇧' }, 'EGY': { ar: 'مصر 🇪🇬', en: 'Egypt 🇪🇬' },
-            'ARE': { ar: 'الإمارات 🇦🇪', en: 'UAE 🇦🇪' }, 'SAU': { ar: 'السعودية 🇸🇦', en: 'KSA 🇸🇦' },
-            'KWT': { ar: 'الكويت 🇰🇼', en: 'Kuwait 🇰🇼' }, 'QAT': { ar: 'قطر 🇶🇦', en: 'Qatar 🇶🇦' },
-            'OMN': { ar: 'عمان 🇴🇲', en: 'Oman 🇴🇲' }, 'BHR': { ar: 'البحرين 🇧🇭', en: 'Bahrain 🇧🇭' },
-            'IRN': { ar: 'إيران 🇮🇷', en: 'Iran 🇮🇷' }, 'USA': { ar: 'أمريكا 🇺🇸', en: 'USA 🇺🇸' },
-            'GBR': { ar: 'بريطانيا 🇬🇧', en: 'UK 🇬🇧' }, 'CAN': { ar: 'كندا 🇨🇦', en: 'Canada 🇨🇦' }
-        };
-
+        /* === إعدادات القاموس واللغة الشاملة === */
         const dict = {
             ar: {
                 appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", 
@@ -559,16 +486,24 @@
                 stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور",
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
                 exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
-                helpTitle: "ℹ️ الدليل الشامل", helpIntro: "النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر والمطارات.",
-                helpH1: "🌟 المميزات والقدرات:", helpN1: "<b>• الفحص الفوري:</b> استخراج دقيق للاسم، الجواز، والتواريخ.", helpN2: "<b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز.", helpN3: "<b>• كشف الجنسية:</b> يقرأ الكود الدولي ويطبع علم واسم الدولة.", helpN4: "<b>• حاسبة السفر الدقيقة:</b> حساب دقيق للعمر لتجنب غرامات المطار.",
-                helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفردي:</b> مسافر واحد فقط.", helpModeG: "<b>• العائلي:</b> فحص عدة جوازات كقائمة واحدة.",
-                helpTipsTitle: "📸 نصائح هامة لنجاح الفحص:", helpTip1: "<b>1. الإضاءة الصحيحة:</b> لا تستخدم الفلاش، وتأكد من عدم وجود إضاءة ساطعة.", helpTip2: "<b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز يظهران بالكامل.",
+                
+                helpTitle: "ℹ️ الدليل الشامل والمفصل", 
+                helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
+                helpSec1Title: "🔍 أولاً: نظام الفحص (الماسح السينمائي)",
+                helpSec1Text: "يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية (الرادار والليزر) أثناء قيام النظام بتحليل الاسم، رقم الجواز، وتاريخ الانتهاء بثانية واحدة وبدون أخطاء. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة واحدة يمكن نسخها لبرامج الحجز (مثل سيابر وأماديوس).",
+                helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
+                helpSec2Text: "يظهر التقرير بحركة بطاقة ثلاثية الأبعاد (3D Flip) وينزل عليه ختم المطار (APPROVED / REJECTED). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير: الصلاحية أقل من 6 أشهر)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة بالسنوات والأشهر والأيام. إذا أدخلت (تاريخ السفر)، سينبهك النظام إذا كان الرضيع سيصبح طفلاً (فوق سنتين) لتجنب غرامات شركات الطيران.<br><b>3. الجنسية:</b> استخراج تلقائي لدولة الإصدار مع العلم.",
+                helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
+                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN) من اختيارك. تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك ومستمسكاتك داخل ذاكرة المتصفح العميقة (بدون إنترنت وبأمان تام). يقوم النظام بضغط الصور تلقائياً للحفاظ على سرعة الهاتف. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (التنزيل المباشر ⬇️) لحفظها في الاستوديو، أو (المشاركة 🔗) لإرسالها عبر الواتساب والبريد.",
+                helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
+                helpSec4Text: "تجنب تماماً استخدام (الفلاش) أو التصوير تحت إضاءة ساطعة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل أفقي وواضح لضمان عمل الذكاء الاصطناعي بكفاءة.",
+
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
                 saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "🪪 محفظة المستندات", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒"
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "🪪 محفظة المستندات", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "تنزيل", btnShareDoc: "مشاركة"
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -581,16 +516,24 @@
                 stgTitle: "⚙️ Settings", stgHist: "🕒 History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ Guide", stgAbout: "👨‍💻 About Developer",
                 histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
                 exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
-                helpTitle: "ℹ️ User Guide", helpIntro: "Smart system to verify passports and avoid airport surprises.",
-                helpH1: "🌟 Main Features:", helpN1: "<b>• Instant Scan:</b> Extract exact Name, Passport No, and Dates.", helpN2: "<b>• Visual Age Bar:</b> Colored bar showing remaining life.", helpN3: "<b>• Nationality:</b> Auto-detects country flag.", helpN4: "<b>• Age Alerts:</b> Calculates exact age on travel day.",
-                helpModesTitle: "1️⃣ Modes:", helpModeS: "<b>• Single:</b> One passenger.", helpModeG: "<b>• Group:</b> Multiple passports as one list.",
-                helpTipsTitle: "📸 Scan Tips:", helpTip1: "<b>1. Lighting:</b> Avoid strong flash or glare.", helpTip2: "<b>2. MRZ Clarity:</b> Ensure bottom two lines are fully visible.",
+
+                helpTitle: "ℹ️ Comprehensive Guide", 
+                helpIntro: "Welcome to the Comprehensive Guide. This system is a professional Super App combining AI passport checking with local encryption for document security.",
+                helpSec1Title: "🔍 First: Scanning System (Cyber UI)",
+                helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly. It supports Single Mode for one traveler, and Group Mode to scan multiple passports into an exportable list for booking systems.",
+                helpSec2Title: "📊 Second: Validity Report & 3D Card",
+                helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It shows: <br><b>1. Color Indicator:</b> Green (Valid), Yellow (Warning <6 months), Red (Expired).<br><b>2. Age Calculator:</b> Exact age calculator. If 'Travel Date' is provided, it alerts you if an infant becomes a child to avoid airline fines.<br><b>3. Nationality:</b> Auto-detects issuing country and flag.",
+                helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
+                helpSec3Text: "A secure vault protected by a PIN of your choice. It uses IndexedDB to save your IDs deep in the browser memory (offline & completely secure). It auto-compresses images to save space. You can view, Download ⬇️, or Share 🔗 your documents easily.",
+                helpSec4Title: "📸 Fourth: Pro Photo Tips",
+                helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear for optimal AI performance.",
+
                 abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool.",
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
                 saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "🪪 ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒"
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "🪪 ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "Download", btnShareDoc: "Share"
             }
         };
 
@@ -627,7 +570,7 @@
             imageElement = document.getElementById('previewImg');
             document.getElementById('travelDateInput').valueAsDate = new Date();
             applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
-            initWalletDB(); // تهيئة قاعدة بيانات المحفظة
+            initWalletDB(); 
             
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
@@ -644,9 +587,7 @@
             history.unshift({ name: name, pass: pass, time: timeStr });
             if(history.length > 20) history.pop(); localStorage.setItem('scanHistory', JSON.stringify(history));
         }
-        function openHistoryModal() {
-            document.getElementById('historySearch').value = ''; renderHistory(JSON.parse(localStorage.getItem('scanHistory') || '[]')); openModal('historyModal');
-        }
+        function openHistoryModal() { document.getElementById('historySearch').value = ''; renderHistory(JSON.parse(localStorage.getItem('scanHistory') || '[]')); openModal('historyModal'); }
         function renderHistory(history) {
             const container = document.getElementById('historyListContainer'); container.innerHTML = '';
             if(history.length === 0) { container.innerHTML = `<div class="empty-history">${dict[currentLang].histEmpty}</div>`; } 
@@ -722,67 +663,35 @@
             });
         }
 
-        function highlightField(id) {
-            const el = document.getElementById(id);
-            el.classList.add('highlight');
-            setTimeout(()=> el.classList.remove('highlight'), 1500);
-        }
+        function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
 
         function extractDates(text) {
-            const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g];
-            let dates = [];
-            let matches1 = [...text.matchAll(datePatterns[0])];
-            matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
-            let matches2 = [...text.matchAll(datePatterns[1])];
-            matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
-
-            dates = dates.filter(d => {
-                let y = parseInt(d.split('-')[0]);
-                return y > 1920 && y < 2050; 
-            }).sort();
-
+            const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g]; let dates = [];
+            let matches1 = [...text.matchAll(datePatterns[0])]; matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
+            let matches2 = [...text.matchAll(datePatterns[1])]; matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
+            dates = dates.filter(d => { let y = parseInt(d.split('-')[0]); return y > 1920 && y < 2050; }).sort();
             if (dates.length > 0) {
-                document.getElementById('dobInput').value = dates[0];
-                highlightField('dobInput');
+                document.getElementById('dobInput').value = dates[0]; highlightField('dobInput');
                 let lastDate = dates[dates.length - 1];
-                if (lastDate !== dates[0]) {
-                    document.getElementById('expiryInput').value = lastDate;
-                    highlightField('expiryInput');
-                }
+                if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; highlightField('expiryInput'); }
             }
         }
 
         function extractNameFromText(text) {
-            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g;
-            const matches = [...text.matchAll(mrzRegex)];
+            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g; const matches = [...text.matchAll(mrzRegex)];
             if (matches.length > 0) {
-                let s = matches[0][1].replace(/</g, ' ').trim();
-                let g = matches[0][2].replace(/</g, ' ').trim();
-                document.getElementById('nameInput').value = `${g} ${s}`;
-                highlightField('nameInput');
+                let s = matches[0][1].replace(/</g, ' ').trim(); let g = matches[0][2].replace(/</g, ' ').trim();
+                document.getElementById('nameInput').value = `${g} ${s}`; highlightField('nameInput');
             } else {
                 const lines = text.split('\n');
-                for (let line of lines) {
-                    if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) {
-                        document.getElementById('nameInput').value = line.trim(); break;
-                    }
-                }
+                for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { document.getElementById('nameInput').value = line.trim(); break; } }
             }
         }
 
         function extractPassportNumber(text) {
-            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g;
-            const matchesMRZ = [...text.matchAll(mrzPattern)];
-            if (matchesMRZ.length > 0) {
-                document.getElementById('passNumInput').value = matchesMRZ[0][1];
-                highlightField('passNumInput');
-            } else {
-                const visualPattern = /\b[A-Z][0-9]{7,8}\b/g;
-                const visualMatches = [...text.matchAll(visualPattern)];
-                if (visualMatches.length > 0) {
-                    document.getElementById('passNumInput').value = visualMatches[0][0];
-                }
-            }
+            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g; const matchesMRZ = [...text.matchAll(mrzPattern)];
+            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1]; highlightField('passNumInput'); } 
+            else { const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) { document.getElementById('passNumInput').value = visualMatches[0][0]; } }
         }
 
         function calculateDiff(startDate, endDate) {
@@ -800,52 +709,32 @@
             if (!dobVal) { vibrate('error'); playSound('error'); return alert(dict[currentLang].valErr); }
             saveToHistory(nameVal, passNum); 
 
-            const today = new Date(); 
-            const dob = new Date(dobVal); 
-            const travelDate = travelVal ? new Date(travelVal) : today;
-
-            const ageToday = calculateDiff(dob, today);
-            const ageTravel = calculateDiff(dob, travelDate);
+            const today = new Date(); const dob = new Date(dobVal); const travelDate = travelVal ? new Date(travelVal) : today;
+            const ageToday = calculateDiff(dob, today); const ageTravel = calculateDiff(dob, travelDate);
             
             let type = "ADULT"; if (ageTravel.years < 2) { type = "INFANT"; } else if (ageTravel.years < 12) { type = "CHILD"; }
 
             let ageAlertHTML = '';
-            if (ageToday.years < 2 && ageTravel.years >= 2) {
-                ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnInfant}</div>`;
-            } else if (ageToday.years < 12 && ageTravel.years >= 12) {
-                ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnChild}</div>`;
-            }
+            if (ageToday.years < 2 && ageTravel.years >= 2) { ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnInfant}</div>`; } 
+            else if (ageToday.years < 12 && ageTravel.years >= 12) { ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnChild}</div>`; }
 
             let statusTitle = "UNKNOWN"; let remainingText = dict[currentLang].remainErr;
             let boxColor = "var(--input-bg)", borderColor = "var(--border-color)", textColor = "var(--text-main)";
-            let progressPct = 0; let progressColor = "#94a3b8";
-            
-            let stampClass = "stamp-invalid"; let stampText = dict[currentLang].stampRejected;
+            let progressPct = 0; let progressColor = "#94a3b8"; let stampClass = "stamp-invalid"; let stampText = dict[currentLang].stampRejected;
 
             if (expiryVal) {
                 const expiryDate = new Date(expiryVal); const validDiff = calculateDiff(today, expiryDate);
                 if (expiryDate < today) {
-                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.1)"; borderColor = "#ef4444"; textColor = "#ef4444"; vibrate('error'); playSound('error');
-                    stampClass = "stamp-invalid"; stampText = dict[currentLang].stampRejected;
+                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.1)"; borderColor = "#ef4444"; textColor = "#ef4444"; vibrate('error'); playSound('error'); stampClass = "stamp-invalid"; stampText = dict[currentLang].stampRejected;
                 } else {
-                    remainingText = currentLang === 'ar' 
-                        ? `باقي: <span dir="rtl">${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم</span>` 
-                        : dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
+                    remainingText = currentLang === 'ar' ? `باقي: <span dir="rtl">${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم</span>` : dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
                     progressPct = Math.min(100, (validDiff.totalMonths / 120) * 100); 
-                    if (validDiff.totalMonths < 6) { 
-                        statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.1)"; borderColor = "#f59e0b"; textColor = "#f59e0b"; progressColor = "#f59e0b"; vibrate('error'); playSound('error');
-                        stampClass = "stamp-invalid"; stampText = dict[currentLang].stampRejected;
-                    } else { 
-                        statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.1)"; borderColor = "#22c55e"; textColor = "#22c55e"; progressColor = "#22c55e"; vibrate('success'); playSound('success');
-                        stampClass = "stamp-valid"; stampText = dict[currentLang].stampApproved;
-                    }
+                    if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.1)"; borderColor = "#f59e0b"; textColor = "#f59e0b"; progressColor = "#f59e0b"; vibrate('error'); playSound('error'); stampClass = "stamp-invalid"; stampText = dict[currentLang].stampRejected; } 
+                    else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.1)"; borderColor = "#22c55e"; textColor = "#22c55e"; progressColor = "#22c55e"; vibrate('success'); playSound('success'); stampClass = "stamp-valid"; stampText = dict[currentLang].stampApproved; }
                 }
             } else { vibrate('success'); playSound('success'); }
             
-            const ageStrHTML = currentLang === 'ar' 
-                ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` 
-                : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
-            
+            const ageStrHTML = currentLang === 'ar' ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
             const dateStr = today.toISOString().split('T')[0];
 
             let reminderBtnHTML = '';
@@ -856,8 +745,7 @@
                 reminderBtnHTML = `<button class="btn-reminder" onclick="window.open('${calLink}', '_blank')">${dict[currentLang].btnReminder}</button>`;
             }
             
-            const rawStatusText = statusTitle.replace(/<[^>]*>?/gm, '');
-            const rawRemainText = currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `باقي: ${calculateDiff(today, new Date(expiryVal)).years} سنة و ${calculateDiff(today, new Date(expiryVal)).months} شهر و ${calculateDiff(today, new Date(expiryVal)).days} يوم` : remainingText.replace(/<[^>]*>?/gm, '');
+            const rawStatusText = statusTitle.replace(/<[^>]*>?/gm, ''); const rawRemainText = currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `باقي: ${calculateDiff(today, new Date(expiryVal)).years} سنة و ${calculateDiff(today, new Date(expiryVal)).months} شهر و ${calculateDiff(today, new Date(expiryVal)).days} يوم` : remainingText.replace(/<[^>]*>?/gm, '');
             const waMessage = currentLang === 'ar' ? `أهلاً بك، تم فحص جواز السفر الخاص بك (${nameVal}).\nالنتيجة: ${rawStatusText}\nالصلاحية: ${rawRemainText}` : `Hello, passport checked for (${nameVal}).\nResult: ${rawStatusText}\nValidity: ${rawRemainText}`;
             const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
 
@@ -872,7 +760,6 @@
                 </div>
                 <div class="v-body">
                     <div class="stamp ${stampClass} animate-stamp">${stampText}</div>
-                    
                     <div class="v-passenger-row">
                         <div class="v-badge">${nationalityData.flag} ${type}</div>
                         <div class="v-pass-info">
@@ -880,42 +767,27 @@
                             <h2 class="v-pass-name">${nameVal.toUpperCase()}</h2>
                         </div>
                     </div>
-                    
                     ${ageAlertHTML}
-
                     <div class="v-status-box" style="background-color:${boxColor}; border-color:${borderColor}; color:${textColor};">
                         <p class="v-status-label" style="font-size: 10px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase;">TRAVEL VALIDITY STATUS</p>
                         <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '20px'}; margin-bottom: 6px;">${statusTitle}</h3>
-                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; direction: ${currentLang==='ar'?'rtl':'ltr'};">
-                            ${currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `<span>باقي:</span><span>${calculateDiff(today, new Date(expiryVal)).years}</span><span>سنة و</span><span>${calculateDiff(today, new Date(expiryVal)).months}</span><span>شهر و</span><span>${calculateDiff(today, new Date(expiryVal)).days}</span><span>يوم</span>` : remainingText}
-                        </div>
+                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; direction: ${currentLang==='ar'?'rtl':'ltr'};">${currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `<span>باقي:</span><span>${calculateDiff(today, new Date(expiryVal)).years}</span><span>سنة و</span><span>${calculateDiff(today, new Date(expiryVal)).months}</span><span>شهر و</span><span>${calculateDiff(today, new Date(expiryVal)).days}</span><span>يوم</span>` : remainingText}</div>
                         <div class="progress-bg"><div class="progress-fill" style="width: ${progressPct}%; background: ${progressColor};"></div></div>
                     </div>
-
                     <div class="v-detail-row-single">
                         <div class="v-detail-value" style="width: 100%; text-align: right;">${ageStrHTML}</div>
                         <p class="v-detail-label">${dict[currentLang].ageLabel}</p>
                     </div>
                     <div class="v-details-grid">
-                        <div class="v-grid-box">
-                            <p class="v-grid-label">EXPIRY DATE</p>
-                            <p class="v-grid-value">${expiryVal || "--"}</p>
-                        </div>
-                        <div class="v-grid-box">
-                            <p class="v-grid-label">BIRTH DATE</p>
-                            <p class="v-grid-value">${dobVal}</p>
-                        </div>
+                        <div class="v-grid-box"><p class="v-grid-label">EXPIRY DATE</p><p class="v-grid-value">${expiryVal || "--"}</p></div>
+                        <div class="v-grid-box"><p class="v-grid-label">BIRTH DATE</p><p class="v-grid-value">${dobVal}</p></div>
                     </div>
                     ${reminderBtnHTML}
                     <div class="v-footer">
                         <div class="qr-container"><canvas class="qr-canvas"></canvas></div>
-                        <div class="v-pass-num-box">
-                            <p class="v-pass-num-label">PASSPORT NO</p>
-                            <p class="v-pass-num-value">${passNum}</p>
-                        </div>
+                        <div class="v-pass-num-box"><p class="v-pass-num-label">PASSPORT NO</p><p class="v-pass-num-value">${passNum}</p></div>
                     </div>
-                    <button class="btn-wa" onclick="window.open('${waLink}', '_blank')">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    <button class="btn-wa" onclick="window.open('${waLink}', '_blank')"><svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                         <span data-i18n="btnWa">${dict[currentLang].btnWa}</span>
                     </button>
                 </div>
@@ -963,40 +835,25 @@
                 const blob = await fetchRes.blob();
                 const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
                 if (navigator.share) {
-                    await navigator.share({
-                        title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report',
-                        files: [file]
-                    });
-                } else {
-                    alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك، يرجى الضغط مطولاً على الصورة لحفظها." : "Sharing not supported, please long press the image to save.");
-                }
+                    await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] });
+                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك، يرجى الضغط مطولاً على الصورة لحفظها." : "Sharing not supported, please long press the image to save."); }
             } catch(e) { console.error("Share error", e); }
         }
 
-        /* ========================================================================================= */
-        /* ==================== الكود الجديد المعزول 100%: محفظة المستندات (IndexedDB) ==================== */
-        /* ========================================================================================= */
+        /* ==================== محفظة المستندات (IndexedDB) ==================== */
         
-        let walletDB;
-        let enteredPin = "";
-        let isPinSetupMode = false;
-        let setupPinStep = 1; 
-        let tempSetupPin = "";
+        let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
 
-        // 1. تهيئة قاعدة البيانات العميقة (بدون التأثير على الرام)
         function initWalletDB() {
             const request = indexedDB.open("SmartPassWalletDB", 1);
             request.onupgradeneeded = function(e) {
                 walletDB = e.target.result;
-                if(!walletDB.objectStoreNames.contains('documents')) {
-                    walletDB.createObjectStore('documents', { keyPath: 'id', autoIncrement: true });
-                }
+                if(!walletDB.objectStoreNames.contains('documents')) { walletDB.createObjectStore('documents', { keyPath: 'id', autoIncrement: true }); }
             };
             request.onsuccess = function(e) { walletDB = e.target.result; };
             request.onerror = function(e) { console.error("DB Error", e); };
         }
 
-        // 2. نظام المصادقة وفتح النوافذ
         function openWalletAuth() {
             enteredPin = ""; updatePinDots();
             const savedPin = localStorage.getItem("walletPIN");
@@ -1008,7 +865,7 @@
             } else {
                 isPinSetupMode = false;
                 document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code";
-                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية بجهازك فقط" : "Wallet is secure locally";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية ومحفوظة بجهازك فقط" : "Wallet is encrypted and saved locally";
             }
             openModal('pinModal');
         }
@@ -1017,7 +874,6 @@
         function closeWalletModal() { closeModal('walletModal'); }
         function closeDocView() { closeModal('docViewModal'); document.getElementById('docNameInput').value = ''; }
 
-        // 3. لوحة المفاتيح (PIN Pad)
         function updatePinDots() {
             for(let i=1; i<=4; i++) {
                 let dot = document.getElementById('dot'+i);
@@ -1028,33 +884,25 @@
 
         function addPin(num) {
             if (enteredPin.length < 4) {
-                enteredPin += num;
-                updatePinDots();
+                enteredPin += num; updatePinDots();
                 if (enteredPin.length === 4) setTimeout(checkPin, 200);
             }
         }
 
         function removePin() {
-            if (enteredPin.length > 0) {
-                enteredPin = enteredPin.slice(0, -1);
-                updatePinDots();
-            }
+            if (enteredPin.length > 0) { enteredPin = enteredPin.slice(0, -1); updatePinDots(); }
         }
 
         function checkPin() {
             if (isPinSetupMode) {
                 if (setupPinStep === 1) {
-                    tempSetupPin = enteredPin;
-                    enteredPin = ""; updatePinDots(); setupPinStep = 2;
+                    tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2;
                     document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN";
                 } else if (setupPinStep === 2) {
                     if (enteredPin === tempSetupPin) {
-                        localStorage.setItem("walletPIN", enteredPin);
-                        vibrate('success'); playSound('success');
-                        closeWalletAuth(); openWalletGallery();
+                        localStorage.setItem("walletPIN", enteredPin); vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery();
                     } else {
-                        vibrate('error'); playSound('error');
-                        alert(currentLang === 'ar' ? "الرمز غير متطابق، أعد المحاولة" : "PINs do not match, try again");
+                        vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرمز غير متطابق، أعد المحاولة" : "PINs do not match, try again");
                         enteredPin = ""; updatePinDots(); setupPinStep = 1; tempSetupPin = "";
                         document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN";
                     }
@@ -1062,11 +910,9 @@
             } else {
                 const savedPin = localStorage.getItem("walletPIN");
                 if (enteredPin === savedPin) {
-                    vibrate('success'); playSound('success');
-                    closeWalletAuth(); openWalletGallery();
+                    vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery();
                 } else {
-                    vibrate('error'); playSound('error');
-                    enteredPin = ""; updatePinDots();
+                    vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots();
                     document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!";
                     document.getElementById('pinTitle').style.color = "#ef4444";
                     setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500);
@@ -1074,11 +920,7 @@
             }
         }
 
-        // 4. فتح معرض المحفظة وقراءة الصور من DB
-        function openWalletGallery() {
-            openModal('walletModal');
-            loadDocsFromDB();
-        }
+        function openWalletGallery() { openModal('walletModal'); loadDocsFromDB(); }
 
         function loadDocsFromDB() {
             const container = document.getElementById('walletGallery');
@@ -1094,78 +936,48 @@
                 if(docs.length === 0) {
                     container.innerHTML = `<div style="grid-column: span 2; text-align: center; color: var(--text-sub); padding: 20px; font-size: 13px; font-weight: 800;">${currentLang==='ar'?'لا توجد مستندات محفوظة بعد.':'No documents saved yet.'}</div>`;
                 } else {
-                    // عكس الترتيب حتى يظهر الأحدث أولاً
                     docs.reverse().forEach(doc => {
-                        const card = document.createElement('div');
-                        card.className = 'doc-card';
-                        card.innerHTML = `
-                            <button class="doc-delete" onclick="deleteDoc(${doc.id}, event)">✖</button>
-                            <img src="${doc.image}" onclick="viewFullDoc('${doc.image}')">
-                            <div class="doc-card-title">${doc.name}</div>
-                        `;
+                        const card = document.createElement('div'); card.className = 'doc-card';
+                        card.innerHTML = `<button class="doc-delete" onclick="deleteDoc(${doc.id}, event)">✖</button><img src="${doc.image}" onclick="viewFullDoc('${doc.image}')"><div class="doc-card-title">${doc.name}</div>`;
                         container.appendChild(card);
                     });
                 }
             };
         }
 
-        // 5. ضغط الصور (السر لعدم تعليق التطبيق)
         function handleWalletUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
+            const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 1200; // دقة ممتازة للقراءة ومناسبة للحجم
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    // ضغط الجودة إلى 0.7 
+                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; 
+                    const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                    
-                    document.getElementById('docPreviewImg').src = compressedDataUrl;
-                    document.getElementById('docNameInput').value = '';
-                    openModal('docViewModal');
+                    document.getElementById('docPreviewImg').src = compressedDataUrl; document.getElementById('docNameInput').value = ''; openModal('docViewModal');
                 };
                 img.src = e.target.result;
             };
-            reader.readAsDataURL(file);
-            event.target.value = ''; // تصفير الحقل
+            reader.readAsDataURL(file); event.target.value = ''; 
         }
 
-        // 6. حفظ المستند في DB
         function saveDocToWallet() {
             const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc');
             const imgData = document.getElementById('docPreviewImg').src;
-
             if(!walletDB) return;
             const transaction = walletDB.transaction(["documents"], "readwrite");
             const store = transaction.objectStore("documents");
-            
             const doc = { name: name, image: imgData, date: new Date().getTime() };
             const request = store.add(doc);
-            
-            request.onsuccess = function() {
-                vibrate('success');
-                closeDocView();
-                loadDocsFromDB();
-            };
+            request.onsuccess = function() { vibrate('success'); closeDocView(); loadDocsFromDB(); };
         }
 
-        // 7. حذف وعرض المستند
         function deleteDoc(id, event) {
             event.stopPropagation();
             if(confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح هذا المستند؟' : 'Are you sure you want to delete this document?')) {
                 const transaction = walletDB.transaction(["documents"], "readwrite");
-                const store = transaction.objectStore("documents");
-                store.delete(id);
+                const store = transaction.objectStore("documents"); store.delete(id);
                 transaction.oncomplete = function() { loadDocsFromDB(); vibrate('success'); };
             }
         }
@@ -1174,6 +986,36 @@
             document.getElementById('docFullImg').src = imgSrc;
             openModal('docFullModal');
         }
+
+        /* === دوال التنزيل والمشاركة المباشرة لصور المحفظة === */
+        function downloadDocImage() {
+            const imgSrc = document.getElementById('docFullImg').src;
+            const link = document.createElement('a');
+            link.href = imgSrc;
+            link.download = 'Secure_Document_' + new Date().getTime() + '.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            vibrate('success');
+        }
+
+        async function shareDocImage() {
+            try {
+                const imgElement = document.getElementById('docFullImg');
+                const fetchRes = await fetch(imgElement.src);
+                const blob = await fetchRes.blob();
+                const file = new File([blob], "Secure_Document.jpg", { type: "image/jpeg" });
+                if (navigator.share) {
+                    await navigator.share({
+                        title: currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document',
+                        files: [file]
+                    });
+                } else {
+                    alert(currentLang === 'ar' ? "المشاركة غير مدعومة في متصفحك." : "Sharing not supported in your browser.");
+                }
+            } catch(e) { console.error("Share error", e); }
+        }
     </script>
 </body>
 </html>
+
