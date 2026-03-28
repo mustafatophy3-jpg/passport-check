@@ -128,7 +128,7 @@
         .v-pass-name { font-size: 18px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
         
         .v-status-box { padding: 15px 10px; border-radius: 14px; text-align: center; margin-bottom: 15px; border: 2px solid #86efac; background: #f0fdf4; color: #15803d; }
-        .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; display: flex; justify-content: center; align-items: center; gap: 6px; }
+        .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
         .v-status-desc { font-size: 14px; font-weight: 800; margin-bottom: 8px;}
         
         .progress-bg { width: 100%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; }
@@ -143,6 +143,7 @@
         .v-grid-label { font-size: 8px; font-weight: 800; margin-bottom: 4px; color: #64748b; }
         .v-grid-value { font-size: 14px; font-weight: 900; font-family: monospace; color: #0f172a; }
         
+        /* تنبيه العمر المنسق بدون خربطة */
         .age-alert { background: #fffbeb; color: #b45309; font-size: 12px; font-weight: 800; padding: 10px; border-radius: 8px; border: 1px dashed #fcd34d; text-align: center; margin-bottom: 15px; display: none; direction: rtl; }
 
         .v-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 2px dashed #cbd5e1; padding-top: 15px; }
@@ -288,6 +289,7 @@
             
             <button class="btn btn-main" style="background: linear-gradient(135deg, #eab308, #d97706); display: none;" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة شخص آخر للمجموعة</button>
             <button class="btn btn-main" style="background: linear-gradient(135deg, #0284c7, #0369a1); display: none;" id="btnExportExcel" onclick="openExportModal()" data-i18n="btnExport">📋 نسخ بيانات المجموعة</button>
+            
             <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
             <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
@@ -330,26 +332,26 @@
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر والمطارات. يعتمد النظام على تقنيات الذكاء الاصطناعي لاستخراج بيانات المسافرين بدقة وسرعة.</p>
+                <p class="intro" data-i18n="helpIntro">النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر. يعتمد النظام على تقنيات الذكاء الاصطناعي لاستخراج بيانات المسافرين بدقة وسرعة.</p>
                 
                 <h4 data-i18n="helpH1">🌟 المميزات والقدرات:</h4>
                 <ul>
-                    <li data-i18n="helpN1"><b>• الفحص الفوري:</b> استخراج الاسم، رقم الجواز، وتواريخ الميلاد والنفاذ بثانية واحدة عبر الذكاء الاصطناعي.</li>
-                    <li data-i18n="helpN2"><b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز (أخضر = صالح، أصفر = تحذير أقل من 6 أشهر، أحمر = منتهي).</li>
-                    <li data-i18n="helpN3"><b>• كشف الجنسية:</b> يقرأ الكود الدولي من الجواز ويطبع علم واسم الدولة بالتقرير تلقائياً (مثل: العراق 🇮🇶، تركيا 🇹🇷).</li>
-                    <li data-i18n="helpN4"><b>• حاسبة السفر الدقيقة:</b> النظام يتيح لك إدخال 'تاريخ السفر' لحساب ما إذا كان الرضيع سيكمل السنتين أو الطفل سيكمل 12 سنة يوم السفر، لتجنب غرامات المطار ومشاكل الحجز.</li>
+                    <li data-i18n="helpN1"><b>• الفحص الفوري:</b> استخراج الاسم، رقم الجواز، وتواريخ الميلاد والنفاذ بثانية واحدة بشكل ذكي.</li>
+                    <li data-i18n="helpN2"><b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز (أخضر=صالح، أصفر=تحذير أقل من 6 أشهر، أحمر=منتهي).</li>
+                    <li data-i18n="helpN3"><b>• كشف الجنسية:</b> يقرأ الكود الدولي من الجواز ويطبع علم واسم الدولة بالتقرير (مثل: 🇮🇶، 🇹🇷).</li>
+                    <li data-i18n="helpN4"><b>• حاسبة السفر الدقيقة:</b> النظام يتيح لك إدخال 'تاريخ السفر' لحساب ما إذا كان الرضيع سيكمل السنتين أو الطفل سيكمل 12 سنة يوم السفر، لتجنب الغرامات المالية في المطار.</li>
                 </ul>
 
                 <h4 data-i18n="helpModesTitle">1️⃣ أوضاع الفحص:</h4>
                 <ul>
-                    <li data-i18n="helpModeS"><b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط، يصدر تقرير مفصل له.</li>
-                    <li data-i18n="helpModeG"><b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب كقائمة واحدة، مع إمكانية نسخ جميع بياناتهم كجدول لبرامج الحجز.</li>
+                    <li data-i18n="helpModeS"><b>• الفحص الفردي:</b> مخصص لمسافر واحد فقط.</li>
+                    <li data-i18n="helpModeG"><b>• الفحص العائلي:</b> يتيح لك فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب كقائمة واحدة قابلة للنسخ.</li>
                 </ul>
 
                 <h4 data-i18n="helpTipsTitle">📸 نصائح هامة لنجاح الفحص:</h4>
                 <ul>
-                    <li data-i18n="helpTip1"><b>1. تجنب الانعكاسات:</b> لا تستخدم الفلاش القوي للتلفون، وتأكد من عدم وجود إضاءة ساطعة تخفي الحروف والأرقام.</li>
-                    <li data-i18n="helpTip2"><b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز (المليئة بالأحرف والأرقام والأسهم) يظهران بالكامل، فهما المصدر الأساسي والوحيد للبيانات.</li>
+                    <li data-i18n="helpTip1"><b>1. الإضاءة الصحيحة:</b> لا تستخدم الفلاش القوي للتلفون، وتأكد من عدم وجود إضاءة ساطعة تخفي الحروف والأرقام.</li>
+                    <li data-i18n="helpTip2"><b>2. شريط البيانات (MRZ):</b> تأكد أن السطرين في أسفل الجواز (المليئة بالأحرف والأرقام والأسهم) يظهران بالكامل بوضوح عالي.</li>
                 </ul>
             </div>
         </div>
@@ -378,7 +380,7 @@
     </div>
 
     <script>
-        /* === نظام الصوت الآمن 100% === */
+        /* === نظام الصوت الآمن 100% يعمل بضغطة الزر === */
         let audioCtx;
         function initAudio() {
             if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -452,15 +454,14 @@
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
                 exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
                 helpTitle: "ℹ️ الدليل الشامل", helpIntro: "النظام الذكي للتدقيق الشامل هو أداة متطورة مصممة خصيصاً لتسهيل عمل شركات السياحة والسفر والمطارات.",
-                helpH1: "🌟 المميزات والقدرات:", helpN1: "<b>• الفحص الفوري:</b> استخراج الاسم، رقم الجواز، وتواريخ الميلاد والنفاذ بثانية واحدة عبر الذكاء الاصطناعي.", helpN2: "<b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز (أخضر=صالح، أصفر=تحذير أقل من 6 أشهر، أحمر=منتهي).", helpN3: "<b>• كشف الجنسية:</b> يقرأ الكود الدولي من الجواز ويطبع علم واسم الدولة بالتقرير.", helpN4: "<b>• حاسبة السفر الدقيقة:</b> النظام يتيح لك إدخال 'تاريخ السفر' لحساب العمر يوم السفر وتجنب غرامات المطار.",
-                helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفردي:</b> مسافر واحد فقط.", helpModeG: "<b>• العائلي:</b> فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة أو الكروب كقائمة واحدة.",
-                helpTipsTitle: "📸 نصائح هامة لنجاح الفحص:", helpTip1: "<b>1. تجنب الانعكاسات:</b> لا تستخدم الفلاش، وتأكد من عدم وجود إضاءة ساطعة تخفي الحروف.", helpTip2: "<b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز يظهران بالكامل فهما المصدر الأساسي للبيانات.",
+                helpH1: "🌟 المميزات والقدرات:", helpN1: "<b>• الفحص الفوري:</b> استخراج الاسم، رقم الجواز، والتواريخ بثانية واحدة.", helpN2: "<b>• مؤشر الصلاحية البصري:</b> شريط ملون يوضح العمر المتبقي للجواز.", helpN3: "<b>• كشف الجنسية:</b> يقرأ الكود الدولي ويطبع علم واسم الدولة بالتقرير.", helpN4: "<b>• حاسبة السفر الدقيقة:</b> حساب دقيق للعمر لتجنب غرامات المطار.",
+                helpModesTitle: "1️⃣ أوضاع الفحص:", helpModeS: "<b>• الفردي:</b> مسافر واحد فقط.", helpModeG: "<b>• العائلي:</b> فحص عدة جوازات تباعاً وإصدار تقرير واحد يجمع أفراد العائلة.",
+                helpTipsTitle: "📸 نصائح هامة لنجاح الفحص:", helpTip1: "<b>1. تجنب الانعكاسات:</b> لا تستخدم الفلاش، وتأكد من عدم وجود إضاءة ساطعة.", helpTip2: "<b>2. وضوح شريط الـ MRZ:</b> تأكد أن السطرين في أسفل الجواز يظهران بالكامل.",
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
-                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم", ageText: "{y} سنة و {m} شهر و {d} يوم",
-                warnInfant: "⚠️ تنبيه: المسافر سيكمل سنتين (يصبح طفلاً) يوم السفر ويحتاج مقعد!", warnChild: "⚠️ تنبيه: المسافر سيكمل 12 سنة (يصبح بالغاً) يوم السفر!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
-                saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇",
-                ageLabel: "AGE DETAILS"
+                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
+                warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
+                saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", ageLabel: "AGE DETAILS"
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -479,10 +480,9 @@
                 helpTipsTitle: "📸 Scan Tips:", helpTip1: "<b>1. Lighting:</b> Avoid strong flash or glare.", helpTip2: "<b>2. MRZ Clarity:</b> Ensure bottom two lines are fully visible.",
                 abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool.",
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
-                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D", ageText: "{y}Y, {m}M, {d}D",
+                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
-                saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇",
-                ageLabel: "AGE DETAILS"
+                saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", ageLabel: "AGE DETAILS"
             }
         };
 
@@ -573,9 +573,9 @@
         }
         function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
 
-        /* === الفحص الأساسي (تم إرجاع كود الـ OCR القديم الذي يعمل بامتياز 100%) === */
+        /* === دمج نظام الـ OCR الهجين (القارئ الأصلي + اكتشاف التواريخ الصحيحة والجنسية) === */
         async function processImage() {
-            initAudio(); 
+            initAudio(); // تهيئة الصوت لضمان العمل
             if (!navigator.onLine) { vibrate('error'); playSound('error'); return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); }
             document.getElementById('loader').style.display = 'flex';
             try {
@@ -595,17 +595,8 @@
                 
                 const text = data.ParsedResults[0].ParsedText;
                 
-                // استخراج الجنسية 
-                const mrzMatch = text.match(/P<([A-Z]{3})/);
-                if (mrzMatch && mrzMatch[1]) {
-                    const code = mrzMatch[1];
-                    if (countries[code]) { nationalityData = { flag: countries[code][currentLang].slice(-2), name: countries[code][currentLang] }; }
-                }
-
-                // الكود القديم الأصلي بالضبط
-                extractDates(text); 
-                extractNameFromText(text); 
-                extractPassportNumber(text);
+                // الكود الذكي لاستخراج البيانات الدقيقة (هجين بين MRZ و Visual)
+                extractMasterData(text);
 
                 vibrate('success'); playSound('success');
             } catch (error) { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرجاء إدخال البيانات يدوياً." : "Please enter data manually."); } 
@@ -629,66 +620,89 @@
             setTimeout(()=> el.classList.remove('highlight'), 1500);
         }
 
-        /* === دوال الاستخراج القديمة الأصلية 100% كما أرسلتها أنت === */
-        function extractDates(text) {
+        /* === دالة الاستخراج المركزية الذكية (تضمن عدم ضياع الحرف وقراءة التواريخ صح) === */
+        function extractMasterData(text) {
+            let dob = "", exp = "", pass = "", name = "";
+
+            // 1. الفحص البصري الأصلي (لضمان التقاط رقم الجواز بشكل ممتاز كما في كودك القديم)
+            const visualPassMatch = text.match(/\b[A-Z][0-9]{7,8}\b/i);
+            let visualPass = visualPassMatch ? visualPassMatch[0].toUpperCase() : "";
+
             const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g];
             let dates = [];
             let matches1 = [...text.matchAll(datePatterns[0])];
             matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
             let matches2 = [...text.matchAll(datePatterns[1])];
             matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
+            dates = dates.filter(d => { let y = parseInt(d.split('-')[0]); return y > 1920 && y < 2050; }).sort();
 
-            // تنظيف التواريخ وفرزها
-            dates = dates.filter(d => {
-                let y = parseInt(d.split('-')[0]);
-                return y > 1920 && y < 2050; // تواريخ منطقية
-            }).sort();
+            let visualDob = dates.length > 0 ? dates[0] : "";
+            let visualExp = dates.length > 1 ? dates[dates.length - 1] : "";
 
-            if (dates.length > 0) {
-                // أصغر تاريخ عادة هو الميلاد
-                document.getElementById('dobInput').value = dates[0];
-                highlightField('dobInput');
-                
-                // أكبر تاريخ عادة هو النفاذ (Expiry)
-                let lastDate = dates[dates.length - 1];
-                if (lastDate !== dates[0]) {
-                    document.getElementById('expiryInput').value = lastDate;
-                    highlightField('expiryInput');
+            const lines = text.split('\n');
+            for (let line of lines) {
+                if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) {
+                    name = line.trim(); break;
                 }
             }
-        }
 
-        function extractNameFromText(text) {
-            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g;
-            const matches = [...text.matchAll(mrzRegex)];
-            if (matches.length > 0) {
-                let s = matches[0][1].replace(/</g, ' ').trim();
-                let g = matches[0][2].replace(/</g, ' ').trim();
-                document.getElementById('nameInput').value = `${g} ${s}`;
-                highlightField('nameInput');
-            } else {
-                const lines = text.split('\n');
-                for (let line of lines) {
-                    if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) {
-                        document.getElementById('nameInput').value = line.trim(); break;
+            // 2. الفحص العميق من شريط الـ MRZ (لضمان دقة التواريخ والجنسية 100%)
+            const cleanText = text.replace(/\s+/g, '').toUpperCase();
+            
+            // استخراج الجنسية
+            const mrzNatMatch = cleanText.match(/P<([A-Z]{3})/);
+            if (mrzNatMatch && mrzNatMatch[1]) {
+                const code = mrzNatMatch[1];
+                if (countries[code]) { nationalityData = { flag: countries[code][currentLang].slice(-2), name: countries[code][currentLang] }; }
+            }
+
+            // استخراج الاسم من MRZ
+            const mrzNameMatch = cleanText.match(/P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/);
+            if (mrzNameMatch) {
+                let last = mrzNameMatch[1].replace(/</g, ' ').trim();
+                let first = mrzNameMatch[2].replace(/</g, ' ').trim();
+                name = `${first} ${last}`;
+            }
+
+            // استخراج التواريخ ورقم الجواز من MRZ (لحل مشكلة تاريخ الإصدار بدل النفاذ)
+            const mrzPattern = /([A-Z0-9<]{9})\d[A-Z<]{3}(\d{6})\d[A-Z<](\d{6})/;
+            const mrzMatch = cleanText.match(mrzPattern);
+
+            if (mrzMatch) {
+                let mrzPass = mrzMatch[1].replace(/</g, '');
+                
+                // السر هنا: إذا الـ MRZ ضيع الحرف الأول (قرأه كرقم)، نعتمد على الكود البصري القديم!
+                if (/^\d+$/.test(mrzPass) && visualPass) {
+                    pass = visualPass;
+                } else {
+                    pass = mrzPass;
+                    // تأكيد إضافي: إذا الفحص البصري التقط حرف واضح والـ MRZ لا، نثق بالبصري
+                    if (visualPass && visualPass.substring(1) === mrzPass.substring(1)) {
+                        pass = visualPass;
                     }
                 }
-            }
-        }
 
-        function extractPassportNumber(text) {
-            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g;
-            const matchesMRZ = [...text.matchAll(mrzPattern)];
-            if (matchesMRZ.length > 0) {
-                document.getElementById('passNumInput').value = matchesMRZ[0][1];
-                highlightField('passNumInput');
+                let dobStr = mrzMatch[2];
+                let dobY = parseInt(dobStr.substring(0,2));
+                let currY = parseInt(new Date().getFullYear().toString().substring(2,4));
+                dobY = dobY > (currY + 10) ? 1900 + dobY : 2000 + dobY;
+                dob = `${dobY}-${dobStr.substring(2,4)}-${dobStr.substring(4,6)}`;
+
+                let expStr = mrzMatch[3];
+                let expY = 2000 + parseInt(expStr.substring(0,2));
+                exp = `${expY}-${expStr.substring(2,4)}-${expStr.substring(4,6)}`;
             } else {
-                const visualPattern = /\b[A-Z][0-9]{7,8}\b/g;
-                const visualMatches = [...text.matchAll(visualPattern)];
-                if (visualMatches.length > 0) {
-                    document.getElementById('passNumInput').value = visualMatches[0][0];
-                }
+                // إذا فشل العثور على MRZ تماماً، نرجع للطريقة القديمة الكلاسيكية كاحتياط
+                pass = visualPass;
+                dob = visualDob;
+                exp = visualExp;
             }
+
+            // تعبئة الحقول مع تأثير التوهج
+            if (name) { document.getElementById('nameInput').value = name; highlightField('nameInput'); }
+            if (pass) { document.getElementById('passNumInput').value = pass; highlightField('passNumInput'); }
+            if (dob) { document.getElementById('dobInput').value = dob; highlightField('dobInput'); }
+            if (exp) { document.getElementById('expiryInput').value = exp; highlightField('expiryInput'); }
         }
 
         function calculateDiff(startDate, endDate) {
@@ -697,8 +711,9 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
+        /* === إصدار التقرير (تم ضبط اتجاه النصوص للغة العربية 100%) === */
         function generateTicket() {
-            initAudio(); 
+            initAudio(); // تفعيل النغمة
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
             const nameVal = document.getElementById('nameInput').value || "GUEST"; const passNum = document.getElementById('passNumInput').value || "---";
             const travelVal = document.getElementById('travelDateInput').value;
@@ -731,16 +746,18 @@
                 if (expiryDate < today) {
                     statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.1)"; borderColor = "#ef4444"; textColor = "#ef4444"; vibrate('error'); playSound('error');
                 } else {
-                    remainingText = dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
+                    remainingText = currentLang === 'ar' 
+                        ? `باقي: <span dir="rtl">${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم</span>` 
+                        : dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
                     progressPct = Math.min(100, (validDiff.totalMonths / 120) * 100); 
                     if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.1)"; borderColor = "#f59e0b"; textColor = "#f59e0b"; progressColor = "#f59e0b"; vibrate('error'); playSound('error'); } 
                     else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.1)"; borderColor = "#22c55e"; textColor = "#22c55e"; progressColor = "#22c55e"; vibrate('success'); playSound('success'); }
                 }
             } else { vibrate('success'); playSound('success'); }
             
-            /* تصحيح ترتيب الأرقام والكلمات العربية بدقة متناهية عبر Flexbox */
+            /* الحل النهائي لمشكلة ترتيب العمر بالعربي (من اليمين لليسار بدقة تامة) */
             const ageStrHTML = currentLang === 'ar' 
-                ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` 
+                ? `<div dir="rtl" style="display:inline-block;">${ageTravel.years} سنة و ${ageTravel.months} شهر و ${ageTravel.days} يوم</div>` 
                 : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
             
             const dateStr = today.toISOString().split('T')[0];
@@ -753,7 +770,10 @@
                 reminderBtnHTML = `<button class="btn-reminder" onclick="window.open('${calLink}', '_blank')">${dict[currentLang].btnReminder}</button>`;
             }
             
-            const waMessage = currentLang === 'ar' ? `أهلاً بك، تم فحص جواز السفر الخاص بك (${nameVal}).\nالنتيجة: ${statusTitle.replace(/<[^>]*>?/gm, '')}\nالصلاحية: ${remainingText}` : `Hello, passport checked for (${nameVal}).\nResult: ${statusTitle.replace(/<[^>]*>?/gm, '')}\nValidity: ${remainingText}`;
+            // رسالة الواتساب وتجريدها من HTML tags
+            const rawStatusText = statusTitle.replace(/<[^>]*>?/gm, '');
+            const rawRemainText = currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `باقي: ${calculateDiff(today, new Date(expiryVal)).years} سنة و ${calculateDiff(today, new Date(expiryVal)).months} شهر و ${calculateDiff(today, new Date(expiryVal)).days} يوم` : remainingText.replace(/<[^>]*>?/gm, '');
+            const waMessage = currentLang === 'ar' ? `أهلاً بك، تم فحص جواز السفر الخاص بك (${nameVal}).\nالنتيجة: ${rawStatusText}\nالصلاحية: ${rawRemainText}` : `Hello, passport checked for (${nameVal}).\nResult: ${rawStatusText}\nValidity: ${rawRemainText}`;
             const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
 
             groupPassengersData.push({ name: nameVal.toUpperCase(), pass: passNum, dob: dobVal, exp: expiryVal || "N/A", type: type });
@@ -762,8 +782,8 @@
             <div class="voucher mb-4" id="ticket_${ticketCount}">
                 <div class="v-head">
                     <div class="v-date-corner">${dateStr}</div>
-                    <h3 class="v-title-main">PASS CHECK</h3>
-                    <p class="v-title-sub">${nationalityData.name || 'TRAVEL DOCUMENT'}</p>
+                    <h3 class="v-title-main">TRAVEL ELIGIBILITY</h3>
+                    <p class="v-title-sub">DOCUMENT STATUS CHECK</p>
                 </div>
                 <div class="v-body">
                     <div class="v-passenger-row">
@@ -779,14 +799,14 @@
                     <div class="v-status-box" style="background-color:${boxColor}; border-color:${borderColor}; color:${textColor};">
                         <p class="v-status-label" style="font-size: 10px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase;">TRAVEL VALIDITY STATUS</p>
                         <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '20px'}; margin-bottom: 6px;">${statusTitle}</h3>
-                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; direction: ${currentLang==='ar'?'rtl':'ltr'};">
-                            ${currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `<span>باقي:</span><span>${calculateDiff(today, new Date(expiryVal)).years}</span><span>سنة و</span><span>${calculateDiff(today, new Date(expiryVal)).months}</span><span>شهر و</span><span>${calculateDiff(today, new Date(expiryVal)).days}</span><span>يوم</span>` : remainingText}
+                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; text-align: center; direction: ${currentLang==='ar'?'rtl':'ltr'};">
+                            ${remainingText}
                         </div>
                         <div class="progress-bg"><div class="progress-fill" style="width: ${progressPct}%; background: ${progressColor};"></div></div>
                     </div>
 
                     <div class="v-detail-row-single">
-                        <div class="v-detail-value" style="width: 100%;">${ageStrHTML}</div>
+                        <div class="v-detail-value" style="width: 100%; text-align: right;">${ageStrHTML}</div>
                         <p class="v-detail-label">${dict[currentLang].ageLabel}</p>
                     </div>
                     <div class="v-details-grid">
@@ -841,7 +861,7 @@
             navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
         }
 
-        /* === حفظ ومشاركة الصورة (بدون كراش) === */
+        /* === حفظ ومشاركة الصورة (الآمن للأندرويد) === */
         function downloadAllImages() {
             const container = document.getElementById('ticketsContainer');
             html2canvas(container, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
