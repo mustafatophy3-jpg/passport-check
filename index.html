@@ -90,7 +90,7 @@
         .placeholder p { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
         .placeholder span { font-size: 11px; color: #94a3b8; font-weight: 600; }
         
-        /* === Cyber UI - شاشة الفحص === */
+        /* === Cyber UI === */
         .cyber-scanner-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); overflow: hidden; }
         .cyber-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(59, 130, 246, 0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.25) 1px, transparent 1px); background-size: 20px 20px; z-index: 1; }
         .cyber-laser { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 25px 8px rgba(59, 130, 246, 0.8); position: absolute; top: 0; z-index: 2; animation: cyberScan 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate; }
@@ -337,7 +337,7 @@
             
             <button class="btn btn-main" style="background: linear-gradient(135deg, #eab308, #d97706); display: none;" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة شخص آخر للمجموعة</button>
             <button class="btn btn-main" style="background: linear-gradient(135deg, #0284c7, #0369a1); display: none;" id="btnExportExcel" onclick="openExportModal()" data-i18n="btnExport">📋 نسخ بيانات المجموعة</button>
-            <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
+            <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">تجهيز التقرير للحفظ 💾</button>
             <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
     </div>
@@ -385,7 +385,7 @@
                 <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
                 <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
                 <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
-                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (التنزيل المباشر ⬇️) أو (المشاركة 🔗).</p>
+                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).</p>
                 <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
                 <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.</p>
             </div>
@@ -406,11 +406,14 @@
         <div class="modal-card" style="text-align: center; padding: 20px;">
             <button class="modal-close-btn" onclick="closeModal('saveOverlay')">✖</button>
             <h3 class="modal-title" style="margin-bottom: 5px;" data-i18n="saveReady">التقرير جاهز!</h3>
-            <p style="font-size: 13px; font-weight: 700; color: #22c55e; margin-bottom: 15px;" data-i18n="saveInst">👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇</p>
-            <div style="max-height: 60vh; overflow-y: auto; border-radius: 12px; border: 2px dashed #3b82f6; padding: 5px; margin-bottom: 15px;">
+            <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 15px; font-weight: 800;">التقرير مشفر بأمان. اختر الإجراء المناسب لك:</p>
+            <div style="max-height: 55vh; overflow-y: auto; border-radius: 12px; border: 2px dashed #3b82f6; padding: 5px; margin-bottom: 15px;">
                 <img id="finalImage" alt="Report" style="width: 100%; display: block; border-radius: 8px;">
             </div>
-            <button class="btn btn-main" onclick="shareImageFile()" data-i18n="btnShareImg" style="margin-top: 10px; width: 100%;">🔗 مشاركة الصورة</button>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openReportInBrowser()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
+                <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareImageFile()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
+            </div>
         </div>
     </div>
 
@@ -461,9 +464,10 @@
     <div class="modal-overlay" id="docFullModal" onclick="if(event.target === this) closeModal('docFullModal')">
         <div class="modal-card" style="text-align: center; padding: 20px;">
             <button class="modal-close-btn" onclick="closeModal('docFullModal')">✖</button>
-            <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 55vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
+            <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 50vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
+            
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">تنزيل</span></button>
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
                 <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareDocImage()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
             </div>
         </div>
@@ -543,7 +547,7 @@
                 btnHome: "الرئيسية", camTitle: "المس هنا لالتقاط أو إدراج الجواز", camSub: "يدعم الفحص التلقائي بالذكاء الاصطناعي", scanning: "جاري الفحص والتحليل...",
                 btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
                 lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري لحساب العمر)", btnGen: "إصدار تقرير الصلاحية",
-                btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻", btnShareImg: "🔗 مشاركة الصورة",
+                btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "تجهيز التقرير للحفظ 💾", btnClear: "مسح وبدء جديد ↻", btnShareImg: "مشاركة",
                 stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور",
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
                 exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
@@ -554,7 +558,7 @@
                 helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
                 helpSec2Text: "يظهر التقرير بحركة بطاقة ثلاثية الأبعاد (3D Flip) وينزل عليه ختم المطار (APPROVED / REJECTED). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير: الصلاحية أقل من 6 أشهر)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة بالسنوات والأشهر والأيام. إذا أدخلت (تاريخ السفر)، سينبهك النظام إذا كان الرضيع سيصبح طفلاً (فوق سنتين) لتجنب غرامات شركات الطيران.<br><b>3. الجنسية:</b> استخراج تلقائي لدولة الإصدار مع العلم.",
                 helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
-                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN) من اختيارك. تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك ومستمسكاتك داخل ذاكرة المتصفح العميقة (بدون إنترنت وبأمان تام). يقوم النظام بضغط الصور تلقائياً للحفاظ على سرعة الهاتف. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (التنزيل المباشر ⬇️) لحفظها في الاستوديو، أو (المشاركة 🔗) لإرسالها عبر الواتساب والبريد.",
+                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN) من اختيارك. تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك ومستمسكاتك داخل ذاكرة المتصفح العميقة (بدون إنترنت وبأمان تام). يقوم النظام بضغط الصور تلقائياً للحفاظ على سرعة الهاتف. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بمتصفح آمن وحفظها بالاستوديو، أو (المشاركة 🔗) لإرسالها عبر الواتساب.",
                 helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
                 helpSec4Text: "تجنب تماماً استخدام (الفلاش) أو التصوير تحت إضاءة ساطعة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل أفقي وواضح لضمان عمل الذكاء الاصطناعي بكفاءة.",
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
@@ -562,7 +566,7 @@
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
                 saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "🪪 محفظة المستندات", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "تنزيل", btnShareDoc: "مشاركة"
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "🪪 محفظة المستندات", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة"
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -571,7 +575,7 @@
                 btnHome: "Home", camTitle: "Tap here to capture passport", camSub: "Supports AI auto scanning", scanning: "Scanning & Analyzing...",
                 btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
                 lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
-                btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Save as Image 💾", btnClear: "Clear & Restart ↻", btnShareImg: "🔗 Share Image",
+                btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Prepare Report 💾", btnClear: "Clear & Restart ↻", btnShareImg: "Share",
                 stgTitle: "⚙️ Settings", stgHist: "🕒 History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ Guide", stgAbout: "👨‍💻 About Developer",
                 histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
                 exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
@@ -582,7 +586,7 @@
                 helpSec2Title: "📊 Second: Validity Report & 3D Card",
                 helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It shows: <br><b>1. Color Indicator:</b> Green (Valid), Yellow (Warning <6 months), Red (Expired).<br><b>2. Age Calculator:</b> Exact age calculator. If 'Travel Date' is provided, it alerts you if an infant becomes a child.<br><b>3. Nationality:</b> Auto-detects issuing country and flag.",
                 helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
-                helpSec3Text: "A secure vault protected by a PIN of your choice. It uses IndexedDB to save your IDs deep in the browser memory (offline & completely secure). It auto-compresses images to save space. You can view, Download ⬇️, or Share 🔗 your documents easily.",
+                helpSec3Text: "A secure vault protected by a PIN of your choice. It uses IndexedDB to save your IDs deep in the browser memory (offline & completely secure). It auto-compresses images to save space. You can view, Download ⬇️ safely via browser fallback, or Share 🔗 your documents easily.",
                 helpSec4Title: "📸 Fourth: Pro Photo Tips",
                 helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear for optimal AI performance.",
                 abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool.",
@@ -590,7 +594,7 @@
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
                 saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "🪪 ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "Download", btnShareDoc: "Share"
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "🪪 ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share"
             }
         };
 
@@ -867,16 +871,8 @@
                 openModal('saveOverlay'); 
             });
         }
-        async function shareImageFile() {
-            try {
-                const imgElement = document.getElementById('finalImage'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
-                const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
-                if (navigator.share) { await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] }); } 
-                else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك، يرجى الضغط مطولاً على الصورة لحفظها." : "Sharing not supported, please long press the image to save."); }
-            } catch(e) { console.error("Share error", e); }
-        }
 
-        /* ==================== محفظة المستندات (الخزنة السرية المكتملة) ==================== */
+        /* ==================== محفظة المستندات (الخزنة السرية) ==================== */
         let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
 
         function initWalletDB() {
@@ -996,23 +992,91 @@
 
         function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
 
+        /* ==================== دوال (الهروب من الكراش) للتنزيل والمشاركة ==================== */
+
+        // 1. هروب التنزيل للمحفظة
         function downloadDocImage() {
             try {
-                const imgSrc = document.getElementById('docFullImg').src; const link = document.createElement('a');
-                link.href = imgSrc; link.download = 'Secure_Document_' + new Date().getTime() + '.jpg';
-                document.body.appendChild(link); link.click(); document.body.removeChild(link); vibrate('success');
-            } catch(e) {}
+                const imgSrc = document.getElementById('docFullImg').src;
+                const newWindow = window.open();
+                if (newWindow) {
+                    newWindow.document.write(`
+                        <html>
+                        <head>
+                            <title>حفظ المستند</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1">
+                        </head>
+                        <body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;">
+                            <h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">تم التجهيز بنجاح</h3>
+                            <p style="color:white; font-family:sans-serif; margin-bottom:20px; font-size:14px;">اضغط مطولاً على الصورة أدناه واختر (حفظ) 💾</p>
+                            <img src="${imgSrc}" style="max-width:95%; max-height:75vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+                        </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                } else {
+                    alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ (Pop-ups) بجهازك، أو التقط شاشة (سكرين شوت)." : "Please allow pop-ups or take a screenshot.");
+                }
+            } catch(e) {
+                alert(currentLang === 'ar' ? "حدث خطأ. يرجى أخذ لقطة شاشة." : "Error. Please take a screenshot.");
+            }
         }
 
+        // 2. هروب التنزيل لتقرير الجواز
+        function openReportInBrowser() {
+            try {
+                const imgSrc = document.getElementById('finalImage').src;
+                const newWindow = window.open();
+                if (newWindow) {
+                    newWindow.document.write(`
+                        <html>
+                        <head>
+                            <title>حفظ تقرير الجواز</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1">
+                        </head>
+                        <body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;">
+                            <h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">تم تجهيز تقرير الفحص</h3>
+                            <p style="color:white; font-family:sans-serif; margin-bottom:20px; font-size:14px;">اضغط مطولاً على الصورة أدناه واختر (حفظ) 💾</p>
+                            <img src="${imgSrc}" style="max-width:95%; max-height:75vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
+                        </body>
+                        </html>
+                    `);
+                    newWindow.document.close();
+                } else {
+                    alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ المنبثقة، أو التقط شاشة." : "Please allow pop-ups or take a screenshot.");
+                }
+            } catch(e) {
+                alert(currentLang === 'ar' ? "حدث خطأ. يرجى أخذ لقطة شاشة." : "Error. Please take a screenshot.");
+            }
+        }
+
+        // 3. درع الأمان للمشاركة للمحفظة
         async function shareDocImage() {
             try {
-                const imgElement = document.getElementById('docFullImg'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
-                const file = new File([blob], "Secure_Document.jpg", { type: "image/jpeg" });
-                if (navigator.share) { await navigator.share({ title: currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document', files: [file] }); } 
-                else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة في متصفحك." : "Sharing not supported in your browser."); }
-            } catch(e) {}
+                if (navigator.share) {
+                    const imgElement = document.getElementById('docFullImg'); 
+                    const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
+                    const file = new File([blob], "Secure_Document.jpg", { type: "image/jpeg" });
+                    await navigator.share({ title: currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document', files: [file] });
+                } else {
+                    alert(currentLang === 'ar' ? "المشاركة المباشرة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save' to open image and share.");
+                }
+            } catch(e) { /* المستخدم ألغى المشاركة أو المنصة رفضت بصمت */ }
+        }
+
+        // 4. درع الأمان للمشاركة لتقرير الجواز
+        async function shareImageFile() {
+            try {
+                if (navigator.share) {
+                    const imgElement = document.getElementById('finalImage'); 
+                    const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
+                    const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
+                    await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] });
+                } else {
+                    alert(currentLang === 'ar' ? "المشاركة المباشرة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save' to open image and share.");
+                }
+            } catch(e) { /* المستخدم ألغى المشاركة أو المنصة رفضت بصمت */ }
         }
     </script>
 </body>
 </html>
-
