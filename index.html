@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* === المتغيرات اللونية (الوضع الفاتح والمظلم) === */
+        /* === المتغيرات === */
         :root {
             --bg-grad-1: #f0f4fd; --bg-grad-2: #d9e6f6;
             --card-bg: rgba(255, 255, 255, 0.65);
@@ -32,18 +32,15 @@
             --btn-glass: rgba(15,23,42,0.5);
         }
 
-        /* === الإعدادات الأساسية === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%); color: var(--text-main); padding: 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; position: relative; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         
-        /* شاشة الترحيب */
         #splashScreen { position: fixed; inset: 0; background: linear-gradient(135deg, #1e3a8a, #0f172a); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
         .splash-logo { font-size: 90px; filter: drop-shadow(0 0 20px rgba(96,165,250,0.5)); animation: pulseLogo 1.5s infinite alternate; }
         .splash-text { color: white; font-weight: 900; font-size: 24px; margin-top: 15px; letter-spacing: 1px; }
         @keyframes pulseLogo { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
 
-        /* الكرات المضيئة في الخلفية */
-        body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(60px); opacity: 0.6; animation: floatOrbs 12s ease-in-out infinite alternate; transition: background 0.3s; pointer-events: none;}
+        body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(60px); opacity: 0.6; animation: floatOrbs 12s ease-in-out infinite alternate; pointer-events: none;}
         body::before { width: 350px; height: 350px; background: var(--orb-1); top: -50px; left: -100px; }
         body::after { width: 300px; height: 300px; background: var(--orb-2); bottom: 5%; right: -50px; animation-delay: -5s; }
         @keyframes floatOrbs { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(40px) scale(1.1); } }
@@ -51,19 +48,18 @@
         .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; z-index: 1; position: relative; }
         .card { background: var(--card-bg); border-radius: 28px; padding: 25px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), inset 0 0 0 1px var(--border-color); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); position: relative; transition: all 0.3s; }
 
-        /* === الهيدر والشريط العلوي === */
+        /* === الهيدر وزر الهمبرغر === */
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .greeting-box { font-size: 12px; font-weight: 800; color: var(--text-sub); display: flex; flex-direction: column; gap: 4px;}
         .conn-indicator { display: flex; align-items: center; gap: 5px; font-size: 10px; }
         .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
         .conn-dot.offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
 
-        /* زر القائمة (الهمبرغر) */
         .hamburger-btn { background: var(--btn-glass); border: 1px solid var(--border-color); color: var(--text-main); width: 44px; height: 44px; border-radius: 14px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); z-index: 100; padding: 0;}
         .hamburger-btn:active { transform: scale(0.9); }
         .hamburger-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
 
-        /* === القائمة الجانبية (Sidebar) الزجاجية === */
+        /* === القائمة الجانبية === */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.4); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
         .sidebar { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: var(--modal-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-left: 1px solid var(--border-color); z-index: 10000; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; padding: 30px 20px; box-shadow: -15px 0 40px rgba(0,0,0,0.15); overflow-y: auto;}
@@ -83,7 +79,7 @@
         [dir="ltr"] .sidebar-btn { text-align: left; }
         .sidebar-btn:active { transform: scale(0.97); background: rgba(59,130,246,0.1); border-color: #3b82f6; color: #3b82f6;}
 
-        /* === الشاشة الرئيسية (Home) بعد الترتيب === */
+        /* === الشاشة الرئيسية === */
         #homeSection { display: flex; flex-direction: column; gap: 20px; align-items: center; text-align: center; margin-top: 20px;}
         .home-logo { font-size: 90px; filter: drop-shadow(0 15px 30px rgba(59,130,246,0.4)); margin-bottom: -10px; animation: floatLogo 3s ease-in-out infinite alternate; }
         .title { font-size: 26px; font-weight: 900; color: var(--text-main); margin-bottom: 2px; }
@@ -149,7 +145,7 @@
         #ticketArea { display: none; margin-top: 20px; perspective: 1000px; }
         #ticketsContainer { display: flex; flex-direction: column; gap: 15px; }
 
-        /* === البطاقة التقرير 3D === */
+        /* === بطاقة التقرير === */
         .voucher-3d { animation: flipIn3D 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform-origin: center; opacity: 0; transform-style: preserve-3d; }
         @keyframes flipIn3D { 0% { transform: rotateY(-90deg) scale(0.9); opacity: 0; } 100% { transform: rotateY(0deg) scale(1); opacity: 1; } }
 
@@ -195,10 +191,7 @@
         .v-pass-num-label { font-size: 9px; color: #94a3b8; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; }
         .v-pass-num-value { font-size: 22px; font-weight: 900; font-family: monospace; color: #0f172a; }
         
-        .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 15px; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; }
-        .btn-reminder { background: #f8fafc; color: #2563eb; border: 1px solid #bfdbfe; width: 100%; margin-top: 8px; border-radius: 12px; padding: 10px; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; }
-
-        /* === النوافذ المنبثقة العامة === */
+        /* === النوافذ المنبثقة === */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: var(--modal-bg); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; color: var(--text-main);}
@@ -221,7 +214,7 @@
         
         .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
 
-        /* === ستايلات المحفظة السرية === */
+        /* === ستايلات المحفظة === */
         .pin-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; direction: ltr; }
         .pin-dot { width: 15px; height: 15px; border-radius: 50%; background: var(--border-color); border: 2px solid #3b82f6; transition: 0.2s; }
         .pin-dot.filled { background: #3b82f6; }
@@ -234,6 +227,13 @@
         .doc-card img { width: 100%; height: 100px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
         .doc-card-title { padding: 8px; font-size: 11px; font-weight: 800; text-align: center; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .doc-delete { position: absolute; top: 5px; right: 5px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer; z-index: 5; display: flex; justify-content: center; align-items: center;}
+        
+        /* === وضع السكرين شوت (Screenshot Overlay) === */
+        #screenshotOverlay { position: fixed; inset: 0; background: #000; z-index: 999999; display: none; justify-content: center; align-items: center; flex-direction: column; }
+        #screenshotOverlay img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .close-screenshot { position: absolute; top: 30px; left: 30px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .screenshot-hint { position: absolute; bottom: 40px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; animation: fadeOutHint 4s forwards; pointer-events: none;}
+        @keyframes fadeOutHint { 0% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -247,6 +247,12 @@
     <div id="splashScreen">
         <div class="splash-logo">🛂</div>
         <div class="splash-text">Smart Pass Check</div>
+    </div>
+
+    <div id="screenshotOverlay">
+        <button class="close-screenshot" onclick="closeScreenshotMode()">✖</button>
+        <img id="screenshotImage" src="" alt="Screenshot View">
+        <div class="screenshot-hint">📸 التقط شاشة الآن (Screenshot) لحفظ الصورة</div>
     </div>
 
     <div class="container">
@@ -275,7 +281,7 @@
                 <p style="font-size:11px; margin-top:-5px; color:var(--text-sub); font-weight: 800;" data-i18n="startHint">لخيارات الفحص العائلي وأدوات النظام، افتح القائمة الجانبية (☰)</p>
 
                 <div class="tips-marquee">
-                    <span id="tipsText">💡 نصيحة: تجنب الانعكاس الضوئي على الجواز عند التصوير | 👶 معلومة: يعتبر المسافر رضيعاً حتى عمر سنتين، وطفلاً من سنتين إلى 12 سنة | ⚖️ تنبيه: إذا كان الطفل (أقل من 18 سنة) يسافر بدون والده أو كان الوالد متوفياً، يجب إحضار حجة وصاية أو وكالة سفر رسمية | 🛂 نصيحة: تأكد من وضوح شريط البيانات (MRZ) أسفل الجواز لضمان دقة القراءة 100%.</span>
+                    <span id="tipsText">💡 نصيحة: تجنب الانعكاس الضوئي على الجواز عند التصوير | 👶 معلومة: يعتبر المسافر طفلاً من سنتين إلى 12 سنة | ⚖️ تنبيه: الطفل (أقل من 18 سنة) المسافر بدون والده يحتاج حجة وصاية أو وكالة رسمية | 🛂 تأكد من وضوح شريط الـ MRZ السفلي لقراءة 100%.</span>
                 </div>
             </div>
 
@@ -344,7 +350,8 @@
             
             <button class="btn btn-main" style="background: linear-gradient(135deg, #eab308, #d97706); display: none;" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة شخص آخر للمجموعة</button>
             <button class="btn btn-main" style="background: linear-gradient(135deg, #0284c7, #0369a1); display: none;" id="btnExportExcel" onclick="openExportModal()" data-i18n="btnExport">📋 نسخ بيانات المجموعة</button>
-            <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">تجهيز التقرير للحفظ 💾</button>
+            
+            <button class="btn btn-success" onclick="prepareReportForScreenshot()" data-i18n="btnSave">عرض التقرير للحفظ 📸</button>
             <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
     </div>
@@ -359,15 +366,15 @@
         </div>
 
         <div class="sidebar-section-title" data-i18n="sideModes">أوضاع الفحص</div>
-        <button class="sidebar-btn" onclick="startScanner('single')">👤 <span data-i18n="btnSingle">فحص فردي (شخص واحد)</span></button>
-        <button class="sidebar-btn" onclick="startScanner('group')">👨‍👩‍👧‍👦 <span data-i18n="btnGroup">فحص عائلي (مجموعة)</span></button>
+        <button class="sidebar-btn" onclick="startScanner('single')">👤 <span data-i18n="btnSingle">فحص فردي</span></button>
+        <button class="sidebar-btn" onclick="startScanner('group')">👨‍👩‍👧‍👦 <span data-i18n="btnGroup">فحص عائلي</span></button>
 
         <div class="sidebar-section-title" data-i18n="sideTools">أدوات النظام</div>
         <button class="sidebar-btn" onclick="openWalletAuth()">🪪 <span data-i18n="walletTitle">المحفظة السرية</span></button>
         <button class="sidebar-btn" onclick="openHistoryModal()">🕒 <span data-i18n="stgHist">سجل الفحص</span></button>
 
         <div class="sidebar-section-title" data-i18n="sideSettings">الإعدادات والملف</div>
-        <button class="sidebar-btn" onclick="toggleDarkMode()">🌙 <span data-i18n="stgDark">الوضع المظلم</span></button>
+        <button class="sidebar-btn" onclick="toggleDarkMode()">🌙 <span data-i18n="stgDark">الوضع المظلم / الفاتح</span></button>
         <button class="sidebar-btn" onclick="toggleLanguage()">🌐 <span data-i18n="stgLang">English / عربي</span></button>
         <button class="sidebar-btn" onclick="openModal('appInfoModal')">ℹ️ <span data-i18n="stgHelp">الدليل الشامل</span></button>
         <button class="sidebar-btn" onclick="openModal('aboutModal')">👨‍💻 <span data-i18n="stgAbout">نبذة عن المطور</span></button>
@@ -396,17 +403,17 @@
     <div class="modal-overlay" id="appInfoModal" onclick="if(event.target === this) closeModal('appInfoModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
-            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل والمفصل</h3>
+            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
-                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص (الماسح السينمائي)</h4>
-                <p data-i18n="helpSec1Text" style="margin-bottom: 15px;">يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.</p>
-                <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
-                <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
-                <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
-                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).</p>
-                <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
-                <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.</p>
+                <p class="intro" data-i18n="helpIntro">أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
+                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص</h4>
+                <p data-i18n="helpSec1Text">يعتمد النظام على قراءة شريط MRZ السفلي لضمان دقة 100%.</p>
+                <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية</h4>
+                <p data-i18n="helpSec2Text">يظهر التقرير مؤشر الألوان للصلاحية، ويحسب العمر الدقيق لتجنب غرامات الطيران للأطفال.</p>
+                <h4 data-i18n="helpSec3Title">🪪 ثالثاً: المحفظة السرية</h4>
+                <p data-i18n="helpSec3Text">خزنة مشفرة بكلمة سر. تحفظ صورك بأمان. استخدم (وضع السكرين شوت) لحفظ الصور بأمان في الاستوديو.</p>
+                <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير</h4>
+                <p data-i18n="helpSec4Text">تجنب الفلاش. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل واضح جداً.</p>
             </div>
         </div>
     </div>
@@ -416,22 +423,7 @@
             <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
             <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
             <div class="info-content">
-                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="saveOverlay" onclick="if(event.target === this) closeModal('saveOverlay')">
-        <div class="modal-card" style="text-align: center; padding: 20px;">
-            <button class="modal-close-btn" onclick="closeModal('saveOverlay')">✖</button>
-            <h3 class="modal-title" style="margin-bottom: 5px;" data-i18n="saveReady">التقرير جاهز!</h3>
-            <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 15px; font-weight: 800;">اختر الإجراء المناسب لك لحفظ أو إرسال التقرير:</p>
-            <div style="max-height: 55vh; overflow-y: auto; border-radius: 12px; border: 2px dashed #3b82f6; padding: 5px; margin-bottom: 15px;">
-                <img id="finalImage" alt="Report" style="width: 100%; display: block; border-radius: 8px;">
-            </div>
-            <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openReportInBrowser()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
-                <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareImageFile()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
+                <p data-i18n="abtText">خبير في مجال السياحة والسفر، طور هذا النظام ليكون أداة دقيقة وسريعة لتقديم تجربة سفر سلسة للجميع.</p>
             </div>
         </div>
     </div>
@@ -457,7 +449,7 @@
     <div class="modal-overlay" id="walletModal" onclick="if(event.target === this) closeWalletModal()">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeWalletModal()">✖</button>
-            <h3 class="modal-title" data-i18n="walletTitle">🪪 محفظة المستندات</h3>
+            <h3 class="modal-title" data-i18n="walletTitle">🪪 المحفظة السرية</h3>
             <div style="background: var(--input-bg); border: 1px dashed #3b82f6; padding: 15px; border-radius: 16px; margin-bottom: 15px; text-align: center; cursor: pointer;" onclick="document.getElementById('walletUpload').click()">
                 <div style="font-size: 24px; margin-bottom: 5px;">➕</div>
                 <div style="font-size: 13px; font-weight: 800; color: #3b82f6;" data-i18n="walletAdd">إضافة مستند جديد</div>
@@ -475,7 +467,7 @@
             <input type="text" id="docNameInput" class="search-box" style="text-align: center; margin-bottom: 10px;" placeholder="اسم المستند (مثال: بطاقة وطنية)" data-i18n-ph="docNamePh">
             <div style="display: flex; gap: 10px;">
                 <button class="btn btn-main" style="margin-top: 0; background: var(--btn-glass); border: 1px solid var(--border-color); color: var(--text-main);" onclick="closeDocView()" data-i18n="btnCancel">إلغاء</button>
-                <button class="btn btn-success" style="margin-top: 0;" onclick="saveDocToWallet()" data-i18n="btnSaveDoc">حفظ بالمحفظة 🔒</button>
+                <button class="btn btn-success" style="margin-top: 0;" onclick="saveDocToWallet()" data-i18n="btnSaveDoc">حفظ 🔒</button>
             </div>
         </div>
     </div>
@@ -486,18 +478,16 @@
             <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 50vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
             
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
-                <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareDocImage()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openScreenshotMode('docFullImg')"><span style="font-size: 16px;">📸</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
             </div>
         </div>
     </div>
 
     <script>
-        // دوال الأمان لمنع الكراش من الذاكرة
         function safeGetItem(key, defaultVal) { try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; } }
         function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
 
-        // نظام الصوت المريح
+        // نظام الصوت
         let audioCtx; let audioInitialized = false;
         function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } }
         function playClickSound() {
@@ -532,12 +522,9 @@
                 }
             } catch(e) {}
         }
-        function vibrate(type) {
-            if (!navigator.vibrate) return;
-            if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]);
-        }
+        function vibrate(type) { if (!navigator.vibrate) return; if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]); }
 
-        // المتغيرات والقاموس
+        // المتغيرات
         let currentLang = safeGetItem('appLang', 'ar');
         let isDarkMode = safeGetItem('darkMode') === 'true';
         let appMode = 'single'; 
@@ -546,7 +533,7 @@
         let imageElement;
         let groupPassengersData = []; 
         let nationalityData = { flag: "🌍", name: "" };
-        const API_KEY = 'helloworld'; // استبدل بمفتاح OCR حقيقي لاحقاً
+        const API_KEY = 'helloworld'; 
 
         const countries = {
             'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
@@ -559,74 +546,11 @@
             'GBR': { ar: 'بريطانيا 🇬🇧', en: 'UK 🇬🇧' }, 'CAN': { ar: 'كندا 🇨🇦', en: 'Canada 🇨🇦' }
         };
 
-        const dict = {
-            ar: {
-                appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", 
-                btnStart: "بدء الفحص 🚀", startHint: "لخيارات الفحص العائلي وأدوات النظام، افتح القائمة الجانبية (☰)",
-                sideModes: "أوضاع الفحص", sideTools: "أدوات النظام", sideSettings: "الإعدادات والملف",
-                btnSingle: "فحص فردي (شخص واحد)", descSingle: "استخراج تقرير صلاحية لجواز سفر واحد",
-                btnGroup: "فحص عائلي (مجموعة)", descGroup: "فحص عدة جوازات وإصدار تقرير شامل",
-                btnHome: "الرئيسية", camTitle: "المس هنا لالتقاط أو إدراج الجواز", camSub: "يدعم الفحص التلقائي بالذكاء الاصطناعي", scanning: "جاري الفحص والتحليل...",
-                btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
-                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري لحساب العمر)", btnGen: "إصدار تقرير الصلاحية",
-                btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "تجهيز التقرير للحفظ 💾", btnClear: "مسح وبدء جديد ↻", btnShareImg: "مشاركة",
-                stgTitle: "⚙️ الإعدادات", stgHist: "سجل الفحص", stgLang: "English / عربي", stgDark: "الوضع المظلم / الفاتح", stgHelp: "الدليل الشامل", stgAbout: "نبذة عن المطور",
-                histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
-                exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
-                helpTitle: "ℹ️ الدليل الشامل والمفصل", 
-                helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
-                helpSec1Title: "🔍 أولاً: نظام الفحص (الماسح السينمائي)",
-                helpSec1Text: "يعمل النظام بدمج تقنيتين لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI أثناء قيام النظام بتحليل البيانات. يدعم النظام وضعين: الفردي، والعائلي لفحص عدة جوازات وجمعهم بقائمة.",
-                helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
-                helpSec2Text: "يظهر التقرير بحركة بطاقة (3D Flip). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.",
-                helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
-                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح العميقة بأمان تام. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) أو (المشاركة 🔗).",
-                helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
-                helpSec4Text: "تجنب استخدام (الفلاش) أو التصوير تحت إضاءة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان عمل الذكاء الاصطناعي بكفاءة.",
-                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام ليكون أداة دقيقة وسريعة لتقديم تجربة سفر سلسة للجميع.",
-                modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
-                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
-                warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
-                saveReady: "التقرير جاهز!", saveInst: "👇 اختر الإجراء المناسب لحفظ أو إرسال التقرير 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة"
-            },
-            en: {
-                appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
-                btnStart: "Start Scan 🚀", startHint: "For group scanning & tools, open side menu (☰)",
-                sideModes: "Scan Modes", sideTools: "System Tools", sideSettings: "Settings & Profile",
-                btnSingle: "Single Scan", descSingle: "Generate report for one passport",
-                btnGroup: "Group Scan", descGroup: "Scan multiple passports at once",
-                btnHome: "Home", camTitle: "Tap here to capture passport", camSub: "Supports AI auto scanning", scanning: "Scanning & Analyzing...",
-                btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
-                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
-                btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Prepare Report 💾", btnClear: "Clear & Restart ↻", btnShareImg: "Share",
-                stgTitle: "⚙️ Settings", stgHist: "Scan History", stgLang: "التبديل للعربية", stgDark: "Dark / Light Mode", stgHelp: "User Guide", stgAbout: "About Developer",
-                histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
-                exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
-                helpTitle: "ℹ️ Comprehensive Guide", 
-                helpIntro: "Welcome to the Comprehensive Guide. This system is a professional Super App combining AI passport checking with local encryption for document security.",
-                helpSec1Title: "🔍 First: Scanning System (Cyber UI)",
-                helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly.",
-                helpSec2Title: "📊 Second: Validity Report & 3D Card",
-                helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It calculates precise age and country of issue automatically.",
-                helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
-                helpSec3Text: "A secure vault protected by a PIN. It uses IndexedDB to save your IDs locally (offline & secure). You can View to Save ⬇️ or Share 🔗 your documents easily.",
-                helpSec4Title: "📸 Fourth: Pro Photo Tips",
-                helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear.",
-                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who developed this smart system as an accurate and fast assistive tool to reduce human errors in passport checks.",
-                modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
-                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
-                warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
-                saveReady: "Report Ready!", saveInst: "👇 Choose an action to save or share the report 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share"
-            }
-        };
-
-        // واجهة المستخدم وإعدادات اللغة والوضع
+        // واجهة المستخدم
         function applyLanguage() {
             document.getElementById('htmlTag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (dict[currentLang][key]) el.innerHTML = dict[currentLang][key]; });
-            document.querySelectorAll('[data-i18n-ph]').forEach(el => { const key = el.getAttribute('data-i18n-ph'); if (dict[currentLang][key]) el.placeholder = dict[currentLang][key]; });
+            document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (dict[currentLang] && dict[currentLang][key]) el.innerHTML = dict[currentLang][key]; });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => { const key = el.getAttribute('data-i18n-ph'); if (dict[currentLang] && dict[currentLang][key]) el.placeholder = dict[currentLang][key]; });
             if(appMode) document.getElementById('currentModeBadge').innerText = appMode === 'single' ? dict[currentLang].modeS : dict[currentLang].modeG;
             updateGreeting();
         }
@@ -639,23 +563,17 @@
             let gEn = h < 12 ? "Good Morning ☀️" : h < 18 ? "Good Afternoon 🌤️" : "Good Evening 🌙";
             document.getElementById('greetingText').innerText = currentLang === 'ar' ? gAr : gEn;
         }
-        function updateConnectionStatus() {
-            const dot = document.getElementById('connDot'); const txt = document.getElementById('connText');
-            if (navigator.onLine) { dot.classList.remove('offline'); txt.innerText = currentLang === 'ar' ? 'متصل بالسيرفر' : 'Connected'; } 
-            else { dot.classList.add('offline'); txt.innerText = currentLang === 'ar' ? 'غير متصل (تأكد من النت)' : 'Offline'; }
-        }
-        window.addEventListener('online', updateConnectionStatus); window.addEventListener('offline', updateConnectionStatus);
 
         window.addEventListener('DOMContentLoaded', function() {
             try {
                 imageElement = document.getElementById('previewImg');
                 document.getElementById('travelDateInput').valueAsDate = new Date();
-                applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
+                applyLanguage(); applyDarkMode(); updateGreeting();
                 initWalletDB(); 
-            } catch(e) { console.error("Init err", e); }
+            } catch(e) {}
         });
 
-        // دوال القائمة الجانبية (Sidebar) والنوافذ
+        // النوافذ
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
         function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
         
@@ -679,7 +597,6 @@
             else { document.getElementById('scannerSection').scrollIntoView({behavior: 'smooth'}); }
         }
 
-        // السجل (History)
         function saveToHistory(name, pass) {
             try {
                 let history = JSON.parse(safeGetItem('scanHistory', '[]'));
@@ -691,7 +608,7 @@
         function openHistoryModal() { document.getElementById('historySearch').value = ''; try { renderHistory(JSON.parse(safeGetItem('scanHistory', '[]'))); } catch(e) { renderHistory([]); } openModal('historyModal'); }
         function renderHistory(history) {
             const container = document.getElementById('historyListContainer'); container.innerHTML = '';
-            if(history.length === 0) { container.innerHTML = `<div class="empty-history" style="text-align:center; color:var(--text-sub); padding:15px;">${dict[currentLang].histEmpty}</div>`; } 
+            if(history.length === 0) { container.innerHTML = `<div style="text-align:center; color:var(--text-sub); padding:15px;">${dict[currentLang].histEmpty}</div>`; } 
             else { history.forEach(item => { container.innerHTML += `<div class="history-item"><div class="history-info"><h4>${item.name}</h4><p style="font-size:12px; color:var(--text-sub);">${item.pass}</p></div><div class="history-time" style="color:#3b82f6; font-size:11px; font-weight:800;">${item.time}</div></div>`; }); }
         }
         function filterHistory() {
@@ -699,12 +616,30 @@
             try { const history = JSON.parse(safeGetItem('scanHistory', '[]')); const filtered = history.filter(item => item.name.toLowerCase().includes(query) || item.pass.toLowerCase().includes(query)); renderHistory(filtered); } catch(e) {}
         }
 
-        // قارئ الصور والذكاء الاصطناعي
+        // ==========================================
+        // تعديل الـ OCR الجذري (التركيز على الـ MRZ)
+        // ==========================================
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) { const reader = new FileReader(); reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; nationalityData = { flag: "🌍", name: "" }; }; reader.readAsDataURL(file); }
         }
         function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
+
+        // حل مشكلة التدوير: إرسال الصورة بدقتها الأصلية إذا لم يتم تدويرها
+        function getRotatedImage() {
+            return new Promise((resolve) => {
+                if (currentRotation === 0) {
+                    resolve(imageElement.src); // دقة 100% بدون تدخل الكانفاس
+                    return;
+                }
+                const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); const img = new Image(); img.src = imageElement.src;
+                img.onload = () => {
+                    if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } else { canvas.width = img.width; canvas.height = img.height; }
+                    ctx.translate(canvas.width / 2, canvas.height / 2); ctx.rotate(currentRotation * Math.PI / 180); ctx.drawImage(img, -img.width / 2, -img.height / 2);
+                    resolve(canvas.toDataURL('image/jpeg', 1.0)); // استخدام أعلى جودة
+                };
+            });
+        }
 
         async function processImage() {
             initAudio(); 
@@ -718,50 +653,71 @@
                 const data = await response.json();
                 if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) throw new Error("فشل");
                 
-                const text = data.ParsedResults[0].ParsedText;
+                const rawText = data.ParsedResults[0].ParsedText.replace(/\r/g, "");
                 
-                const mrzMatch = text.match(/P<([A-Z]{3})/);
+                // 1. الجنسية من الـ MRZ
+                const mrzMatch = rawText.match(/P<([A-Z]{3})/);
                 if (mrzMatch && mrzMatch[1]) { const code = mrzMatch[1]; if (countries[code]) { nationalityData = { flag: countries[code][currentLang].slice(-2), name: countries[code][currentLang] }; } }
 
-                extractDates(text); extractNameFromText(text); extractPassportNumber(text);
+                // 2. القناص (قراءة شريط MRZ السطر الثاني للأرقام والتواريخ بدقة 100%)
+                const mrz2Regex = /([A-Z0-9<]{9})\d[A-Z<]{3}(\d{2})(\d{2})(\d{2})\d[MF<](\d{2})(\d{2})(\d{2})/;
+                const match2 = rawText.match(mrz2Regex);
+                
+                if(match2) {
+                    // استخراج رقم الجواز
+                    document.getElementById('passNumInput').value = match2[1].replace(/</g, '');
+                    
+                    // استخراج الميلاد (YYMMDD)
+                    let yy = parseInt(match2[2]);
+                    let fullYear = (yy > 30) ? (1900 + yy) : (2000 + yy);
+                    document.getElementById('dobInput').value = `${fullYear}-${match2[3]}-${match2[4]}`;
+                    
+                    // استخراج الانتهاء (YYMMDD)
+                    let expYY = 2000 + parseInt(match2[5]);
+                    document.getElementById('expiryInput').value = `${expYY}-${match2[6]}-${match2[7]}`;
+                    
+                } else {
+                    // إذا فشل الـ MRZ، نستخدم القراءة العشوائية كخيار بديل
+                    extractDates(rawText);
+                    extractPassportNumber(rawText);
+                }
+
+                // 3. استخراج الاسم من السطر الأول للـ MRZ
+                const mrz1Regex = /P<[A-Z<]{3}([A-Z]+)<<([A-Z<]+)/;
+                const match1 = rawText.match(mrz1Regex);
+                if(match1) {
+                    let sur = match1[1].replace(/</g, ' ').trim();
+                    let given = match1[2].replace(/</g, ' ').trim();
+                    document.getElementById('nameInput').value = `${given} ${sur}`;
+                } else {
+                    extractNameFromText(rawText);
+                }
+
+                highlightField('nameInput'); highlightField('passNumInput'); highlightField('dobInput'); highlightField('expiryInput');
                 vibrate('success'); playSound('success');
             } catch (error) { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرجاء إدخال البيانات يدوياً." : "Please enter data manually."); } 
             finally { document.getElementById('loader').style.display = 'none'; }
         }
 
-        function getRotatedImage() {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); const img = new Image(); img.src = imageElement.src;
-                img.onload = () => {
-                    if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } else { canvas.width = img.width; canvas.height = img.height; }
-                    ctx.translate(canvas.width / 2, canvas.height / 2); ctx.rotate(currentRotation * Math.PI / 180); ctx.drawImage(img, -img.width / 2, -img.height / 2);
-                    resolve(canvas.toDataURL('image/jpeg', 0.8));
-                };
-            });
-        }
-
+        // الدوال البديلة (إذا كان الـ MRZ غير واضح)
         function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
-
         function extractDates(text) {
             const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g]; let dates = [];
             let matches1 = [...text.matchAll(datePatterns[0])]; matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
             let matches2 = [...text.matchAll(datePatterns[1])]; matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
             dates = dates.filter(d => { let y = parseInt(d.split('-')[0]); return y > 1920 && y < 2050; }).sort();
             if (dates.length > 0) {
-                document.getElementById('dobInput').value = dates[0]; highlightField('dobInput');
-                let lastDate = dates[dates.length - 1]; if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; highlightField('expiryInput'); }
+                document.getElementById('dobInput').value = dates[0];
+                let lastDate = dates[dates.length - 1]; if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; }
             }
         }
         function extractNameFromText(text) {
-            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g; const matches = [...text.matchAll(mrzRegex)];
-            if (matches.length > 0) { let s = matches[0][1].replace(/</g, ' ').trim(); let g = matches[0][2].replace(/</g, ' ').trim(); document.getElementById('nameInput').value = `${g} ${s}`; highlightField('nameInput'); } 
-            else { const lines = text.split('\n'); for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { document.getElementById('nameInput').value = line.trim(); break; } } }
+            const lines = text.split('\n'); for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { document.getElementById('nameInput').value = line.trim(); break; } }
         }
         function extractPassportNumber(text) {
-            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g; const matchesMRZ = [...text.matchAll(mrzPattern)];
-            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1]; highlightField('passNumInput'); } 
-            else { const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) { document.getElementById('passNumInput').value = visualMatches[0][0]; } }
+            const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) { document.getElementById('passNumInput').value = visualMatches[0][0]; }
         }
+
         function calculateDiff(startDate, endDate) {
             let years = endDate.getFullYear() - startDate.getFullYear(); let months = endDate.getMonth() - startDate.getMonth(); let days = endDate.getDate() - startDate.getDate();
             if (days < 0) { months--; days += new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate(); } if (months < 0) { years--; months += 12; }
@@ -805,19 +761,7 @@
             
             const ageStrHTML = currentLang === 'ar' ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
             const dateStr = today.toISOString().split('T')[0];
-
-            let reminderBtnHTML = '';
-            if (expiryVal && new Date(expiryVal) > today) {
-                const remindDate = new Date(expiryVal); remindDate.setMonth(remindDate.getMonth() - 6);
-                const dStr = remindDate.toISOString().replace(/-|:|\.\d\d\d/g,"");
-                const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تجديد جواز ' + nameVal)}&dates=${dStr}/${dStr}&details=${encodeURIComponent('تذكير لتجديد الجواز')}`;
-                reminderBtnHTML = `<button class="btn-reminder" onclick="window.open('${calLink}', '_blank')">${dict[currentLang].btnReminder}</button>`;
-            }
             
-            const rawStatusText = statusTitle.replace(/<[^>]*>?/gm, ''); const rawRemainText = currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `باقي: ${calculateDiff(today, new Date(expiryVal)).years} سنة و ${calculateDiff(today, new Date(expiryVal)).months} شهر و ${calculateDiff(today, new Date(expiryVal)).days} يوم` : remainingText.replace(/<[^>]*>?/gm, '');
-            const waMessage = currentLang === 'ar' ? `أهلاً بك، تم فحص جواز السفر الخاص بك (${nameVal}).\nالنتيجة: ${rawStatusText}\nالصلاحية: ${rawRemainText}` : `Hello, passport checked for (${nameVal}).\nResult: ${rawStatusText}\nValidity: ${rawRemainText}`;
-            const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
-
             groupPassengersData.push({ name: nameVal.toUpperCase(), pass: passNum, dob: dobVal, exp: expiryVal || "N/A", type: type });
 
             const ticketHTML = `
@@ -851,14 +795,10 @@
                         <div class="v-grid-box"><p class="v-grid-label">EXPIRY DATE</p><p class="v-grid-value">${expiryVal || "--"}</p></div>
                         <div class="v-grid-box"><p class="v-grid-label">BIRTH DATE</p><p class="v-grid-value">${dobVal}</p></div>
                     </div>
-                    ${reminderBtnHTML}
                     <div class="v-footer">
                         <div class="qr-container"><canvas class="qr-canvas"></canvas></div>
                         <div class="v-pass-num-box"><p class="v-pass-num-label">PASSPORT NO</p><p class="v-pass-num-value">${passNum}</p></div>
                     </div>
-                    <button class="btn-wa" onclick="window.open('${waLink}', '_blank')"><svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                        <span data-i18n="btnWa">${dict[currentLang].btnWa}</span>
-                    </button>
                 </div>
             </div>`;
 
@@ -876,29 +816,39 @@
             ticketCount++;
         }
 
-        function openExportModal() {
-            if(groupPassengersData.length === 0) return;
-            let textContent = currentLang === 'ar' ? "الاسم | الجواز | الميلاد | النفاذ | الفئة\n" : "Name | Passport | DOB | EXP | Type\n";
-            textContent += "----------------------------------------\n";
-            groupPassengersData.forEach(p => { textContent += `${p.name} | ${p.pass} | ${p.dob} | ${p.exp} | ${p.type}\n`; });
-            document.getElementById('exportDataContent').innerText = textContent;
-            openModal('exportModal');
-        }
-        function copyExportData() {
-            const text = document.getElementById('exportDataContent').innerText;
-            navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
-        }
-        function downloadAllImages() {
+        // ==========================================
+        // وضع السكرين شوت (الهروب من الـ APK نهائياً)
+        // ==========================================
+        
+        // تجهيز تقرير الفحص للسكرين شوت
+        function prepareReportForScreenshot() {
             const container = document.getElementById('ticketsContainer');
             html2canvas(container, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
-                document.getElementById('finalImage').src = canvas.toDataURL('image/png');
-                openModal('saveOverlay'); 
+                const imgData = canvas.toDataURL('image/png');
+                openScreenshotMode(imgData);
             });
         }
 
-        /* ==================== محفظة المستندات (الخزنة السرية) ==================== */
-        let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
+        // فتح وضع السكرين شوت للشاشة كاملة
+        function openScreenshotMode(imgSrcIdOrData) {
+            let src = imgSrcIdOrData;
+            if(document.getElementById(imgSrcIdOrData)) {
+                src = document.getElementById(imgSrcIdOrData).src;
+            }
+            document.getElementById('screenshotImage').src = src;
+            document.getElementById('screenshotOverlay').style.display = 'flex';
+            // إغلاق النوافذ المفتوحة
+            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        }
 
+        function closeScreenshotMode() {
+            document.getElementById('screenshotOverlay').style.display = 'none';
+            document.getElementById('screenshotImage').src = "";
+        }
+
+
+        // المحفظة السرية
+        let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
         function initWalletDB() {
             try {
                 if (!window.indexedDB) return;
@@ -910,62 +860,34 @@
                 request.onsuccess = function(e) { walletDB = e.target.result; }; request.onerror = function(e) {};
             } catch (e) {}
         }
-
         function openWalletAuth() {
-            closeSidebar(); enteredPin = ""; updatePinDots();
-            const savedPin = safeGetItem("walletPIN", "");
-            
-            if (!savedPin) {
-                isPinSetupMode = true; setupPinStep = 1;
-                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN";
-                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "أدخل 4 أرقام لحماية مستمسكاتك" : "Enter 4 digits to secure your IDs";
-            } else {
-                isPinSetupMode = false;
-                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code";
-                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية ومحفوظة بجهازك فقط" : "Wallet is encrypted and saved locally";
-            }
+            closeSidebar(); enteredPin = ""; updatePinDots(); const savedPin = safeGetItem("walletPIN", "");
+            if (!savedPin) { isPinSetupMode = true; setupPinStep = 1; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN"; document.getElementById('pinSub').innerText = currentLang === 'ar' ? "أدخل 4 أرقام لحماية مستمسكاتك" : "Enter 4 digits to secure your IDs"; } 
+            else { isPinSetupMode = false; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية ومحفوظة بجهازك فقط" : "Wallet is encrypted and saved locally"; }
             openModal('pinModal');
         }
-
         function closeWalletAuth() { closeModal('pinModal'); }
         function closeWalletModal() { closeModal('walletModal'); }
         function closeDocView() { closeModal('docViewModal'); document.getElementById('docNameInput').value = ''; }
-
-        function updatePinDots() {
-            for(let i=1; i<=4; i++) { let dot = document.getElementById('dot'+i); if(i <= enteredPin.length) dot.classList.add('filled'); else dot.classList.remove('filled'); }
-        }
-
-        function addPin(num) {
-            if (enteredPin.length < 4) { enteredPin += num; updatePinDots(); if (enteredPin.length === 4) setTimeout(checkPin, 200); }
-        }
-
+        function updatePinDots() { for(let i=1; i<=4; i++) { let dot = document.getElementById('dot'+i); if(i <= enteredPin.length) dot.classList.add('filled'); else dot.classList.remove('filled'); } }
+        function addPin(num) { if (enteredPin.length < 4) { enteredPin += num; updatePinDots(); if (enteredPin.length === 4) setTimeout(checkPin, 200); } }
         function removePin() { if (enteredPin.length > 0) { enteredPin = enteredPin.slice(0, -1); updatePinDots(); } }
-
         function checkPin() {
             if (isPinSetupMode) {
-                if (setupPinStep === 1) {
-                    tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN";
-                } else if (setupPinStep === 2) {
+                if (setupPinStep === 1) { tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN"; } 
+                else if (setupPinStep === 2) {
                     if (enteredPin === tempSetupPin) { safeSetItem("walletPIN", enteredPin); vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery(); } 
                     else { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرمز غير متطابق، أعد المحاولة" : "PINs do not match, try again"); enteredPin = ""; updatePinDots(); setupPinStep = 1; tempSetupPin = ""; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN"; }
                 }
             } else {
                 const savedPin = safeGetItem("walletPIN", "");
                 if (enteredPin === savedPin) { vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery(); } 
-                else {
-                    vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots();
-                    document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!";
-                    document.getElementById('pinTitle').style.color = "#ef4444";
-                    setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500);
-                }
+                else { vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots(); document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!"; document.getElementById('pinTitle').style.color = "#ef4444"; setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500); }
             }
         }
-
         function openWalletGallery() { openModal('walletModal'); loadDocsFromDB(); }
-
         function loadDocsFromDB() {
-            const container = document.getElementById('walletGallery'); container.innerHTML = '';
-            if(!walletDB) return;
+            const container = document.getElementById('walletGallery'); container.innerHTML = ''; if(!walletDB) return;
             try {
                 const transaction = walletDB.transaction(["documents"], "readonly"); const store = transaction.objectStore("documents"); const request = store.getAll();
                 request.onsuccess = function(e) {
@@ -975,27 +897,20 @@
                 };
             } catch(e) {}
         }
-
         function handleWalletUpload(event) {
             const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; 
-                    const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
-                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height); const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
                     document.getElementById('docPreviewImg').src = compressedDataUrl; document.getElementById('docNameInput').value = ''; openModal('docViewModal');
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file); event.target.value = ''; 
+                }; img.src = e.target.result;
+            }; reader.readAsDataURL(file); event.target.value = ''; 
         }
-
         function saveDocToWallet() {
-            const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc');
-            const imgData = document.getElementById('docPreviewImg').src;
+            const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc'); const imgData = document.getElementById('docPreviewImg').src;
             if(!walletDB) return;
             try {
                 const transaction = walletDB.transaction(["documents"], "readwrite"); const store = transaction.objectStore("documents");
@@ -1003,7 +918,6 @@
                 request.onsuccess = function() { vibrate('success'); closeDocView(); loadDocsFromDB(); };
             } catch(e) {}
         }
-
         function deleteDoc(id, event) {
             event.stopPropagation();
             if(confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح هذا المستند؟' : 'Are you sure you want to delete this document?')) {
@@ -1013,49 +927,18 @@
                 } catch(e) {}
             }
         }
-
         function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
 
-        /* ==================== دوال الحفظ والمشاركة الآمنة (Web/APK Safe) ==================== */
-
-        function downloadDocImage() {
-            try {
-                const imgSrc = document.getElementById('docFullImg').src; const newWindow = window.open();
-                if (newWindow) {
-                    newWindow.document.write(`<html><head><title>حفظ المستند</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;"><h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">تم التجهيز بنجاح</h3><p style="color:white; font-family:sans-serif; margin-bottom:20px; font-size:14px;">اضغط مطولاً على الصورة أدناه واختر (حفظ) 💾</p><img src="${imgSrc}" style="max-width:95%; max-height:75vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);"></body></html>`);
-                    newWindow.document.close();
-                } else { alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ (Pop-ups) بجهازك." : "Please allow pop-ups."); }
-            } catch(e) { alert(currentLang === 'ar' ? "حدث خطأ. يرجى أخذ لقطة شاشة." : "Error. Please take a screenshot."); }
+        // التصدير للاكسيل
+        function openExportModal() {
+            if(groupPassengersData.length === 0) return;
+            let textContent = currentLang === 'ar' ? "الاسم | الجواز | الميلاد | النفاذ | الفئة\n" : "Name | Passport | DOB | EXP | Type\n"; textContent += "----------------------------------------\n";
+            groupPassengersData.forEach(p => { textContent += `${p.name} | ${p.pass} | ${p.dob} | ${p.exp} | ${p.type}\n`; });
+            document.getElementById('exportDataContent').innerText = textContent; openModal('exportModal');
         }
-
-        function openReportInBrowser() {
-            try {
-                const imgSrc = document.getElementById('finalImage').src; const newWindow = window.open();
-                if (newWindow) {
-                    newWindow.document.write(`<html><head><title>حفظ التقرير</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;"><h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">تم تجهيز التقرير</h3><p style="color:white; font-family:sans-serif; margin-bottom:20px; font-size:14px;">اضغط مطولاً على الصورة أدناه واختر (حفظ) 💾</p><img src="${imgSrc}" style="max-width:95%; max-height:75vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);"></body></html>`);
-                    newWindow.document.close();
-                } else { alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ (Pop-ups) بجهازك." : "Please allow pop-ups."); }
-            } catch(e) { alert(currentLang === 'ar' ? "حدث خطأ. يرجى أخذ لقطة شاشة." : "Error. Please take a screenshot."); }
-        }
-
-        async function shareDocImage() {
-            try {
-                if (navigator.share) {
-                    const imgElement = document.getElementById('docFullImg'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
-                    const file = new File([blob], "Secure_Document.jpg", { type: "image/jpeg" });
-                    await navigator.share({ title: currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document', files: [file] });
-                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save'."); }
-            } catch(e) {}
-        }
-
-        async function shareImageFile() {
-            try {
-                if (navigator.share) {
-                    const imgElement = document.getElementById('finalImage'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
-                    const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
-                    await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] });
-                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save'."); }
-            } catch(e) {}
+        function copyExportData() {
+            const text = document.getElementById('exportDataContent').innerText;
+            navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
         }
     </script>
 </body>
