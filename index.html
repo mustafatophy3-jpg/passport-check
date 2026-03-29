@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* === المتغيرات === */
+        /* === المتغيرات اللونية (الوضع الفاتح والمظلم) === */
         :root {
             --bg-grad-1: #f0f4fd; --bg-grad-2: #d9e6f6;
             --card-bg: rgba(255, 255, 255, 0.65);
@@ -32,6 +32,7 @@
             --btn-glass: rgba(15,23,42,0.5);
         }
 
+        /* === الإعدادات الأساسية === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%); color: var(--text-main); padding: 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; position: relative; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         
@@ -40,7 +41,7 @@
         .splash-text { color: white; font-weight: 900; font-size: 24px; margin-top: 15px; letter-spacing: 1px; }
         @keyframes pulseLogo { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
 
-        body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(60px); opacity: 0.6; animation: floatOrbs 12s ease-in-out infinite alternate; pointer-events: none;}
+        body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(60px); opacity: 0.6; animation: floatOrbs 12s ease-in-out infinite alternate; transition: background 0.3s; pointer-events: none;}
         body::before { width: 350px; height: 350px; background: var(--orb-1); top: -50px; left: -100px; }
         body::after { width: 300px; height: 300px; background: var(--orb-2); bottom: 5%; right: -50px; animation-delay: -5s; }
         @keyframes floatOrbs { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(40px) scale(1.1); } }
@@ -191,7 +192,7 @@
         .v-pass-num-label { font-size: 9px; color: #94a3b8; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; }
         .v-pass-num-value { font-size: 22px; font-weight: 900; font-family: monospace; color: #0f172a; }
         
-        /* === النوافذ المنبثقة === */
+        /* === النوافذ المنبثقة العامة === */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: var(--modal-bg); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; color: var(--text-main);}
@@ -227,13 +228,6 @@
         .doc-card img { width: 100%; height: 100px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
         .doc-card-title { padding: 8px; font-size: 11px; font-weight: 800; text-align: center; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .doc-delete { position: absolute; top: 5px; right: 5px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer; z-index: 5; display: flex; justify-content: center; align-items: center;}
-        
-        /* === وضع السكرين شوت (Screenshot Overlay) === */
-        #screenshotOverlay { position: fixed; inset: 0; background: #000; z-index: 999999; display: none; justify-content: center; align-items: center; flex-direction: column; }
-        #screenshotOverlay img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .close-screenshot { position: absolute; top: 30px; left: 30px; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .screenshot-hint { position: absolute; bottom: 40px; background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: bold; animation: fadeOutHint 4s forwards; pointer-events: none;}
-        @keyframes fadeOutHint { 0% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; } }
     </style>
 </head>
 <body>
@@ -247,12 +241,6 @@
     <div id="splashScreen">
         <div class="splash-logo">🛂</div>
         <div class="splash-text">Smart Pass Check</div>
-    </div>
-
-    <div id="screenshotOverlay">
-        <button class="close-screenshot" onclick="closeScreenshotMode()">✖</button>
-        <img id="screenshotImage" src="" alt="Screenshot View">
-        <div class="screenshot-hint">📸 التقط شاشة الآن (Screenshot) لحفظ الصورة</div>
     </div>
 
     <div class="container">
@@ -351,7 +339,7 @@
             <button class="btn btn-main" style="background: linear-gradient(135deg, #eab308, #d97706); display: none;" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة شخص آخر للمجموعة</button>
             <button class="btn btn-main" style="background: linear-gradient(135deg, #0284c7, #0369a1); display: none;" id="btnExportExcel" onclick="openExportModal()" data-i18n="btnExport">📋 نسخ بيانات المجموعة</button>
             
-            <button class="btn btn-success" onclick="prepareReportForScreenshot()" data-i18n="btnSave">عرض التقرير للحفظ 📸</button>
+            <button class="btn btn-success" onclick="prepareReportForSafeSave()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
             <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
     </div>
@@ -407,11 +395,11 @@
             <div class="info-content">
                 <p class="intro" data-i18n="helpIntro">أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
                 <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص</h4>
-                <p data-i18n="helpSec1Text">يعتمد النظام على قراءة شريط MRZ السفلي لضمان دقة 100%.</p>
+                <p data-i18n="helpSec1Text">يعتمد النظام على قراءة الصورة بذكاء اصطناعي مرن لضمان دقة القراءة حتى لو كان الجواز غير مستقيم.</p>
                 <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية</h4>
                 <p data-i18n="helpSec2Text">يظهر التقرير مؤشر الألوان للصلاحية، ويحسب العمر الدقيق لتجنب غرامات الطيران للأطفال.</p>
                 <h4 data-i18n="helpSec3Title">🪪 ثالثاً: المحفظة السرية</h4>
-                <p data-i18n="helpSec3Text">خزنة مشفرة بكلمة سر. تحفظ صورك بأمان. استخدم (وضع السكرين شوت) لحفظ الصور بأمان في الاستوديو.</p>
+                <p data-i18n="helpSec3Text">خزنة مشفرة بكلمة سر. تحفظ صورك بأمان. استخدم (الحفظ الآمن) لفتح الصور بمتصفح خارجي وحفظها بجهازك.</p>
                 <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير</h4>
                 <p data-i18n="helpSec4Text">تجنب الفلاش. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل واضح جداً.</p>
             </div>
@@ -478,7 +466,7 @@
             <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 50vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
             
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openScreenshotMode('docFullImg')"><span style="font-size: 16px;">📸</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openSafeSaveWindow('docFullImg')"><span style="font-size: 16px;">🌐</span> <span data-i18n="btnDownDoc">حفظ آمن</span></button>
             </div>
         </div>
     </div>
@@ -487,7 +475,7 @@
         function safeGetItem(key, defaultVal) { try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; } }
         function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
 
-        // نظام الصوت
+        // نظام الصوت المريح
         let audioCtx; let audioInitialized = false;
         function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } }
         function playClickSound() {
@@ -524,7 +512,6 @@
         }
         function vibrate(type) { if (!navigator.vibrate) return; if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]); }
 
-        // المتغيرات
         let currentLang = safeGetItem('appLang', 'ar');
         let isDarkMode = safeGetItem('darkMode') === 'true';
         let appMode = 'single'; 
@@ -546,7 +533,61 @@
             'GBR': { ar: 'بريطانيا 🇬🇧', en: 'UK 🇬🇧' }, 'CAN': { ar: 'كندا 🇨🇦', en: 'Canada 🇨🇦' }
         };
 
-        // واجهة المستخدم
+        const dict = {
+            ar: {
+                appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", 
+                btnStart: "بدء الفحص 🚀", startHint: "لخيارات الفحص العائلي وأدوات النظام، افتح القائمة الجانبية (☰)",
+                sideModes: "أوضاع الفحص", sideTools: "أدوات النظام", sideSettings: "الإعدادات والملف",
+                btnSingle: "فحص فردي", descSingle: "استخراج تقرير صلاحية لجواز سفر واحد",
+                btnGroup: "فحص عائلي", descGroup: "فحص عدة جوازات وإصدار تقرير شامل",
+                btnHome: "الرئيسية", camTitle: "المس هنا لالتقاط أو إدراج الجواز", camSub: "يدعم الفحص التلقائي بالذكاء الاصطناعي", scanning: "جاري الفحص والتحليل...",
+                btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
+                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري لحساب العمر)", btnGen: "إصدار تقرير الصلاحية",
+                btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻",
+                stgTitle: "⚙️ الإعدادات", stgHist: "سجل الفحص", stgLang: "English / عربي", stgDark: "الوضع المظلم / الفاتح", stgHelp: "الدليل الشامل", stgAbout: "نبذة عن المطور",
+                histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
+                exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
+                helpTitle: "ℹ️ الدليل الشامل", 
+                helpIntro: "أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
+                helpSec1Title: "🔍 أولاً: نظام الفحص", helpSec1Text: "يعتمد النظام على قراءة الصورة بذكاء اصطناعي مرن لضمان دقة القراءة حتى لو كان الجواز غير مستقيم.",
+                helpSec2Title: "📊 ثانياً: تقرير الصلاحية", helpSec2Text: "يظهر التقرير مؤشر الألوان للصلاحية، ويحسب العمر الدقيق لتجنب غرامات الطيران للأطفال.",
+                helpSec3Title: "🪪 ثالثاً: المحفظة السرية", helpSec3Text: "خزنة مشفرة بكلمة سر. تحفظ صورك بأمان. استخدم (الحفظ الآمن) لفتح الصور بمتصفح خارجي وحفظها بجهازك.",
+                helpSec4Title: "📸 رابعاً: نصائح التصوير", helpSec4Text: "تجنب الفلاش. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل واضح جداً.",
+                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، طور هذا النظام ليكون أداة دقيقة وسريعة لتقديم تجربة سفر سلسة للجميع.",
+                modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
+                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
+                warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!",
+                saveReady: "التقرير جاهز!", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ 🔒", btnDownDoc: "حفظ آمن"
+            },
+            en: {
+                appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
+                btnStart: "Start Scan 🚀", startHint: "For group scanning & tools, open side menu (☰)",
+                sideModes: "Scan Modes", sideTools: "System Tools", sideSettings: "Settings & Profile",
+                btnSingle: "Single Scan", descSingle: "Generate report for one passport",
+                btnGroup: "Group Scan", descGroup: "Scan multiple passports at once",
+                btnHome: "Home", camTitle: "Tap here to capture passport", camSub: "Supports AI auto scanning", scanning: "Scanning & Analyzing...",
+                btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
+                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
+                btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Save Report 💾", btnClear: "Clear & Restart ↻",
+                stgTitle: "⚙️ Settings", stgHist: "Scan History", stgLang: "التبديل للعربية", stgDark: "Dark / Light Mode", stgHelp: "User Guide", stgAbout: "About Developer",
+                histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
+                exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
+                helpTitle: "ℹ️ Guide", 
+                helpIntro: "Professional Super App combining AI passport checking with local encryption.",
+                helpSec1Title: "🔍 First: Scanning", helpSec1Text: "Flexible AI reading ensures high accuracy even if the passport is not straight.",
+                helpSec2Title: "📊 Second: Validity Report", helpSec2Text: "Shows colored validity indicator and calculates precise age to avoid child fines.",
+                helpSec3Title: "🪪 Third: ID Wallet", helpSec3Text: "PIN-protected vault. Use (Safe Save) to open images in an external browser to save.",
+                helpSec4Title: "📸 Fourth: Photo Tips", helpSec4Text: "Avoid flash. Ensure MRZ lines are fully visible and clear.",
+                abtTitle: "👨‍💻 About Developer", abtText: "A travel expert who developed this smart system as an accurate assistive tool.",
+                modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
+                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
+                warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!",
+                saveReady: "Report Ready!", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save 🔒", btnDownDoc: "Safe Save"
+            }
+        };
+
         function applyLanguage() {
             document.getElementById('htmlTag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
             document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (dict[currentLang] && dict[currentLang][key]) el.innerHTML = dict[currentLang][key]; });
@@ -573,7 +614,6 @@
             } catch(e) {}
         });
 
-        // النوافذ
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
         function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
         
@@ -616,27 +656,22 @@
             try { const history = JSON.parse(safeGetItem('scanHistory', '[]')); const filtered = history.filter(item => item.name.toLowerCase().includes(query) || item.pass.toLowerCase().includes(query)); renderHistory(filtered); } catch(e) {}
         }
 
-        // ==========================================
-        // تعديل الـ OCR الجذري (التركيز على الـ MRZ)
-        // ==========================================
+        // ==============================================================
+        // نظام الـ OCR القوي والقديم (استخراج البيانات بمرونة من أي مكان)
+        // ==============================================================
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) { const reader = new FileReader(); reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; nationalityData = { flag: "🌍", name: "" }; }; reader.readAsDataURL(file); }
         }
         function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
 
-        // حل مشكلة التدوير: إرسال الصورة بدقتها الأصلية إذا لم يتم تدويرها
         function getRotatedImage() {
             return new Promise((resolve) => {
-                if (currentRotation === 0) {
-                    resolve(imageElement.src); // دقة 100% بدون تدخل الكانفاس
-                    return;
-                }
                 const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); const img = new Image(); img.src = imageElement.src;
                 img.onload = () => {
                     if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } else { canvas.width = img.width; canvas.height = img.height; }
                     ctx.translate(canvas.width / 2, canvas.height / 2); ctx.rotate(currentRotation * Math.PI / 180); ctx.drawImage(img, -img.width / 2, -img.height / 2);
-                    resolve(canvas.toDataURL('image/jpeg', 1.0)); // استخدام أعلى جودة
+                    resolve(canvas.toDataURL('image/jpeg', 0.8));
                 };
             });
         }
@@ -653,71 +688,49 @@
                 const data = await response.json();
                 if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) throw new Error("فشل");
                 
-                const rawText = data.ParsedResults[0].ParsedText.replace(/\r/g, "");
+                const text = data.ParsedResults[0].ParsedText;
                 
-                // 1. الجنسية من الـ MRZ
-                const mrzMatch = rawText.match(/P<([A-Z]{3})/);
+                // استخراج الجنسية
+                const mrzMatch = text.match(/P<([A-Z]{3})/);
                 if (mrzMatch && mrzMatch[1]) { const code = mrzMatch[1]; if (countries[code]) { nationalityData = { flag: countries[code][currentLang].slice(-2), name: countries[code][currentLang] }; } }
 
-                // 2. القناص (قراءة شريط MRZ السطر الثاني للأرقام والتواريخ بدقة 100%)
-                const mrz2Regex = /([A-Z0-9<]{9})\d[A-Z<]{3}(\d{2})(\d{2})(\d{2})\d[MF<](\d{2})(\d{2})(\d{2})/;
-                const match2 = rawText.match(mrz2Regex);
-                
-                if(match2) {
-                    // استخراج رقم الجواز
-                    document.getElementById('passNumInput').value = match2[1].replace(/</g, '');
-                    
-                    // استخراج الميلاد (YYMMDD)
-                    let yy = parseInt(match2[2]);
-                    let fullYear = (yy > 30) ? (1900 + yy) : (2000 + yy);
-                    document.getElementById('dobInput').value = `${fullYear}-${match2[3]}-${match2[4]}`;
-                    
-                    // استخراج الانتهاء (YYMMDD)
-                    let expYY = 2000 + parseInt(match2[5]);
-                    document.getElementById('expiryInput').value = `${expYY}-${match2[6]}-${match2[7]}`;
-                    
-                } else {
-                    // إذا فشل الـ MRZ، نستخدم القراءة العشوائية كخيار بديل
-                    extractDates(rawText);
-                    extractPassportNumber(rawText);
-                }
+                // استخراج التواريخ القديم القوي
+                extractDates(text); 
+                extractNameFromText(text); 
+                extractPassportNumber(text);
 
-                // 3. استخراج الاسم من السطر الأول للـ MRZ
-                const mrz1Regex = /P<[A-Z<]{3}([A-Z]+)<<([A-Z<]+)/;
-                const match1 = rawText.match(mrz1Regex);
-                if(match1) {
-                    let sur = match1[1].replace(/</g, ' ').trim();
-                    let given = match1[2].replace(/</g, ' ').trim();
-                    document.getElementById('nameInput').value = `${given} ${sur}`;
-                } else {
-                    extractNameFromText(rawText);
-                }
-
-                highlightField('nameInput'); highlightField('passNumInput'); highlightField('dobInput'); highlightField('expiryInput');
                 vibrate('success'); playSound('success');
             } catch (error) { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرجاء إدخال البيانات يدوياً." : "Please enter data manually."); } 
             finally { document.getElementById('loader').style.display = 'none'; }
         }
 
-        // الدوال البديلة (إذا كان الـ MRZ غير واضح)
         function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
+
         function extractDates(text) {
             const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g]; let dates = [];
             let matches1 = [...text.matchAll(datePatterns[0])]; matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
             let matches2 = [...text.matchAll(datePatterns[1])]; matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
+            
+            // تنظيف التواريخ وفرزها بمرونة
             dates = dates.filter(d => { let y = parseInt(d.split('-')[0]); return y > 1920 && y < 2050; }).sort();
+            
             if (dates.length > 0) {
-                document.getElementById('dobInput').value = dates[0];
-                let lastDate = dates[dates.length - 1]; if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; }
+                // أصغر تاريخ هو الميلاد
+                document.getElementById('dobInput').value = dates[0]; highlightField('dobInput');
+                // أكبر تاريخ هو النفاذ (Expiry)
+                let lastDate = dates[dates.length - 1]; if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; highlightField('expiryInput'); }
             }
         }
         function extractNameFromText(text) {
-            const lines = text.split('\n'); for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { document.getElementById('nameInput').value = line.trim(); break; } }
+            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g; const matches = [...text.matchAll(mrzRegex)];
+            if (matches.length > 0) { let s = matches[0][1].replace(/</g, ' ').trim(); let g = matches[0][2].replace(/</g, ' ').trim(); document.getElementById('nameInput').value = `${g} ${s}`; highlightField('nameInput'); } 
+            else { const lines = text.split('\n'); for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { document.getElementById('nameInput').value = line.trim(); break; } } }
         }
         function extractPassportNumber(text) {
-            const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) { document.getElementById('passNumInput').value = visualMatches[0][0]; }
+            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g; const matchesMRZ = [...text.matchAll(mrzPattern)];
+            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1]; highlightField('passNumInput'); } 
+            else { const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) { document.getElementById('passNumInput').value = visualMatches[0][0]; } }
         }
-
         function calculateDiff(startDate, endDate) {
             let years = endDate.getFullYear() - startDate.getFullYear(); let months = endDate.getMonth() - startDate.getMonth(); let days = endDate.getDate() - startDate.getDate();
             if (days < 0) { months--; days += new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate(); } if (months < 0) { years--; months += 12; }
@@ -761,7 +774,7 @@
             
             const ageStrHTML = currentLang === 'ar' ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
             const dateStr = today.toISOString().split('T')[0];
-            
+
             groupPassengersData.push({ name: nameVal.toUpperCase(), pass: passNum, dob: dobVal, exp: expiryVal || "N/A", type: type });
 
             const ticketHTML = `
@@ -816,39 +829,43 @@
             ticketCount++;
         }
 
-        // ==========================================
-        // وضع السكرين شوت (الهروب من الـ APK نهائياً)
-        // ==========================================
-        
-        // تجهيز تقرير الفحص للسكرين شوت
-        function prepareReportForScreenshot() {
+        function openExportModal() {
+            if(groupPassengersData.length === 0) return;
+            let textContent = currentLang === 'ar' ? "الاسم | الجواز | الميلاد | النفاذ | الفئة\n" : "Name | Passport | DOB | EXP | Type\n";
+            textContent += "----------------------------------------\n";
+            groupPassengersData.forEach(p => { textContent += `${p.name} | ${p.pass} | ${p.dob} | ${p.exp} | ${p.type}\n`; });
+            document.getElementById('exportDataContent').innerText = textContent;
+            openModal('exportModal');
+        }
+        function copyExportData() {
+            const text = document.getElementById('exportDataContent').innerText;
+            navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
+        }
+
+        /* ==================== الحفظ الآمن (Safe Save in Browser) ==================== */
+        function prepareReportForSafeSave() {
             const container = document.getElementById('ticketsContainer');
             html2canvas(container, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                openScreenshotMode(imgData);
+                document.getElementById('finalImage').src = imgData;
+                openModal('saveOverlay'); 
             });
         }
 
-        // فتح وضع السكرين شوت للشاشة كاملة
-        function openScreenshotMode(imgSrcIdOrData) {
-            let src = imgSrcIdOrData;
-            if(document.getElementById(imgSrcIdOrData)) {
-                src = document.getElementById(imgSrcIdOrData).src;
-            }
-            document.getElementById('screenshotImage').src = src;
-            document.getElementById('screenshotOverlay').style.display = 'flex';
-            // إغلاق النوافذ المفتوحة
-            document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+        function openSafeSaveWindow(imgId) {
+            try {
+                const imgSrc = document.getElementById(imgId).src; 
+                const newWindow = window.open();
+                if (newWindow) {
+                    newWindow.document.write(`<html><head><title>Safe Save</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;"><h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">اضغط مطولاً على الصورة لحفظها بجهازك</h3><img src="${imgSrc}" style="max-width:95%; max-height:80vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);"></body></html>`);
+                    newWindow.document.close();
+                } else { alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ (Pop-ups) من إعدادات جهازك." : "Please allow pop-ups."); }
+            } catch(e) { alert("Error"); }
         }
 
-        function closeScreenshotMode() {
-            document.getElementById('screenshotOverlay').style.display = 'none';
-            document.getElementById('screenshotImage').src = "";
-        }
-
-
-        // المحفظة السرية
+        /* ==================== المحفظة السرية ==================== */
         let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
+
         function initWalletDB() {
             try {
                 if (!window.indexedDB) return;
@@ -860,34 +877,54 @@
                 request.onsuccess = function(e) { walletDB = e.target.result; }; request.onerror = function(e) {};
             } catch (e) {}
         }
+
         function openWalletAuth() {
-            closeSidebar(); enteredPin = ""; updatePinDots(); const savedPin = safeGetItem("walletPIN", "");
-            if (!savedPin) { isPinSetupMode = true; setupPinStep = 1; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN"; document.getElementById('pinSub').innerText = currentLang === 'ar' ? "أدخل 4 أرقام لحماية مستمسكاتك" : "Enter 4 digits to secure your IDs"; } 
-            else { isPinSetupMode = false; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية ومحفوظة بجهازك فقط" : "Wallet is encrypted and saved locally"; }
+            closeSidebar(); enteredPin = ""; updatePinDots();
+            const savedPin = safeGetItem("walletPIN", "");
+            if (!savedPin) {
+                isPinSetupMode = true; setupPinStep = 1;
+                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "أدخل 4 أرقام لحماية مستمسكاتك" : "Enter 4 digits to secure your IDs";
+            } else {
+                isPinSetupMode = false;
+                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية ومحفوظة بجهازك فقط" : "Wallet is encrypted and saved locally";
+            }
             openModal('pinModal');
         }
+
         function closeWalletAuth() { closeModal('pinModal'); }
         function closeWalletModal() { closeModal('walletModal'); }
         function closeDocView() { closeModal('docViewModal'); document.getElementById('docNameInput').value = ''; }
         function updatePinDots() { for(let i=1; i<=4; i++) { let dot = document.getElementById('dot'+i); if(i <= enteredPin.length) dot.classList.add('filled'); else dot.classList.remove('filled'); } }
         function addPin(num) { if (enteredPin.length < 4) { enteredPin += num; updatePinDots(); if (enteredPin.length === 4) setTimeout(checkPin, 200); } }
         function removePin() { if (enteredPin.length > 0) { enteredPin = enteredPin.slice(0, -1); updatePinDots(); } }
+
         function checkPin() {
             if (isPinSetupMode) {
-                if (setupPinStep === 1) { tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN"; } 
-                else if (setupPinStep === 2) {
+                if (setupPinStep === 1) {
+                    tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN";
+                } else if (setupPinStep === 2) {
                     if (enteredPin === tempSetupPin) { safeSetItem("walletPIN", enteredPin); vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery(); } 
                     else { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرمز غير متطابق، أعد المحاولة" : "PINs do not match, try again"); enteredPin = ""; updatePinDots(); setupPinStep = 1; tempSetupPin = ""; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN"; }
                 }
             } else {
                 const savedPin = safeGetItem("walletPIN", "");
                 if (enteredPin === savedPin) { vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery(); } 
-                else { vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots(); document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!"; document.getElementById('pinTitle').style.color = "#ef4444"; setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500); }
+                else {
+                    vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots();
+                    document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!";
+                    document.getElementById('pinTitle').style.color = "#ef4444";
+                    setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500);
+                }
             }
         }
+
         function openWalletGallery() { openModal('walletModal'); loadDocsFromDB(); }
+
         function loadDocsFromDB() {
-            const container = document.getElementById('walletGallery'); container.innerHTML = ''; if(!walletDB) return;
+            const container = document.getElementById('walletGallery'); container.innerHTML = '';
+            if(!walletDB) return;
             try {
                 const transaction = walletDB.transaction(["documents"], "readonly"); const store = transaction.objectStore("documents"); const request = store.getAll();
                 request.onsuccess = function(e) {
@@ -897,20 +934,25 @@
                 };
             } catch(e) {}
         }
+
         function handleWalletUpload(event) {
             const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 const img = new Image();
                 img.onload = function() {
-                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
-                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height); const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; 
+                    const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
                     document.getElementById('docPreviewImg').src = compressedDataUrl; document.getElementById('docNameInput').value = ''; openModal('docViewModal');
                 }; img.src = e.target.result;
             }; reader.readAsDataURL(file); event.target.value = ''; 
         }
+
         function saveDocToWallet() {
-            const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc'); const imgData = document.getElementById('docPreviewImg').src;
+            const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc');
+            const imgData = document.getElementById('docPreviewImg').src;
             if(!walletDB) return;
             try {
                 const transaction = walletDB.transaction(["documents"], "readwrite"); const store = transaction.objectStore("documents");
@@ -918,6 +960,7 @@
                 request.onsuccess = function() { vibrate('success'); closeDocView(); loadDocsFromDB(); };
             } catch(e) {}
         }
+
         function deleteDoc(id, event) {
             event.stopPropagation();
             if(confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح هذا المستند؟' : 'Are you sure you want to delete this document?')) {
@@ -927,19 +970,9 @@
                 } catch(e) {}
             }
         }
+
         function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
 
-        // التصدير للاكسيل
-        function openExportModal() {
-            if(groupPassengersData.length === 0) return;
-            let textContent = currentLang === 'ar' ? "الاسم | الجواز | الميلاد | النفاذ | الفئة\n" : "Name | Passport | DOB | EXP | Type\n"; textContent += "----------------------------------------\n";
-            groupPassengersData.forEach(p => { textContent += `${p.name} | ${p.pass} | ${p.dob} | ${p.exp} | ${p.type}\n`; });
-            document.getElementById('exportDataContent').innerText = textContent; openModal('exportModal');
-        }
-        function copyExportData() {
-            const text = document.getElementById('exportDataContent').innerText;
-            navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
-        }
     </script>
 </body>
 </html>
