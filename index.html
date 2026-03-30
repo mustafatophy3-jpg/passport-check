@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام فحص صلاحية الجواز الشامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -10,475 +10,357 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* === المتغيرات للوضع المظلم والفاتح === */
-        :root {
-            --bg-color: #f1f5f9;
-            --text-color: #0f172a;
-            --card-bg: #ffffff;
-            --orb-1: #60a5fa;
-            --orb-2: #c084fc;
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            padding-bottom: 80px; 
+            color: #1e293b;
         }
-        body.dark-mode {
-            --bg-color: #0f172a;
-            --text-color: #f8fafc;
-            --card-bg: #1e293b;
-            --orb-1: #1d4ed8;
-            --orb-2: #7e22ce;
-        }
-
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); color: var(--text-color); padding-bottom: 80px; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;}
         
-        /* === الشاشة الافتتاحية (Splash Screen) === */
-        #splashScreen { position: fixed; inset: 0; background: linear-gradient(135deg, #1e3a8a, #0f172a); z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
-        .splash-logo { font-size: 90px; filter: drop-shadow(0 0 20px rgba(96,165,250,0.5)); animation: pulseLogo 1.5s infinite alternate; }
-        @keyframes pulseLogo { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
+        /* تأثير الخلفية الزجاجية */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
 
-        /* === الكرات المضيئة بالخلفية للفخامة === */
-        body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(70px); opacity: 0.4; animation: floatOrbs 15s ease-in-out infinite alternate; pointer-events: none; }
-        body::before { width: 300px; height: 300px; background: var(--orb-1); top: -50px; left: -50px; }
-        body::after { width: 250px; height: 250px; background: var(--orb-2); top: 40%; right: -50px; animation-delay: -5s; }
-        @keyframes floatOrbs { 0% { transform: translateY(0px); } 100% { transform: translateY(50px); } }
+        .glass-sidebar {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-        /* === كودك الأصلي للـ Preview === */
+        /* حركات وأنيميشن */
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .preview-container {
             position: relative;
-            background: #1e293b;
-            border-radius: 16px;
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 20px;
             overflow: hidden;
             height: 250px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 12px;
-            border: 2px dashed #475569;
+            border: 2px dashed rgba(148, 163, 184, 0.5);
+            transition: all 0.3s ease;
         }
-        .preview-container img { max-width: 100%; max-height: 100%; transition: transform 0.3s ease; }
+        .preview-container:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+        .preview-container img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: transform 0.3s ease;
+        }
         
-        .control-btn { padding: 12px; border-radius: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn-rotate { background: white; border: 1px solid #cbd5e1; color: #334155; }
-        .btn-scan { background: #2563eb; color: white; border: none; }
-        .btn-scan:hover { background: #1d4ed8; }
+        .control-btn {
+            padding: 12px;
+            border-radius: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .control-btn:active { transform: scale(0.95); }
+        .btn-rotate { background: rgba(255,255,255,0.9); border: 1px solid #cbd5e1; color: #334155; }
+        .btn-rotate:hover { background: #f8fafc; }
+        .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
+        .btn-scan:hover { box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4); transform: translateY(-2px); }
 
-        .voucher-card { background: var(--card-bg); border-radius: 24px; box-shadow: 0 20px 50px -12px rgba(0,0,0,0.15); overflow: hidden; border: 1px solid #e2e8f0; position: relative; transition: all 0.3s ease; }
-        body.dark-mode .voucher-card { border-color: #334155; }
-        
-        .v-header { background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%); color: white; padding: 24px; display: flex; justify-content: space-between; align-items: center; }
-        .dashed-cut { border-top: 2px dashed #cbd5e1; margin: 24px 0; position: relative; }
-        .dashed-cut::before, .dashed-cut::after { content: ''; position: absolute; width: 30px; height: 30px; background: var(--bg-color); border-radius: 50%; top: -16px; transition: background 0.3s ease; }
-        .dashed-cut::before { right: -35px; }
-        .dashed-cut::after { left: -35px; }
+        .voucher-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px -12px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            transform: scale(0.98);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes popIn {
+            to { transform: scale(1); opacity: 1; }
+        }
 
-        .scan-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.85); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; color: white; backdrop-filter: blur(4px); }
-        .scan-line { width: 90%; height: 2px; background: #60a5fa; box-shadow: 0 0 20px #60a5fa; animation: scanMove 1.5s infinite ease-in-out; }
-        @keyframes scanMove { 0% { transform: translateY(-100px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(100px); opacity: 0; } }
+        .v-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+            color: white;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashed-cut {
+            border-top: 2px dashed #cbd5e1;
+            margin: 24px 0;
+            position: relative;
+        }
+        .dashed-cut::before, .dashed-cut::after {
+            content: ''; position: absolute; width: 30px; height: 30px;
+            background: #f1f5f9; border-radius: 50%; top: -16px;
+        }
+        .dashed-cut::before { right: -35px; box-shadow: inset 2px 0 5px rgba(0,0,0,0.05); }
+        .dashed-cut::after { left: -35px; box-shadow: inset -2px 0 5px rgba(0,0,0,0.05); }
 
-        /* === القائمة الجانبية (Sidebar) === */
-        #sidebar { background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); border-left: 1px solid #e2e8f0; }
-        body.dark-mode #sidebar { background: rgba(15,23,42,0.95); border-left: 1px solid #334155; }
-        .menu-item { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; font-weight: 700; color: #1e293b; background: #f8fafc; border: 1px solid #e2e8f0; margin-bottom: 10px; cursor: pointer; transition: 0.2s;}
-        body.dark-mode .menu-item { background: #1e293b; color: #f8fafc; border-color: #334155; }
-        .menu-item:active { transform: scale(0.97); }
+        .scan-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10; color: white; backdrop-filter: blur(8px);
+        }
+        .scan-line {
+            width: 90%; height: 3px;
+            background: #60a5fa; box-shadow: 0 0 20px #60a5fa, 0 0 40px #60a5fa;
+            border-radius: 50%;
+            animation: scanMove 1.5s infinite ease-in-out;
+        }
+        @keyframes scanMove { 
+            0% { transform: translateY(-100px); opacity: 0; } 
+            50% { opacity: 1; } 
+            100% { transform: translateY(100px); opacity: 0; } 
+        }
 
-        /* === الشريط المتحرك (Marquee) === */
-        .marquee-container { overflow: hidden; white-space: nowrap; width: 100%; display: flex; align-items: center; }
-        .marquee-text { display: inline-block; padding-left: 100%; animation: marquee 30s linear infinite; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
-
-        /* === النوافذ المنبثقة والمحفظة === */
-        .modal-bg { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
-        .pin-btn { width: 60px; height: 60px; border-radius: 50%; background: #f1f5f9; border: 1px solid #cbd5e1; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; color: #0f172a; cursor: pointer; transition: 0.1s;}
-        body.dark-mode .pin-btn { background: #334155; color: white; border-color: #475569;}
-        .pin-btn:active { background: #3b82f6; color: white; transform: scale(0.9);}
-        .pin-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #3b82f6; background: transparent; transition: 0.2s;}
-        .pin-dot.filled { background: #3b82f6; }
-        
-        .highlight { box-shadow: 0 0 0 3px rgba(34,197,94,0.4) !important; border-color: #22c55e !important; transition: 0.5s ease; }
+        /* تنسيق القائمة الجانبية */
+        #sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-item {
+            transition: all 0.2s;
+        }
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+        }
     </style>
 </head>
-<body class="p-4 md:p-6 relative">
+<body class="relative min-h-screen">
 
-    <div id="splashScreen">
-        <div class="splash-logo">🛂</div>
-        <div class="text-white font-black text-2xl mt-4 tracking-widest">Smart Pass</div>
-        <div class="text-blue-300 text-sm font-bold mt-2 animate-pulse">جاري التحميل...</div>
-    </div>
+    <div class="fixed inset-0 z-[-2] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000&auto=format&fit=crop');"></div>
+    <div class="fixed inset-0 z-[-1] bg-slate-900/40 backdrop-blur-sm"></div>
 
-    <div class="max-w-md mx-auto flex justify-between items-center mb-6 relative z-10">
-        <div>
-            <div id="greetingText" class="text-sm font-black text-blue-600 drop-shadow-sm">صباح الخير ☀️</div>
-            <div class="flex items-center gap-1 mt-1">
-                <span id="connDot" class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_#22c55e]"></span>
-                <span id="connText" class="text-[10px] font-bold opacity-70">متصل بالسيرفر</span>
-            </div>
-        </div>
-        <button onclick="toggleSidebar()" class="bg-white dark:bg-slate-800 p-3 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 active:scale-90 transition z-40">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    <header class="p-4 md:px-8 flex justify-between items-center text-white relative z-20">
+        <button onclick="toggleSidebar()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md transition border border-white/20 shadow-lg">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
-    </div>
-
-    <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="toggleSidebar()"></div>
-    <div id="sidebar" class="fixed top-0 right-0 h-full w-72 shadow-2xl z-[60] transform translate-x-full overflow-y-auto p-6 flex flex-col">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-xl font-black">القائمة الرئيسية</h2>
-            <button onclick="toggleSidebar()" class="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg font-bold">✖</button>
+        <div class="font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-l from-white to-blue-200 drop-shadow-md">
+            نظام الجوازات الذكي
         </div>
-
-        <div class="text-xs font-bold text-blue-600 mb-3 uppercase">أدوات النظام</div>
-        <div class="menu-item" onclick="openWalletAuth()">🪪 المحفظة السرية</div>
-        <div class="menu-item" onclick="openHistoryModal()">🕒 سجل الفحص (محفوظاتك)</div>
-
-        <div class="text-xs font-bold text-blue-600 mb-3 mt-4 uppercase">معلومات وإعدادات</div>
-        <div class="menu-item" onclick="toggleDarkMode()">🌙 الوضع الليلي / النهاري</div>
-        <div class="menu-item" onclick="openModal('guideModal')">📖 الدليل الشامل والمفصل</div>
-        <div class="menu-item" onclick="openModal('aboutModal')">👨‍💻 نبذة عن المطور</div>
-    </div>
-
-    <div class="max-w-md mx-auto space-y-6 relative z-10">
-        
-        <div class="bg-[var(--card-bg)] p-6 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700 transition-all duration-300">
-            <h1 class="text-2xl font-black text-center mb-4 tracking-tight">فحص الجواز الذكي ⚡</h1>
-            
-            <div class="marquee-container bg-blue-50 dark:bg-slate-800 border border-blue-100 dark:border-slate-600 rounded-xl p-2 mb-6">
-                <div class="marquee-text text-xs font-bold text-blue-800 dark:text-blue-300">
-                    💡 نصيحة: تجنب الانعكاس الضوئي على الجواز | 👶 المسافر يعتبر طفلاً من سنتين إلى 12 سنة | ⚖️ تنبيه هام: إذا كان الطفل (أقل من 18 سنة) يسافر بدون والده أو كان الوالد متوفياً، يجب إحضار حجة وصاية أو وكالة سفر رسمية | 🛂 تأكد من وضوح شريط البيانات السفلي (MRZ).
-                </div>
-            </div>
-            
-            <div class="mb-6">
-                <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="loadFile(event)">
-                
-                <div class="preview-container" id="previewBox">
-                    <div id="placeholder" class="text-center text-slate-400 cursor-pointer p-10 w-full h-full flex flex-col items-center justify-center hover:bg-slate-800/50 transition" onclick="document.getElementById('fileInput').click()">
-                        <span class="text-5xl mb-3 opacity-50 drop-shadow-md">📷</span>
-                        <p class="font-bold text-sm">اضغط لرفع صورة الجواز</p>
-                    </div>
-                    <img id="previewImg" class="hidden">
-                    <div id="loader" class="hidden scan-overlay">
-                        <div class="scan-line"></div>
-                        <p class="mt-6 font-bold text-lg animate-pulse text-blue-100">جاري قراءة البيانات...</p>
-                    </div>
-                </div>
-
-                <div class="flex gap-3" id="tools" style="display:none;">
-                    <button class="control-btn btn-rotate flex-1" onclick="rotateImage(90)"><span>↩️ تدوير</span></button>
-                    <button class="control-btn btn-scan flex-[2] bg-gradient-to-r from-blue-600 to-indigo-600" onclick="processImage()"><span>🔍 فحص شامل</span></button>
-                </div>
-            </div>
-
-            <div class="space-y-4">
-                <div class="flex gap-2">
-                    <div class="w-2/3">
-                         <label class="text-xs font-bold opacity-70 mr-1">الاسم (English)</label>
-                         <input type="text" id="nameInput" placeholder="JOHN DOE" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl p-3 text-sm font-bold uppercase outline-none focus:border-blue-500 transition dir-ltr text-left">
-                    </div>
-                    <div class="w-1/3">
-                        <label class="text-xs font-bold opacity-70 mr-1">رقم الجواز</label>
-                        <input type="text" id="passNumInput" placeholder="--" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl p-3 text-sm font-bold uppercase outline-none text-center transition">
-                   </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <div class="w-1/2">
-                        <label class="text-xs font-bold opacity-70 mr-1">تاريخ الميلاد</label>
-                        <input type="date" id="dobInput" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl p-3 text-sm font-bold outline-none transition">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="text-xs font-bold text-red-500 mr-1">تاريخ النفاذ (Expiry)</label>
-                        <input type="date" id="expiryInput" class="w-full bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3 text-sm font-bold text-red-600 dark:text-red-400 outline-none transition">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="text-xs font-bold text-blue-500 mr-1">تاريخ السفر المتوقع (اختياري لحساب العمر)</label>
-                    <input type="date" id="travelDateInput" class="w-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 text-sm font-bold text-blue-700 dark:text-blue-300 outline-none transition">
-                </div>
-
-                <button onclick="generateTicket()" class="w-full bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white font-black py-4 rounded-xl shadow-lg transition transform active:scale-[0.98] text-lg mt-2">
-                    إصدار تقرير الصلاحية
-                </button>
-            </div>
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 border-2 border-white shadow-lg overflow-hidden flex justify-center items-center font-bold text-sm">
+            M
         </div>
+    </header>
 
-        <div id="ticketArea" class="hidden">
-            <div id="finalVoucher" class="voucher-card">
-                <div class="v-header">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-                            <span class="text-2xl">✈️</span>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg leading-tight tracking-wide">TRAVEL ELIGIBILITY</h3>
-                            <p class="text-[10px] text-blue-200 font-medium">DOCUMENT STATUS CHECK</p>
-                        </div>
-                    </div>
-                    <div class="text-left">
-                        <p class="text-[10px] text-blue-200 font-medium">REPORT DATE</p>
-                        <p class="font-bold text-sm font-mono" id="vDate">--</p>
-                    </div>
-                </div>
-
-                <div class="p-6 pb-4">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex-1">
-                            <p class="text-[10px] font-bold tracking-wider mb-1 opacity-60">PASSENGER</p>
-                            <h2 class="text-lg font-black uppercase tracking-tight leading-tight" id="vName">GUEST</h2>
-                        </div>
-                        <div id="vTypeBadge" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-xs font-bold border border-slate-200 dark:border-slate-600 ml-2 whitespace-nowrap">--</div>
-                    </div>
-
-                    <div id="ageAlert" class="hidden mb-4 p-3 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-xl text-center text-amber-700 dark:text-amber-400 font-bold text-xs"></div>
-
-                    <div id="validityBox" class="p-4 rounded-2xl border mb-4 text-center shadow-inner">
-                        <p class="text-[10px] uppercase font-bold mb-1 opacity-70">Travel Validity Status</p>
-                        <h3 class="text-xl font-black mb-1" id="vStatusTitle">--</h3>
-                        <p class="text-sm font-bold dir-rtl" id="vRemaining">--</p>
-                    </div>
-
-                    <div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 mb-4">
-                         <div class="flex justify-between items-center">
-                            <span class="text-[10px] opacity-60 font-bold">AGE DETAILS</span>
-                            <span class="font-bold text-sm" id="vAge">--</span>
-                         </div>
-                    </div>
-
-                    <div class="flex gap-2 mb-2">
-                         <div class="flex-1 bg-white dark:bg-slate-800 p-2 border dark:border-slate-700 rounded-xl text-center">
-                            <p class="text-[10px] opacity-60 font-bold mb-1">BIRTH DATE</p>
-                            <p class="font-bold font-mono text-sm" id="vDob">--</p>
-                         </div>
-                         <div class="flex-1 bg-white dark:bg-slate-800 p-2 border dark:border-slate-700 rounded-xl text-center">
-                            <p class="text-[10px] text-red-500 font-bold mb-1">EXPIRY DATE</p>
-                            <p class="font-bold text-red-600 font-mono text-sm" id="vExpiry">--</p>
-                         </div>
-                    </div>
-
-                    <div class="dashed-cut"></div>
-
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <p class="text-[10px] opacity-60 font-bold mb-1">PASSPORT NO</p>
-                            <p class="text-2xl font-black tracking-tighter font-mono" id="vPassNum">--</p>
-                        </div>
-                        <div class="bg-white p-2 rounded-xl border border-slate-100 shadow-sm">
-                            <canvas id="qr"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="prepareSafeSave()" class="w-full mt-4 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-black py-4 rounded-xl flex justify-center items-center gap-3 shadow-lg transition transform active:scale-[0.98]">
-                <span class="text-xl">💾</span> 
-                <span>حفظ التقرير كصورة</span>
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0 transition-opacity duration-300" onclick="toggleSidebar()"></div>
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-72 glass-sidebar z-50 transform translate-x-full text-white shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-white/10 flex justify-between items-center">
+            <h2 class="font-black text-xl">القائمة</h2>
+            <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
-            <button onclick="resetAll()" class="w-full mt-3 font-bold text-sm py-3 opacity-60 hover:opacity-100 transition">مسح وبدء جديد ↻</button>
         </div>
-
-    </div>
-
-    <div id="safeSaveModal" class="fixed inset-0 modal-bg z-[999] hidden flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-        <div class="modal-card p-5 rounded-3xl max-w-sm w-full text-center relative transform scale-95 transition-transform duration-300" id="safeSaveCard">
-            <button onclick="closeModal('safeSaveModal')" class="absolute top-4 right-4 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full font-bold flex items-center justify-center">✖</button>
-            <h3 class="font-black text-xl text-green-500 mb-1">تم التجهيز بنجاح!</h3>
-            <p class="text-xs font-bold opacity-70 mb-4 bg-slate-50 dark:bg-slate-800 p-2 rounded-lg border border-slate-100 dark:border-slate-700">👇 اضغط مطولاً على الصورة لحفظها بجهازك أو مشاركتها</p>
-            <div class="max-h-[60vh] overflow-y-auto border-2 border-dashed border-green-500/50 p-2 rounded-xl bg-black/5">
-                <img id="safeSaveImg" class="w-full rounded-lg shadow-md">
+        
+        <div class="p-4 flex-1 space-y-2 mt-4">
+            <div class="sidebar-item p-4 rounded-2xl cursor-pointer border border-transparent hover:border-white/10 mb-4 bg-white/5">
+                <div class="flex items-center gap-4">
+                    <span class="text-2xl">💳</span>
+                    <div>
+                        <p class="text-xs text-blue-200">الرصيد الحالي (المحفظة)</p>
+                        <p class="font-bold text-lg">1,250.00 د.ع</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div id="guideModal" class="fixed inset-0 modal-bg z-[150] hidden items-center justify-center p-4 opacity-0 transition-opacity">
-        <div class="modal-card rounded-3xl w-full max-w-sm p-6 max-h-[85vh] overflow-y-auto relative transform scale-95 transition-transform">
-            <button onclick="closeModal('guideModal')" class="absolute top-4 left-4 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full font-bold">✖</button>
-            <h2 class="text-xl font-black text-center mb-4">📖 الدليل الشامل</h2>
-            <div class="space-y-4 text-sm font-semibold text-right leading-relaxed opacity-90">
-                <div class="bg-blue-50 dark:bg-slate-800 p-3 rounded-xl border-r-4 border-blue-500">أهلاً بك. النظام أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات والتشفير المحلي لحماية مستمسكاتك.</div>
-                <h4 class="font-black text-blue-500 text-base mt-2">🔍 نظام الفحص والتصوير:</h4>
-                <p>يعتمد النظام على قراءة الصورة بذكاء اصطناعي. <br><b>نصيحة التصوير:</b> لا تستخدم الفلاش، وتأكد من ظهور شريط (MRZ) السفلي الذي يحتوي على أسهم (<<<) بالكامل لضمان الدقة.</p>
-                <h4 class="font-black text-blue-500 text-base">📊 تقرير الصلاحية والعمر:</h4>
-                <p>التقرير يظهر بحركة 3D ويعرض: <br>- مؤشر ألوان: أخضر (صالح)، أصفر (أقل من 6 أشهر)، أحمر (منتهي).<br>- حاسبة العمر: تحسب العمر يوم السفر بدقة لتجنب غرامات الطيران للأطفال. <br>- تنبيه الـ 18: ينبهك إذا كان المسافر قاصراً ليحضر وكالة.</p>
-                <h4 class="font-black text-blue-500 text-base">🪪 المحفظة السرية:</h4>
-                <p>خزنة مشفرة برمز PIN. تحفظ صورك بذاكرة الهاتف بدون إنترنت. لفتح وحفظ الصور للموبايل اضغط على (حفظ كصورة).</p>
-            </div>
+            <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl cursor-pointer">
+                <span class="text-xl">⚙️</span>
+                <span class="font-bold">إعدادات النظام</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl cursor-pointer">
+                <span class="text-xl">🌗</span>
+                <span class="font-bold">المظهر (Dark/Light)</span>
+            </a>
+            <a href="#" class="sidebar-item flex items-center gap-4 p-4 rounded-xl cursor-pointer">
+                <span class="text-xl">📊</span>
+                <span class="font-bold">سجل الفحوصات</span>
+            </a>
         </div>
-    </div>
-
-    <div id="aboutModal" class="fixed inset-0 modal-bg z-[150] hidden items-center justify-center p-4 opacity-0 transition-opacity">
-        <div class="modal-card rounded-3xl w-full max-w-sm p-6 relative transform scale-95 transition-transform">
-            <button onclick="closeModal('aboutModal')" class="absolute top-4 left-4 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full font-bold">✖</button>
-            <h2 class="text-xl font-black text-center mb-4">👨‍💻 المطور</h2>
-            <p class="text-sm font-semibold text-right leading-relaxed bg-slate-50 dark:bg-slate-800 p-4 rounded-xl opacity-90 border border-slate-100 dark:border-slate-700">
-                خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.
-            </p>
+        
+        <div class="p-6 border-t border-white/10">
+            <button class="w-full py-3 rounded-xl bg-red-500/20 text-red-400 font-bold hover:bg-red-500/30 transition flex justify-center items-center gap-2">
+                <span>تسجيل خروج</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            </button>
         </div>
-    </div>
+    </aside>
 
-    <div id="historyModal" class="fixed inset-0 modal-bg z-[150] hidden items-center justify-center p-4 opacity-0 transition-opacity">
-        <div class="modal-card rounded-3xl w-full max-w-sm p-6 max-h-[80vh] flex flex-col relative transform scale-95 transition-transform">
-            <button onclick="closeModal('historyModal')" class="absolute top-4 left-4 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full font-bold">✖</button>
-            <h2 class="text-xl font-black text-center mb-4">🕒 سجل الفحص</h2>
-            <input type="text" id="historySearch" onkeyup="filterHistory()" placeholder="🔍 ابحث عن اسم أو رقم جواز..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-sm font-bold outline-none mb-3">
-            <div id="historyListContainer" class="overflow-y-auto space-y-2 flex-1 pr-1"></div>
-        </div>
-    </div>
-
-    <div id="pinModal" class="fixed inset-0 modal-bg z-[200] hidden items-center justify-center p-4 opacity-0 transition-opacity">
-        <div class="modal-card rounded-3xl p-6 w-full max-w-sm text-center relative transform scale-95 transition-transform">
-            <button onclick="closeModal('pinModal')" class="absolute top-4 left-4 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full font-bold">✖</button>
-            <div class="text-5xl mb-2 drop-shadow-md">🔒</div>
-            <h2 class="text-xl font-black mb-1" id="pinTitle">أدخل الرمز السري</h2>
-            <p class="text-xs font-bold opacity-60 mb-6" id="pinSub">المحفظة محمية بجهازك فقط</p>
+    <main class="p-4 md:p-6 fade-in-up relative z-10">
+        <div class="max-w-md mx-auto space-y-6">
             
-            <div class="flex justify-center gap-3 mb-8" dir="ltr">
-                <div class="pin-dot" id="dot1"></div><div class="pin-dot" id="dot2"></div><div class="pin-dot" id="dot3"></div><div class="pin-dot" id="dot4"></div>
+            <div class="glass-panel p-6 rounded-3xl shadow-2xl">
+                <h1 class="text-2xl font-black text-center text-slate-800 mb-6 tracking-tight">فحص الجواز الذكي ⚡</h1>
+                
+                <div class="mb-6 relative">
+                    <input type="file" id="fileInput" class="hidden" accept="image/*" onchange="loadFile(event)">
+                    
+                    <div class="preview-container" id="previewBox">
+                        <div id="placeholder" class="text-center text-slate-300 cursor-pointer p-10 w-full h-full flex flex-col items-center justify-center hover:bg-slate-800/50 transition rounded-xl" onclick="document.getElementById('fileInput').click()">
+                            <div class="bg-slate-700/50 p-4 rounded-full mb-3 backdrop-blur-sm shadow-inner">
+                                <span class="text-4xl">📷</span>
+                            </div>
+                            <p class="font-bold text-sm text-slate-400">اضغط لرفع صورة الجواز</p>
+                        </div>
+                        <img id="previewImg" class="hidden rounded-xl shadow-lg">
+                        <div id="loader" class="hidden scan-overlay rounded-xl">
+                            <div class="scan-line"></div>
+                            <p class="mt-6 font-bold text-lg animate-pulse text-blue-200 drop-shadow-md">جاري تحليل البيانات بخوارزميات الذكاء...</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3" id="tools" style="display:none;">
+                        <button class="control-btn btn-rotate flex-1" onclick="rotateImage(90)"><span>↩️ تدوير</span></button>
+                        <button class="control-btn btn-scan flex-[2]" onclick="processImage()"><span>🔍 فحص واستخراج ذكي</span></button>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex gap-2">
+                        <div class="w-2/3">
+                             <label class="text-xs font-bold text-slate-500 mr-1 mb-1 block">الاسم الكامل</label>
+                             <input type="text" id="nameInput" placeholder="-- --" class="w-full bg-white/50 border border-slate-200/50 rounded-xl p-3 text-sm font-bold uppercase outline-none focus:ring-2 focus:ring-blue-500 transition dir-ltr text-left backdrop-blur-sm shadow-sm">
+                        </div>
+                        <div class="w-1/3">
+                            <label class="text-xs font-bold text-slate-500 mr-1 mb-1 block">رقم الجواز</label>
+                            <input type="text" id="passNumInput" placeholder="--" class="w-full bg-white/50 border border-slate-200/50 rounded-xl p-3 text-sm font-bold uppercase outline-none text-center backdrop-blur-sm shadow-sm">
+                       </div>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <div class="w-1/2">
+                            <label class="text-xs font-bold text-slate-500 mr-1 mb-1 block">تاريخ الميلاد</label>
+                            <input type="date" id="dobInput" class="w-full bg-white/50 border border-slate-200/50 rounded-xl p-3 text-sm font-bold text-slate-800 outline-none backdrop-blur-sm shadow-sm">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="text-xs font-bold text-red-500 mr-1 mb-1 block">تاريخ النفاذ (Expiry)</label>
+                            <input type="date" id="expiryInput" class="w-full bg-red-50/50 border border-red-200/50 rounded-xl p-3 text-sm font-bold text-red-900 outline-none focus:ring-2 focus:ring-red-500 backdrop-blur-sm shadow-sm">
+                        </div>
+                    </div>
+
+                    <button onclick="generateTicket()" class="w-full mt-2 bg-gradient-to-r from-slate-900 to-slate-800 text-white font-bold py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all transform active:scale-[0.98] border border-slate-700">
+                        إصدار تقرير الصلاحية النهائي
+                    </button>
+                </div>
             </div>
-            
-            <div class="grid grid-cols-3 gap-4 max-w-[220px] mx-auto" dir="ltr">
-                <div class="pin-btn" onclick="addPin(1)">1</div><div class="pin-btn" onclick="addPin(2)">2</div><div class="pin-btn" onclick="addPin(3)">3</div>
-                <div class="pin-btn" onclick="addPin(4)">4</div><div class="pin-btn" onclick="addPin(5)">5</div><div class="pin-btn" onclick="addPin(6)">6</div>
-                <div class="pin-btn" onclick="addPin(7)">7</div><div class="pin-btn" onclick="addPin(8)">8</div><div class="pin-btn" onclick="addPin(9)">9</div>
-                <div></div><div class="pin-btn" onclick="addPin(0)">0</div>
-                <div class="pin-btn bg-red-500/10 text-red-500 border-red-500/30" onclick="removePin()">⌫</div>
+
+            <div id="ticketArea" class="hidden opacity-0 transition-opacity duration-500">
+                <div id="finalVoucher" class="voucher-card">
+                    <div class="v-header">
+                        <div class="flex items-center gap-3">
+                            <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm shadow-inner border border-white/20">
+                                <span class="text-2xl">✈️</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg leading-tight tracking-wide">TRAVEL ELIGIBILITY</h3>
+                                <p class="text-[10px] text-blue-200 font-medium">DOCUMENT STATUS CHECK</p>
+                            </div>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[10px] text-blue-200 font-medium">REPORT DATE</p>
+                            <p class="font-bold text-sm font-mono" id="vDate">--</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-[#f8fafc]">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex-1">
+                                <p class="text-[10px] text-slate-400 font-bold tracking-wider mb-1">PASSENGER</p>
+                                <h2 class="text-lg font-black text-slate-800 uppercase tracking-tight leading-tight" id="vName">GUEST</h2>
+                            </div>
+                            <div id="vTypeBadge" class="px-3 py-1.5 rounded-lg bg-white text-xs font-bold border border-slate-200 ml-2 whitespace-nowrap shadow-sm">--</div>
+                        </div>
+
+                        <div id="validityBox" class="p-4 rounded-2xl border mb-4 text-center shadow-sm">
+                            <p class="text-[10px] uppercase font-bold mb-1 opacity-70">Travel Validity Status</p>
+                            <h3 class="text-xl font-black mb-1" id="vStatusTitle">--</h3>
+                            <p class="text-sm font-bold dir-rtl" id="vRemaining">--</p>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-xl border border-slate-100 mb-4 shadow-sm">
+                             <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-slate-400 font-bold">AGE DETAILS</span>
+                                <span class="font-bold text-slate-800 text-sm" id="vAge">--</span>
+                             </div>
+                        </div>
+
+                        <div class="flex gap-2 mb-2">
+                             <div class="flex-1 bg-white p-3 border rounded-xl shadow-sm">
+                                <p class="text-[10px] text-slate-400 font-bold mb-1">BIRTH DATE</p>
+                                <p class="font-bold text-slate-700 font-mono text-sm" id="vDob">--</p>
+                             </div>
+                             <div class="flex-1 bg-white p-3 border rounded-xl shadow-sm">
+                                <p class="text-[10px] text-red-400 font-bold mb-1">EXPIRY DATE</p>
+                                <p class="font-bold text-red-700 font-mono text-sm" id="vExpiry">--</p>
+                             </div>
+                        </div>
+
+                        <div class="dashed-cut"></div>
+
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-bold mb-1">PASSPORT NO</p>
+                                <p class="text-2xl font-black text-slate-900 tracking-tighter font-mono" id="vPassNum">--</p>
+                            </div>
+                            <div class="bg-white p-2 rounded-xl border border-slate-100 shadow-md transform rotate-2">
+                                <canvas id="qr"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-3 w-full bg-slate-900"></div>
+                </div>
+
+                <button onclick="downloadImage()" class="w-full mt-6 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 rounded-xl flex justify-center items-center gap-3 shadow-lg hover:shadow-xl transition-all transform active:scale-[0.98] border border-green-400">
+                    <span class="text-xl">💾</span> 
+                    <span>حفظ التقرير كصورة</span>
+                </button>
+                <button onclick="resetAll()" class="w-full mt-4 text-white/80 font-bold text-sm py-3 hover:text-white transition drop-shadow-md bg-black/20 rounded-xl backdrop-blur-sm">مسح وبدء فحص جديد ↻</button>
             </div>
+
         </div>
-    </div>
-
-    <div id="walletModal" class="fixed inset-0 modal-bg z-[190] hidden items-center justify-center p-4 opacity-0 transition-opacity">
-        <div class="modal-card rounded-3xl p-5 w-full max-w-[400px] h-[85vh] flex flex-col relative transform scale-95 transition-transform">
-            <button onclick="closeModal('walletModal')" class="absolute top-4 left-4 w-8 h-8 bg-slate-100 dark:bg-slate-800 rounded-full font-bold z-10">✖</button>
-            <h2 class="text-xl font-black text-center mb-4 pt-2">🪪 المحفظة السرية</h2>
-            
-            <div class="bg-blue-50/50 dark:bg-blue-900/20 border-dashed border-2 border-blue-400/50 rounded-2xl p-4 text-center cursor-pointer transition mb-4 active:scale-95" onclick="document.getElementById('walletUpload').click()">
-                <div class="text-3xl mb-1 drop-shadow-sm">➕</div>
-                <div class="text-sm font-black text-blue-500">إضافة مستند جديد</div>
-            </div>
-            <input type="file" id="walletUpload" class="hidden" accept="image/*" onchange="handleWalletUpload(event)">
-            
-            <div class="grid grid-cols-2 gap-3 overflow-y-auto pb-4 pr-1" id="walletGallery"></div>
-        </div>
-    </div>
-
-    <div id="docViewModal" class="fixed inset-0 modal-bg z-[210] hidden items-center justify-center p-4 opacity-0 transition-opacity">
-        <div class="modal-card rounded-3xl p-5 w-full max-w-sm text-center transform scale-95 transition-transform">
-            <div class="max-h-[40vh] overflow-auto rounded-xl border border-slate-500/30 mb-4 bg-black/5 p-1"><img id="docPreviewImg" class="w-full rounded-lg shadow-inner"></div>
-            <input type="text" id="docNameInput" placeholder="اسم المستند (مثال: بطاقة وطنية)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 text-sm font-bold text-center mb-4 outline-none">
-            <div class="flex gap-3">
-                <button onclick="closeModal('docViewModal')" class="flex-1 bg-slate-100 dark:bg-slate-800 font-bold py-3 rounded-xl active:scale-95 transition">إلغاء</button>
-                <button onclick="saveDocToWallet()" class="flex-[2] bg-blue-600 text-white font-bold py-3 rounded-xl shadow-lg active:scale-95 transition">حفظ 🔒</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="docFullModal" class="fixed inset-0 bg-slate-900/95 z-[210] hidden flex-col items-center justify-center p-4 opacity-0 transition-opacity">
-        <button onclick="closeModal('docFullModal')" class="absolute top-6 right-6 w-10 h-10 bg-white/20 rounded-full font-bold text-white text-xl flex items-center justify-center z-10">✖</button>
-        <img id="docFullImg" class="max-w-full max-h-[70vh] rounded-2xl object-contain mb-6 shadow-2xl border border-white/10">
-        <button onclick="prepareWalletImageSave()" class="bg-gradient-to-r from-emerald-500 to-green-600 text-white font-black py-4 px-10 rounded-2xl flex items-center gap-3 shadow-lg active:scale-95 transition">
-            <span class="text-xl">💾</span> حفظ كصورة
-        </button>
-    </div>
-
+    </main>
 
     <script>
-        // إعدادات الوضع المظلم والشريط العلوي
-        let isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-        function applyDarkMode() {
-            if (isDarkMode) { document.body.classList.add('dark-mode'); document.documentElement.classList.add('dark'); } 
-            else { document.body.classList.remove('dark-mode'); document.documentElement.classList.remove('dark'); }
-        }
-        function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            localStorage.setItem('darkMode', isDarkMode);
-            applyDarkMode();
-            closeSidebar();
-        }
-
-        function updateGreeting() {
-            const h = new Date().getHours();
-            let greeting = h < 12 ? "صباح الخير ☀️" : h < 18 ? "طاب مساؤك 🌤️" : "مساء الخير 🌙";
-            document.getElementById('greetingText').innerText = greeting;
-        }
-        
-        function updateConnectionStatus() {
-            const dot = document.getElementById('connDot'); const txt = document.getElementById('connText');
-            if (navigator.onLine) { dot.classList.replace('bg-red-500', 'bg-green-500'); dot.style.boxShadow = '0 0 8px #22c55e'; txt.innerText = 'متصل بالسيرفر'; } 
-            else { dot.classList.replace('bg-green-500', 'bg-red-500'); dot.style.boxShadow = '0 0 8px #ef4444'; txt.innerText = 'جهازك غير متصل'; }
-        }
-        window.addEventListener('online', updateConnectionStatus); window.addEventListener('offline', updateConnectionStatus);
-
-        // إظهار وإخفاء النوافذ والقائمة
+        // دوال القائمة الجانبية الجديدة
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('sidebarOverlay');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
             if (sidebar.classList.contains('translate-x-full')) {
-                sidebar.classList.remove('translate-x-full'); overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.replace('opacity-0', 'opacity-100'), 10);
-            } else { closeSidebar(); }
-        }
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.add('translate-x-full'); overlay.classList.replace('opacity-100', 'opacity-0');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
-        }
-        function openModal(id) {
-            closeSidebar(); const modal = document.getElementById(id); modal.classList.remove('hidden');
-            setTimeout(() => { modal.classList.replace('opacity-0', 'opacity-100'); if(modal.querySelector('.scale-95')) modal.querySelector('.scale-95').classList.replace('scale-95', 'scale-100'); }, 10);
-        }
-        function closeModal(id) {
-            const modal = document.getElementById(id); modal.classList.replace('opacity-100', 'opacity-0');
-            if(modal.querySelector('.scale-100')) modal.querySelector('.scale-100').classList.replace('scale-100', 'scale-95');
-            setTimeout(() => { modal.classList.add('hidden'); }, 300);
-        }
-
-        // الأصوات والاهتزاز
-        let audioCtx; let audioInitialized = false;
-        function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } }
-        function playClickSound() {
-            try {
-                if (!audioCtx) return; if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                osc.type = 'sine'; osc.frequency.setValueAtTime(600, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } catch(e) {}
-        }
-        document.addEventListener('click', function(e) {
-            if (!audioInitialized) { initAudio(); audioInitialized = true; }
-            if(e.target.closest('button') || e.target.closest('.menu-item') || e.target.closest('.pin-btn')) {
-                if(!e.target.closest('.btn-scan') && !e.target.closest('button[onclick="generateTicket()"]')) { playClickSound(); }
+                sidebar.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
             }
-        });
-        function playSound(type) {
-            try {
-                if (!audioCtx) return;
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                if (type === 'success') {
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-                } else if (type === 'error') {
-                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                }
-            } catch(e) {}
         }
-        function vibrate(type) { if (!navigator.vibrate) return; if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]); }
 
-        // ==========================================
-        // كودك الأصلي للذكاء الاصطناعي والصور
-        // ==========================================
+        // الأكواد الأصلية المتبقية
         let currentRotation = 0;
         let imageElement = document.getElementById('previewImg');
         const qr = new QRious({ element: document.getElementById('qr'), size: 90 });
         const API_KEY = 'helloworld'; 
-
-        window.addEventListener('DOMContentLoaded', function() {
-            applyDarkMode(); updateGreeting(); updateConnectionStatus(); initWalletDB();
-            document.getElementById('travelDateInput').valueAsDate = new Date();
-            setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 600); } }, 1500);
-            try { renderHistory(JSON.parse(localStorage.getItem('scanHistory') || '[]')); } catch(e){}
-        });
 
         function loadFile(event) {
             const file = event.target.files[0];
@@ -502,7 +384,7 @@
         }
 
         async function processImage() {
-            initAudio(); document.getElementById('loader').classList.remove('hidden');
+            document.getElementById('loader').classList.remove('hidden');
             try {
                 const rotatedBase64 = await getRotatedImage();
                 const formData = new FormData();
@@ -520,14 +402,13 @@
                 if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) { throw new Error("فشل"); }
 
                 const text = data.ParsedResults[0].ParsedText;
-                extractDates(text); // دالتك
-                extractNameFromText(text); // دالتك
-                extractPassportNumber(text); // دالتك
-                
-                vibrate('success'); playSound('success');
+                extractDates(text); 
+                extractNameFromText(text);
+                extractPassportNumber(text);
+
             } catch (error) {
-                console.error(error); vibrate('error'); playSound('error');
-                alert("يرجى إدخال البيانات يدوياً لعدم وضوح الصورة.");
+                console.error(error);
+                alert("يرجى إدخال البيانات يدوياً.");
             } finally { document.getElementById('loader').classList.add('hidden'); }
         }
 
@@ -619,47 +500,26 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // ==========================================
-        // توليد التقرير (مع تنبيه 18 سنة)
-        // ==========================================
         function generateTicket() {
-            initAudio();
             const dobVal = document.getElementById('dobInput').value;
             const expiryVal = document.getElementById('expiryInput').value;
             const nameVal = document.getElementById('nameInput').value || "GUEST";
             const passNum = document.getElementById('passNumInput').value || "---";
-            const travelVal = document.getElementById('travelDateInput').value;
 
-            if (!dobVal) { vibrate('error'); playSound('error'); alert("تاريخ الميلاد مطلوب"); return; }
-            
-            // حفظ بالسجل
-            saveToHistory(nameVal, passNum);
+            if (!dobVal) { alert("تاريخ الميلاد مطلوب"); return; }
             
             const today = new Date();
             const dob = new Date(dobVal);
-            const travelDate = travelVal ? new Date(travelVal) : today;
             
-            const ageDiff = calculateDiff(dob, travelDate);
-            const ageToday = calculateDiff(dob, today);
-
+            const ageDiff = calculateDiff(dob, today);
+            
             let type = "ADULT", code = "ADT";
             if (ageDiff.years < 2) { type = "INFANT"; code = "INF"; }
             else if (ageDiff.years < 12) { type = "CHILD"; code = "CHD"; }
 
-            // تنبيه أقل من 18 سنة
-            const alertBox = document.getElementById('ageAlert');
-            if (ageDiff.years < 18) {
-                alertBox.innerHTML = `⚠️ تنبيه: المسافر أقل من 18 سنة، إذا كان يسافر بدون والده يجب إحضار حجة وصاية أو وكالة.`;
-                alertBox.classList.remove('hidden');
-            } else if (ageToday.years < 12 && ageDiff.years >= 12) {
-                alertBox.innerHTML = `⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!`;
-                alertBox.classList.remove('hidden');
-            } else {
-                alertBox.classList.add('hidden');
-            }
-
+            let validityHTML = "";
             let remainingText = "لم يتم تحديد تاريخ النفاذ";
-            let boxClass = "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700";
+            let boxClass = "bg-gray-100 text-gray-600 border-gray-200";
             let statusTitle = "UNKNOWN";
 
             if (expiryVal) {
@@ -669,21 +529,19 @@
                 if (expiryDate < today) {
                     statusTitle = "⛔ EXPIRED (منتهي)";
                     remainingText = "الجواز منتهي الصلاحية";
-                    boxClass = "bg-red-100 text-red-700 border-red-300 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800";
-                    vibrate('error'); playSound('error');
+                    boxClass = "bg-red-100 text-red-700 border-red-300";
                 } else {
                     remainingText = `باقي: ${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم`;
+                    
                     if (validDiff.totalMonths < 6) {
-                        statusTitle = "⚠️ INVALID (تحذير)";
-                        boxClass = "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800";
-                        vibrate('error'); playSound('error');
+                        statusTitle = "⚠️ INVALID (غير صالح للسفر)";
+                        boxClass = "bg-red-50 text-red-600 border-red-200"; 
                     } else {
                         statusTitle = "✅ VALID FOR TRAVEL (صالح)";
-                        boxClass = "bg-green-100 text-green-700 border-green-300 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800";
-                        vibrate('success'); playSound('success');
+                        boxClass = "bg-green-100 text-green-700 border-green-300"; 
                     }
                 }
-            } else { vibrate('success'); playSound('success'); }
+            }
 
             document.getElementById('vName').innerText = nameVal.toUpperCase();
             document.getElementById('vPassNum').innerText = passNum;
@@ -694,142 +552,29 @@
             document.getElementById('vDate').innerText = today.toISOString().split('T')[0];
             
             const vBox = document.getElementById('validityBox');
-            vBox.className = `p-4 rounded-2xl border mb-4 text-center shadow-inner ${boxClass}`;
+            vBox.className = `p-4 rounded-2xl border mb-4 text-center ${boxClass}`;
             document.getElementById('vStatusTitle').innerText = statusTitle;
             document.getElementById('vRemaining').innerText = remainingText;
 
             qr.set({ value: `${nameVal}|${passNum}|EXP:${expiryVal}|${code}` });
 
-            document.getElementById('ticketArea').classList.remove('hidden');
-            setTimeout(() => document.getElementById('ticketArea').scrollIntoView({behavior: 'smooth'}), 100);
+            const ticketArea = document.getElementById('ticketArea');
+            ticketArea.classList.remove('hidden');
+            setTimeout(() => {
+                ticketArea.classList.remove('opacity-0');
+                ticketArea.scrollIntoView({behavior: 'smooth'});
+            }, 50);
         }
 
-        function resetAll() { location.reload(); }
-
-        /* ==================== الحفظ الآمن (Safe Save) بدون كراش ==================== */
-        function prepareSafeSave() {
-            html2canvas(document.getElementById('finalVoucher'), { scale: 3, backgroundColor: null }).then(canvas => {
-                document.getElementById('safeSaveImg').src = canvas.toDataURL('image/png');
-                openModal('safeSaveModal');
+        function downloadImage() {
+            html2canvas(document.getElementById('finalVoucher'), { scale: 3 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Report_${Date.now()}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
             });
         }
-        function prepareWalletImageSave() {
-            document.getElementById('safeSaveImg').src = document.getElementById('docFullImg').src;
-            closeModal('docFullModal'); openModal('safeSaveModal');
-        }
-
-        /* ==================== نظام السجل (History) ==================== */
-        function saveToHistory(name, pass) {
-            try {
-                let history = JSON.parse(localStorage.getItem('scanHistory') || '[]');
-                const now = new Date(); const timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} - ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
-                history.unshift({ name: name, pass: pass, time: timeStr });
-                if(history.length > 20) history.pop(); localStorage.setItem('scanHistory', JSON.stringify(history));
-                renderHistory(history);
-            } catch(e) {}
-        }
-        function renderHistory(history) {
-            const container = document.getElementById('historyListContainer'); container.innerHTML = '';
-            if(history.length === 0) { container.innerHTML = `<div class="text-center opacity-50 font-bold py-6">لا توجد عمليات فحص.</div>`; } 
-            else { history.forEach(item => { container.innerHTML += `<div class="bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-3 rounded-xl flex justify-between items-center mb-2"><div class="text-right"><h4 class="font-bold text-sm">${item.name}</h4><p class="text-xs opacity-60 font-mono">${item.pass}</p></div><div class="text-[10px] font-black text-blue-500 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded">${item.time}</div></div>`; }); }
-        }
-        function filterHistory() {
-            const query = document.getElementById('historySearch').value.toLowerCase();
-            try { const history = JSON.parse(localStorage.getItem('scanHistory') || '[]'); const filtered = history.filter(item => item.name.toLowerCase().includes(query) || item.pass.toLowerCase().includes(query)); renderHistory(filtered); } catch(e) {}
-        }
-
-        /* ==================== المحفظة السرية (IndexedDB) ==================== */
-        let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
-
-        function initWalletDB() {
-            try {
-                if (!window.indexedDB) return;
-                const request = window.indexedDB.open("SmartPassWalletDB", 1);
-                request.onupgradeneeded = function(e) { walletDB = e.target.result; if(!walletDB.objectStoreNames.contains('documents')) { walletDB.createObjectStore('documents', { keyPath: 'id', autoIncrement: true }); } };
-                request.onsuccess = function(e) { walletDB = e.target.result; };
-            } catch (e) {}
-        }
-
-        function openWalletAuth() {
-            closeSidebar(); enteredPin = ""; updatePinDots(); const savedPin = localStorage.getItem("walletPIN");
-            if (!savedPin) { isPinSetupMode = true; setupPinStep = 1; document.getElementById('pinTitle').innerText = "إنشاء رمز للمحفظة"; document.getElementById('pinSub').innerText = "أدخل 4 أرقام لحماية مستمسكاتك"; } 
-            else { isPinSetupMode = false; document.getElementById('pinTitle').innerText = "أدخل الرمز السري"; document.getElementById('pinSub').innerText = "المحفظة محمية بجهازك فقط"; }
-            openModal('pinModal');
-        }
-
-        function updatePinDots() { for(let i=1; i<=4; i++) { let dot = document.getElementById('dot'+i); if(i <= enteredPin.length) dot.classList.add('filled'); else dot.classList.remove('filled'); } }
-        function addPin(num) { if (enteredPin.length < 4) { enteredPin += num; updatePinDots(); if (enteredPin.length === 4) setTimeout(checkPin, 200); } }
-        function removePin() { if (enteredPin.length > 0) { enteredPin = enteredPin.slice(0, -1); updatePinDots(); } }
-
-        function checkPin() {
-            if (isPinSetupMode) {
-                if (setupPinStep === 1) { tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2; document.getElementById('pinTitle').innerText = "تأكيد الرمز السري"; } 
-                else if (setupPinStep === 2) {
-                    if (enteredPin === tempSetupPin) { localStorage.setItem("walletPIN", enteredPin); vibrate('success'); playSound('success'); closeModal('pinModal'); openWalletGallery(); } 
-                    else { vibrate('error'); playSound('error'); alert("الرمز غير متطابق!"); enteredPin = ""; updatePinDots(); setupPinStep = 1; tempSetupPin = ""; document.getElementById('pinTitle').innerText = "إنشاء رمز للمحفظة"; }
-                }
-            } else {
-                const savedPin = localStorage.getItem("walletPIN");
-                if (enteredPin === savedPin) { vibrate('success'); playSound('success'); closeModal('pinModal'); openWalletGallery(); } 
-                else {
-                    vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots();
-                    document.getElementById('pinTitle').innerText = "رمز خاطئ!"; document.getElementById('pinTitle').classList.add('text-red-500');
-                    setTimeout(() => { document.getElementById('pinTitle').classList.remove('text-red-500'); document.getElementById('pinTitle').innerText = "أدخل الرمز السري"; }, 1500);
-                }
-            }
-        }
-
-        function openWalletGallery() { openModal('walletModal'); loadDocsFromDB(); }
-
-        function loadDocsFromDB() {
-            const container = document.getElementById('walletGallery'); container.innerHTML = ''; if(!walletDB) return;
-            try {
-                const transaction = walletDB.transaction(["documents"], "readonly"); const store = transaction.objectStore("documents"); const request = store.getAll();
-                request.onsuccess = function(e) {
-                    const docs = e.target.result;
-                    if(docs.length === 0) { container.innerHTML = `<div class="col-span-2 text-center opacity-50 text-xs font-bold py-6">لا توجد مستندات محفوظة.</div>`; } 
-                    else { docs.reverse().forEach(doc => { 
-                        const card = document.createElement('div'); card.className = 'bg-white dark:bg-slate-800 rounded-xl overflow-hidden relative shadow-sm border border-slate-100 dark:border-slate-700 active:scale-95 transition'; 
-                        card.innerHTML = `<button class="absolute top-2 right-2 bg-red-500/90 text-white w-6 h-6 rounded-full text-xs font-bold z-10 backdrop-blur-sm" onclick="deleteDoc(${doc.id}, event)">✖</button><img src="${doc.image}" class="w-full h-24 object-cover" onclick="viewFullDoc('${doc.image}')"><div class="p-2 text-[10px] font-black text-center truncate opacity-80">${doc.name}</div>`; 
-                        container.appendChild(card); 
-                    }); }
-                };
-            } catch(e) {}
-        }
-
-        function handleWalletUpload(event) {
-            const file = event.target.files[0]; if (!file) return; const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
-                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    document.getElementById('docPreviewImg').src = canvas.toDataURL('image/jpeg', 0.7);
-                    document.getElementById('docNameInput').value = ''; openModal('docViewModal');
-                }; img.src = e.target.result;
-            }; reader.readAsDataURL(file); event.target.value = ''; 
-        }
-
-        function saveDocToWallet() {
-            const name = document.getElementById('docNameInput').value || 'مستند بدون اسم'; const imgData = document.getElementById('docPreviewImg').src; if(!walletDB) return;
-            try {
-                const transaction = walletDB.transaction(["documents"], "readwrite"); const store = transaction.objectStore("documents");
-                const doc = { name: name, image: imgData, date: new Date().getTime() }; const request = store.add(doc);
-                request.onsuccess = function() { vibrate('success'); playSound('success'); closeModal('docViewModal'); loadDocsFromDB(); };
-            } catch(e) {}
-        }
-
-        function deleteDoc(id, event) {
-            event.stopPropagation();
-            if(confirm('هل أنت متأكد من مسح هذا المستند؟')) {
-                try {
-                    const transaction = walletDB.transaction(["documents"], "readwrite"); const store = transaction.objectStore("documents"); store.delete(id);
-                    transaction.oncomplete = function() { vibrate('success'); playSound('success'); loadDocsFromDB(); };
-                } catch(e) {}
-            }
-        }
-
-        function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
+        function resetAll() { location.reload(); }
     </script>
 </body>
 </html>
