@@ -3,458 +3,1014 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>نظام فحص الجواز الشامل - الشجن</title>
+    <title>نظام فحص الجواز الشامل</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
+        /* === المتغيرات اللونية === */
         :root {
-            --bg-main: #f8fafc;
-            --header-bg: #2d3e50;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-sub: #64748b;
-            --accent-blue: #3b82f6;
-            --input-bg: #f1f5f9;
-            --border-color: #e2e8f0;
-            --upload-box-bg: #f8faff;
-            --modal-bg: rgba(255, 255, 255, 0.98);
+            --bg-grad-1: #f0f4fd; --bg-grad-2: #d9e6f6;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --text-main: #0f172a; --text-sub: #475569;
+            --input-bg: rgba(255,255,255,0.6);
+            --border-color: rgba(255,255,255,0.8);
+            --modal-bg: rgba(255, 255, 255, 0.95);
+            --orb-1: #60a5fa; --orb-2: #c084fc;
+            --btn-glass: rgba(255,255,255,0.5);
         }
-
         body.dark-mode {
-            --bg-main: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --input-bg: #334155;
-            --border-color: #475569;
-            --upload-box-bg: #1e293b;
-            --modal-bg: rgba(15, 23, 42, 0.98);
+            --bg-grad-1: #0f172a; --bg-grad-2: #1e293b;
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --text-main: #f8fafc; --text-sub: #94a3b8;
+            --input-bg: rgba(30,41,59,0.6);
+            --border-color: rgba(255,255,255,0.1);
+            --modal-bg: rgba(15, 23, 42, 0.95);
+            --orb-1: #1d4ed8; --orb-2: #7e22ce;
+            --btn-glass: rgba(15,23,42,0.5);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-main); color: var(--text-main); transition: 0.3s; min-height: 100vh; overflow-x: hidden; }
-
-        /* شاشة ترحيب مودرن */
-        #splashScreen { position: fixed; inset: 0; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
-        .splash-logo { font-size: 80px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-        /* الهيدر السماوي */
-        .app-header {
-            height: 160px;
-            background-image: url('https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&w=800&q=80');
-            background-size: cover; background-position: center;
-            position: relative;
-        }
-        .app-header::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.2); backdrop-filter: blur(2px); }
-
-        .container { max-width: 480px; margin: -50px auto 0; position: relative; z-index: 10; padding: 0 15px 100px; }
-        .card { background: var(--card-bg); border-radius: 24px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; }
-
-        /* صندوق الرفع (مثل الصورة) */
-        .upload-container {
-            border: 2px dashed #cbd5e1; border-radius: 20px; background: var(--upload-box-bg);
-            padding: 35px 20px; text-align: center; cursor: pointer; margin-bottom: 20px;
-            position: relative; min-height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .upload-icon-circle { background: #eff6ff; color: var(--accent-blue); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 20px; }
-        #previewImg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: none; border-radius: 18px; z-index: 5; }
-
-        /* الحقول */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 4px; text-transform: uppercase; }
-        input { 
-            width: 100%; padding: 12px 15px; border-radius: 12px; border: 1px solid transparent;
-            background: var(--input-bg); font-family: inherit; font-size: 14px; font-weight: 700; color: var(--text-main); outline: none; transition: 0.3s;
-        }
-        input:focus { border-color: var(--accent-blue); background: var(--card-bg); box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
-
-        /* الأزرار */
-        .btn-main { background: #1e293b; color: white; border: none; padding: 15px; border-radius: 14px; width: 100%; font-weight: 800; font-size: 15px; cursor: pointer; transition: 0.2s; }
-        .btn-main:active { transform: scale(0.97); }
-        .btn-scan { background: var(--accent-blue); margin-bottom: 10px; }
-
-        /* قائمة الأيقونات العلوية */
-        .top-nav { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; z-index: 100; }
-        .icon-btn { background: white; border: none; width: 38px; height: 38px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-
-        /* وضع عائلي / فردي */
-        .mode-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 18px; border-radius: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; }
-        .mode-card:active { transform: scale(0.98); background: var(--input-bg); }
-
-        /* ستايل الـ Voucher الـ 3D (احتفظنا به لقوته) */
-        .voucher { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-top: 20px; direction: ltr; animation: flipIn 0.6s ease-out; }
-        @keyframes flipIn { from { transform: rotateY(-30deg) scale(0.9); opacity: 0; } to { transform: rotateY(0) scale(1); opacity: 1; } }
-        .v-head { background: #1e293b; color: white; padding: 15px; text-align: center; }
-        .v-body { padding: 20px; position: relative; color: #1e293b; }
-        .stamp { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-20deg); font-size: 30px; font-weight: 900; border: 4px solid; padding: 5px 15px; border-radius: 10px; opacity: 0.2; pointer-events: none; }
-
-        /* الـ Cyber Scanner */
-        .loader-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.85); z-index: 20; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .laser { width: 100%; height: 3px; background: var(--accent-blue); position: absolute; top: 0; animation: scanAnim 1.5s infinite alternate; box-shadow: 0 0 15px var(--accent-blue); }
-        @keyframes scanAnim { from { top: 0; } to { top: 100%; } }
-
-        /* المحفظة والسجل */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-card { background: var(--modal-bg); border-radius: 24px; padding: 25px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; color: var(--text-main); }
+        body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%); color: var(--text-main); padding: 15px; padding-bottom: 80px; -webkit-tap-highlight-color: transparent; position: relative; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         
-        /* Pin Pad */
-        .pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; }
-        .pin-btn { background: var(--input-bg); border: none; padding: 15px; border-radius: 50%; font-size: 20px; font-weight: 800; cursor: pointer; }
+        #splashScreen { position: fixed; inset: 0; background: linear-gradient(135deg, #1e3a8a, #0f172a); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
+        .splash-logo { font-size: 90px; filter: drop-shadow(0 0 20px rgba(96,165,250,0.5)); animation: pulseLogo 1.5s infinite alternate; }
+        .splash-text { color: white; font-weight: 900; font-size: 24px; margin-top: 15px; letter-spacing: 1px; }
+        @keyframes pulseLogo { 0% { transform: scale(0.9); } 100% { transform: scale(1.1); } }
+
+        body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(60px); opacity: 0.6; animation: floatOrbs 12s ease-in-out infinite alternate; transition: background 0.3s; }
+        body::before { width: 350px; height: 350px; background: var(--orb-1); top: -50px; left: -100px; }
+        body::after { width: 300px; height: 300px; background: var(--orb-2); bottom: 5%; right: -50px; animation-delay: -5s; }
+        @keyframes floatOrbs { 0% { transform: translateY(0px) scale(1); } 100% { transform: translateY(40px) scale(1.1); } }
+
+        .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; z-index: 1; position: relative; }
+        .card { background: var(--card-bg); border-radius: 28px; padding: 25px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), inset 0 0 0 1px var(--border-color); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); position: relative; transition: all 0.3s; }
+
+        .top-status-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 12px; font-weight: 800; color: var(--text-sub); }
+        .conn-indicator { display: flex; align-items: center; gap: 5px; }
+        .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+        .conn-dot.offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+
+        .top-btn-group { position: absolute; top: 50px; left: 20px; display: flex; gap: 8px; z-index: 10; }
+        [dir="ltr"] .top-btn-group { left: auto; right: 20px; }
+        .icon-btn { background: var(--btn-glass); border: 1px solid var(--border-color); color: #3b82f6; width: 36px; height: 36px; border-radius: 12px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 18px;}
+        .icon-btn:active { transform: scale(0.9); }
+
+        #homeSection { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+        .home-logo { font-size: 80px; filter: drop-shadow(0 10px 20px rgba(59,130,246,0.3)); margin-bottom: -10px; animation: floatLogo 3s ease-in-out infinite alternate; }
+        
+        .mode-btn { background: var(--input-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .mode-btn:active { transform: scale(0.97); }
+        .mode-icon { font-size: 40px; }
+        .mode-title { font-size: 18px; font-weight: 900; color: var(--text-main); }
+        .mode-desc { font-size: 12px; color: var(--text-sub); font-weight: 700; text-align: center; }
+
+        .header-section { text-align: center; margin-bottom: 10px; margin-top: 15px; }
+        .title { font-size: 24px; font-weight: 900; color: var(--text-main); margin-bottom: 2px; }
+        .subtitle { font-size: 11px; color: #3b82f6; font-weight: 800; background: rgba(59, 130, 246, 0.1); padding: 4px 12px; border-radius: 20px; display: inline-block; border: 1px solid rgba(59, 130, 246, 0.2); }
+        
+        .tips-marquee { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px; margin-top: 10px; overflow: hidden; white-space: nowrap; font-size: 12px; font-weight: 800; color: var(--text-sub); display: flex; align-items: center; }
+        .tips-marquee span { display: inline-block; animation: scrollMarquee 35s linear infinite; padding-left: 100%; }
+        [dir="ltr"] .tips-marquee span { animation: scrollMarqueeLtr 35s linear infinite; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(100%); } }
+        @keyframes scrollMarqueeLtr { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        #scannerSection { display: none; flex-direction: column; gap: 15px; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: -10px; }
+        .back-btn { background: var(--btn-glass); border: 1px solid var(--border-color); padding: 8px 15px; border-radius: 12px; color: var(--text-main); font-weight: 800; font-size: 13px; cursor: pointer; transition: 0.2s; }
+        .mode-badge { font-size: 11px; background: #3b82f6; color: white; padding: 5px 12px; border-radius: 10px; font-weight: 800; }
+
+        .preview-wrapper { position: relative; border-radius: 22px; padding: 3px; background: linear-gradient(45deg, #3b82f6, #8b5cf6, #3b82f6); background-size: 200% 200%; animation: glowingBorder 4s ease infinite; margin-top: 15px; overflow: hidden;}
+        @keyframes glowingBorder { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .preview-box { position: relative; background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 20px; height: 210px; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; }
+        .preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; z-index: 5; position: relative; }
+        .placeholder { text-align: center; color: #94a3b8; display: flex; flex-direction: column; align-items: center; z-index: 2; }
+        .placeholder svg { width: 44px; height: 44px; stroke: #60a5fa; stroke-width: 1.5; margin-bottom: 12px; fill: none; }
+        .placeholder p { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+        .placeholder span { font-size: 11px; color: #94a3b8; font-weight: 600; }
+        
+        /* === Cyber UI - شاشة الفحص === */
+        .cyber-scanner-overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.85); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 10; backdrop-filter: blur(4px); overflow: hidden; }
+        .cyber-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(59, 130, 246, 0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.25) 1px, transparent 1px); background-size: 20px 20px; z-index: 1; }
+        .cyber-laser { width: 100%; height: 3px; background: #3b82f6; box-shadow: 0 0 25px 8px rgba(59, 130, 246, 0.8); position: absolute; top: 0; z-index: 2; animation: cyberScan 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate; }
+        .cyber-target { width: 65%; height: 65%; position: absolute; z-index: 1; border-radius: 8px; box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.2); animation: pulseTarget 2s infinite; }
+        .cyber-target::before, .cyber-target::after { content:''; position:absolute; width: 25px; height: 25px; border-color: #60a5fa; border-style: solid; filter: drop-shadow(0 0 5px #60a5fa); }
+        .cyber-target::before { top: -2px; left: -2px; border-width: 3px 0 0 3px; }
+        .cyber-target::after { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; }
+        .cyber-text { z-index: 3; color: #fff; font-weight: 900; margin-top: 150px; font-size: 14px; text-shadow: 0 0 10px #3b82f6; letter-spacing: 1px; animation: pulseText 1s infinite; }
+        @keyframes cyberScan { 0% { top: 0%; } 100% { top: 100%; } }
+        @keyframes pulseTarget { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.05); opacity: 1; } }
+        @keyframes pulseText { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
+
+        .tools { display: none; gap: 10px; margin-top: 10px; }
+        .btn { padding: 14px; border-radius: 14px; font-weight: 800; font-size: 14px; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 5px; transition: 0.2s; font-family: inherit; }
+        .btn-rotate { background: var(--input-bg); color: var(--text-main); flex: 1; border: 1px solid var(--border-color); }
+        .btn-scan { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; flex: 2; }
+        
+        .input-row { display: grid; gap: 10px; margin-top: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .input-row-1-2 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+        .form-group { display: flex; flex-direction: column; }
+        label { font-size: 10px; font-weight: 800; color: var(--text-sub); margin-bottom: 4px; text-transform: uppercase; }
+        .label-blue { color: #2563eb; }
+        input { padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); font-family: inherit; font-size: 13px; font-weight: 800; color: var(--text-main); outline: none; transition: 0.3s; }
+        input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+        input.input-blue { background: rgba(239,246,255,0.7); border-color: rgba(147,197,253,0.6); color: #1e40af; }
+        .text-center { text-align: center; } .text-left { text-align: left; direction: ltr; }
+        
+        .btn-main { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; width: 100%; margin-top: 15px; box-shadow: 0 10px 25px rgba(15,23,42,0.2); }
+        .btn-success { background: linear-gradient(135deg, #16a34a, #15803d); color: white; width: 100%; margin-top: 10px; }
+        .btn-clear { background: var(--btn-glass); color: var(--text-main); width: 100%; margin-top: 8px; font-size: 13px; font-weight: 800; border: 1px solid var(--border-color); }
+
+        #ticketArea { display: none; margin-top: 20px; perspective: 1000px; }
+        #ticketsContainer { display: flex; flex-direction: column; gap: 15px; }
+
+        /* === 3D Flip Reveal === */
+        .voucher-3d { animation: flipIn3D 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; transform-origin: center; opacity: 0; transform-style: preserve-3d; }
+        @keyframes flipIn3D { 0% { transform: rotateY(-90deg) scale(0.9); opacity: 0; } 100% { transform: rotateY(0deg) scale(1); opacity: 1; } }
+
+        .voucher { background: rgba(255, 255, 255, 0.95); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 15px 35px rgba(0,0,0,0.08); position: relative; direction: ltr; color: #0f172a; }
+        .v-head { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 15px; text-align: center; position: relative; }
+        .v-title-main { font-size: 20px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px; }
+        .v-title-sub { font-size: 9px; color: #93c5fd; font-weight: 700; letter-spacing: 1px; }
+        .v-date-corner { position: absolute; top: 12px; right: 15px; font-size: 9px; opacity: 0.7; font-family: monospace; font-weight: 600; }
+        .v-body { padding: 20px 15px; position: relative; }
+        
+        /* === ختم المطار المتحرك === */
+        .stamp { position: absolute; top: 40%; left: 50%; font-size: 32px; font-weight: 900; border: 4px solid; padding: 5px 20px; border-radius: 8px; opacity: 0; z-index: 50; pointer-events: none; letter-spacing: 2px; text-transform: uppercase; }
+        .stamp-valid { color: rgba(34, 197, 94, 0.5); border-color: rgba(34, 197, 94, 0.5); }
+        .stamp-invalid { color: rgba(239, 68, 68, 0.5); border-color: rgba(239, 68, 68, 0.5); }
+        .stamp.animate-stamp { animation: stampDrop 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; animation-delay: 0.8s; }
+        @keyframes stampDrop { 0% { transform: translate(-50%, -50%) rotate(-25deg) scale(3); opacity: 0; } 50% { transform: translate(-50%, -50%) rotate(-25deg) scale(0.8); opacity: 0.8; } 100% { transform: translate(-50%, -50%) rotate(-25deg) scale(1); opacity: 1; } }
+
+        .v-passenger-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .v-badge { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 900; border: 1px solid #e2e8f0; color: #475569; display: flex; align-items: center; gap: 5px;}
+        .v-pass-info { text-align: left; max-width: 70%; }
+        .v-pass-label { font-size: 9px; color: #94a3b8; font-weight: 800; margin-bottom: 2px; }
+        .v-pass-name { font-size: 18px; font-weight: 900; color: #0f172a; line-height: 1.2; word-wrap: break-word; }
+        
+        .v-status-box { padding: 15px 10px; border-radius: 14px; text-align: center; margin-bottom: 15px; border: 2px solid #86efac; background: #f0fdf4; color: #15803d; }
+        .v-status-label { font-size: 9px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; }
+        .v-status-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; display: flex; justify-content: center; align-items: center; gap: 6px; }
+        .v-status-desc { font-size: 14px; font-weight: 800; margin-bottom: 8px;}
+        
+        .progress-bg { width: 100%; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 1s ease-in-out; }
+        
+        .v-detail-row-single { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .v-detail-label { font-size: 9px; color: #64748b; font-weight: 800; text-transform: uppercase; }
+        
+        .v-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .v-grid-box { background: white; border: 1px solid #e2e8f0; padding: 12px; border-radius: 12px; text-align: center; }
+        .v-grid-label { font-size: 8px; font-weight: 800; margin-bottom: 4px; color: #64748b; }
+        .v-grid-value { font-size: 14px; font-weight: 900; font-family: monospace; color: #0f172a; }
+        
+        .age-alert { background: #fffbeb; color: #b45309; font-size: 12px; font-weight: 800; padding: 10px; border-radius: 8px; border: 1px dashed #fcd34d; text-align: center; margin-bottom: 15px; display: none; direction: rtl; }
+
+        .v-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; border-top: 2px dashed #cbd5e1; padding-top: 15px; }
+        .qr-container { background: white; padding: 4px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .v-pass-num-box { text-align: left; }
+        .v-pass-num-label { font-size: 9px; color: #94a3b8; font-weight: 800; margin-bottom: 2px; text-transform: uppercase; }
+        .v-pass-num-value { font-size: 22px; font-weight: 900; font-family: monospace; color: #0f172a; }
+        
+        .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 15px; border-radius: 12px; padding: 12px; font-size: 14px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; }
+        .btn-reminder { background: #f8fafc; color: #2563eb; border: 1px solid #bfdbfe; width: 100%; margin-top: 8px; border-radius: 12px; padding: 10px; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border: none; }
+
+        /* === النوافذ المنبثقة === */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.8); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
+        .modal-card { background: var(--modal-bg); border-radius: 24px; padding: 30px 25px; width: 100%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; color: var(--text-main);}
+        .modal-overlay.active .modal-card { transform: translateY(0); }
+        .modal-close-btn { position: absolute; top: 15px; left: 15px; background: var(--btn-glass); border: 1px solid var(--border-color); width: 32px; height: 32px; border-radius: 10px; font-weight: bold; color: var(--text-main); cursor: pointer; z-index: 5; display: flex; justify-content: center; align-items: center; }
+        [dir="ltr"] .modal-close-btn { left: auto; right: 15px; }
+        
+        .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 20px; text-align: center; }
+        .settings-item { background: var(--input-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 16px; display: flex; align-items: center; gap: 12px; font-family: inherit; font-size: 15px; font-weight: 800; color: var(--text-main); cursor: pointer; transition: 0.2s; width: 100%; text-align: right; margin-bottom: 10px;}
+        [dir="ltr"] .settings-item { text-align: left; }
+        
+        .search-box { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); font-family: inherit; font-size: 13px; font-weight: 800; margin-bottom: 15px; outline: none;}
+        .history-item { background: var(--input-bg); border: 1px solid var(--border-color); padding: 12px 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
+        .history-info h4 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+        
+        .info-content { font-size: 14px; line-height: 1.8; font-weight: 600; text-align: right; }
+        [dir="ltr"] .info-content { text-align: left; }
+        .info-content p.intro { font-size: 14.5px; color: var(--text-main); font-weight: 800; margin-bottom: 20px; text-align: center; background: var(--input-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border-color);}
+        .info-content h4 { color: #3b82f6; margin-top: 15px; font-weight: 900; font-size: 16px;}
+        .info-content ul { padding-right: 15px; margin-bottom: 15px; list-style-type: none; }
+        [dir="ltr"] .info-content ul { padding-left: 15px; padding-right: 0;}
+        .info-content li { margin-bottom: 8px; position: relative; }
+        
+        .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
+
+        /* === ستايلات المحفظة === */
+        .pin-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; direction: ltr; }
+        .pin-dot { width: 15px; height: 15px; border-radius: 50%; background: var(--border-color); border: 2px solid #3b82f6; transition: 0.2s; }
+        .pin-dot.filled { background: #3b82f6; }
+        .pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 250px; margin: 0 auto; direction: ltr;}
+        .pin-btn { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: 900; color: var(--text-main); cursor: pointer; transition: 0.1s; margin: 0 auto;}
+        .pin-btn:active { transform: scale(0.9); background: #3b82f6; color: white; }
+        
+        .wallet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 15px; max-height: 50vh; overflow-y: auto; padding: 5px;}
+        .doc-card { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+        .doc-card img { width: 100%; height: 100px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        .doc-card-title { padding: 8px; font-size: 11px; font-weight: 800; text-align: center; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .doc-delete { position: absolute; top: 5px; right: 5px; background: rgba(239,68,68,0.9); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer; z-index: 5; display: flex; justify-content: center; align-items: center;}
     </style>
 </head>
 <body>
 
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if(splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 600); }
+            }, 1500);
+        });
+    </script>
+
     <div id="splashScreen">
         <div class="splash-logo">🛂</div>
-        <div class="splash-text" style="font-weight: 900; color: #1e293b; margin-top: 10px;">Al-Shajan Smart Pass</div>
+        <div class="splash-text">Smart Pass Check</div>
     </div>
 
-    <div class="app-header"></div>
-
     <div class="container">
-        
-        <div class="top-nav">
-            <button onclick="openModal('settingsModal')" class="icon-btn">⚙️</button>
-            <div style="display:flex; gap:8px;">
-                <button onclick="openWalletAuth()" class="icon-btn" style="color:#10b981;">🪪</button>
-                <button onclick="toggleDarkMode()" class="icon-btn" id="darkModeBtn">🌙</button>
-            </div>
-        </div>
-
         <div class="card">
+            <div class="top-status-bar">
+                <div id="greetingText">صباح الخير ☀️</div>
+                <div class="conn-indicator"><span class="conn-dot" id="connDot"></span><span id="connText">متصل بالسيرفر</span></div>
+            </div>
+
             <div id="homeSection">
-                <div style="text-align: center; margin-bottom: 25px;">
-                    <h1 style="font-size: 20px; font-weight: 900;">التدقيق الذكي للجوازات</h1>
-                    <p style="color: var(--text-sub); font-size: 12px; font-weight: 700;">نظام "الشجن" المتكامل للسياحة</p>
+                <div class="top-btn-group">
+                    <button onclick="openModal('settingsModal')" class="icon-btn" title="الإعدادات">⚙️</button>
+                    <button onclick="toggleDarkMode()" class="icon-btn" id="darkModeBtn" title="الوضع المظلم">🌙</button>
+                    <button onclick="openModal('appInfoModal')" class="icon-btn" title="دليل الاستخدام">ℹ️</button>
+                    <button onclick="openWalletAuth()" class="icon-btn" style="color: #10b981; border-color: rgba(16,185,129,0.3);" title="المحفظة السرية">🪪</button>
                 </div>
 
-                <div class="mode-card" onclick="startScanner('single')">
-                    <div style="font-size: 30px;">👤</div>
-                    <div>
-                        <div style="font-weight: 900;">فحص فردي</div>
-                        <div style="font-size: 11px; color: var(--text-sub);">إصدار تقرير لمسافر واحد</div>
+                <div class="header-section">
+                    <div class="home-logo">🛂</div>
+                    <h1 class="title" data-i18n="appTitle">التدقيق الذكي للجوازات</h1>
+                    <p class="subtitle" data-i18n="appSub">النظام الشامل لفحص صلاحية السفر</p>
+                </div>
+
+                <div class="modes-container" style="width: 100%; display: flex; flex-direction: column; gap: 15px;">
+                    <div class="mode-btn" onclick="startScanner('single')">
+                        <div class="mode-icon">👤</div>
+                        <div class="mode-title" data-i18n="btnSingle">فحص فردي (شخص واحد)</div>
+                        <div class="mode-desc" data-i18n="descSingle">استخراج تقرير صلاحية لجواز سفر واحد</div>
+                    </div>
+                    <div class="mode-btn" onclick="startScanner('group')">
+                        <div class="mode-icon">👨‍👩‍👧‍👦</div>
+                        <div class="mode-title" data-i18n="btnGroup">فحص عائلي (مجموعة)</div>
+                        <div class="mode-desc" data-i18n="descGroup">فحص عدة جوازات وإصدار تقرير شامل</div>
                     </div>
                 </div>
 
-                <div class="mode-card" onclick="startScanner('group')">
-                    <div style="font-size: 30px;">👨‍👩‍👧‍👦</div>
-                    <div>
-                        <div style="font-weight: 900;">فحص عائلي / مجموعة</div>
-                        <div style="font-size: 11px; color: var(--text-sub);">تدقيق عدة جوازات دفعة واحدة</div>
-                    </div>
+                <div class="tips-marquee">
+                    <span id="tipsText">💡 نصيحة: تجنب الانعكاس الضوئي على الجواز عند التصوير | 👶 معلومة: يعتبر المسافر رضيعاً حتى عمر سنتين، وطفلاً من سنتين إلى 12 سنة | ⚖️ تنبيه: إذا كان الطفل يسافر بدون والده أو كان الوالد متوفياً، يجب إحضار حجة وصاية أو وكالة سفر رسمية | 🛂 نصيحة: تأكد من وضوح شريط البيانات (MRZ) أسفل الجواز لضمان دقة القراءة 100%.</span>
                 </div>
             </div>
 
-            <div id="scannerSection" style="display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <button onclick="goHome()" style="background:none; border:none; color:var(--accent-blue); font-weight:900; cursor:pointer;">🏠 عودة</button>
-                    <span id="modeBadge" style="background:#eff6ff; color:var(--accent-blue); padding:4px 12px; border-radius:20px; font-size:10px; font-weight:900;"></span>
+            <div id="scannerSection">
+                <div class="top-nav">
+                    <button class="back-btn" onclick="goHome()">🏠 <span data-i18n="btnHome">الرئيسية</span></button>
+                    <span class="mode-badge" id="currentModeBadge">--</span>
                 </div>
 
                 <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="loadFile(event)">
-                
-                <div class="upload-container" onclick="document.getElementById('fileInput').click()">
-                    <img id="previewImg">
-                    <div id="placeholder">
-                        <div class="upload-icon-circle">⬆️</div>
-                        <div style="font-weight: 800; font-size: 14px;">ارفع صورة الجواز</div>
-                        <div style="font-size: 11px; color: var(--text-sub); margin-top: 4px;">JPG, PNG مدعوم</div>
+                <div class="preview-wrapper">
+                    <div class="preview-box" id="previewBox" onclick="document.getElementById('fileInput').click()">
+                        <div class="placeholder" id="placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5"><path d="M4 8V6a2 2 0 0 1 2-2h2l1.5-1.5A1.5 1.5 0 0 1 10.56 2h2.88a1.5 1.5 0 0 1 1.06.44L16 4h2a2 2 0 0 1 2 2v2M4 8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2M4 8h16M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p data-i18n="camTitle">المس هنا لالتقاط أو إدراج الجواز</p>
+                            <span data-i18n="camSub">يدعم الفحص التلقائي بالذكاء الاصطناعي</span>
+                        </div>
+                        <img id="previewImg">
+                        <div class="cyber-scanner-overlay" id="loader">
+                            <div class="cyber-grid"></div>
+                            <div class="cyber-target"></div>
+                            <div class="cyber-laser"></div>
+                            <p class="cyber-text" data-i18n="scanning">جاري الفحص والتحليل...</p>
+                        </div>
                     </div>
-                    <div class="loader-overlay" id="loader">
-                        <div class="laser"></div>
-                        <div style="margin-top: 40px; font-weight: 900; color: var(--accent-blue);">جاري الفحص...</div>
-                    </div>
                 </div>
 
-                <div id="toolButtons" style="display:none; gap:10px; margin-bottom:15px;">
-                    <button class="btn-main" style="background:#f1f5f9; color:#1e293b; flex:1;" onclick="rotateImage(90)">تدوير ⟳</button>
-                    <button class="btn-main btn-scan" style="flex:2;" onclick="processImage()">مسح ضوئي 🔍</button>
+                <div class="tools" id="tools">
+                    <button class="btn btn-rotate" onclick="rotateImage(90)"><span data-i18n="btnRot">تدوير ⟳</span></button>
+                    <button class="btn btn-scan" onclick="processImage()"><span data-i18n="btnScan">مسح ضوئي 🔍</span></button>
                 </div>
 
-                <div class="form-group">
-                    <label>الاسم الكامل (English)</label>
-                    <input type="text" id="nameInput" placeholder="JOHN DOE">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px;">
+                <div class="input-row input-row-1-2">
                     <div class="form-group">
-                        <label>رقم الجواز</label>
-                        <input type="text" id="passNumInput" placeholder="A1234567">
+                        <label data-i18n="lblName">الاسم الكامل (English)</label>
+                        <input type="text" id="nameInput" placeholder="JOHN DOE" class="text-left">
                     </div>
                     <div class="form-group">
-                        <label>تاريخ الميلاد</label>
+                        <label data-i18n="lblPass">رقم الجواز</label>
+                        <input type="text" id="passNumInput" placeholder="A1234567" class="text-center text-left">
+                    </div>
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label data-i18n="lblDob">تاريخ الميلاد</label>
                         <input type="date" id="dobInput">
                     </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     <div class="form-group">
-                        <label>تاريخ النفاذ (Expiry)</label>
-                        <input type="date" id="expiryInput">
-                    </div>
-                    <div class="form-group">
-                        <label>تاريخ السفر</label>
-                        <input type="date" id="travelDateInput">
+                        <label class="label-red" data-i18n="lblExp">تاريخ النفاذ (Expiry)</label>
+                        <input type="date" id="expiryInput" class="input-red">
                     </div>
                 </div>
-
-                <button class="btn-main" onclick="generateTicket()">إصدار التقرير النهائي</button>
+                <div class="input-row" style="grid-template-columns: 1fr;">
+                    <div class="form-group">
+                        <label class="label-blue" data-i18n="lblTravel">تاريخ السفر المتوقع (اختياري لحساب العمر الدقيق)</label>
+                        <input type="date" id="travelDateInput" class="input-blue">
+                    </div>
+                </div>
+                
+                <button class="btn btn-main" onclick="generateTicket()" data-i18n="btnGen">إصدار تقرير الصلاحية</button>
             </div>
         </div>
 
-        <div id="ticketArea" style="display:none; margin-top: 20px;">
-            <div id="ticketsContainer"></div>
-            <button class="btn-main" style="background:#10b981; margin-top:15px;" onclick="downloadReport()">حفظ التقرير كصورة 💾</button>
-            <button class="btn-main" style="background:#f1f5f9; color:#1e293b; margin-top:10px;" onclick="goHome()">إنهاء العمل</button>
+        <div id="ticketArea">
+            <div id="ticketsContainer"></div> 
+            
+            <button class="btn btn-main" style="background: linear-gradient(135deg, #eab308, #d97706); display: none;" id="btnAddAnother" onclick="resetForNext()" data-i18n="btnAddGroup">➕ إضافة شخص آخر للمجموعة</button>
+            <button class="btn btn-main" style="background: linear-gradient(135deg, #0284c7, #0369a1); display: none;" id="btnExportExcel" onclick="openExportModal()" data-i18n="btnExport">📋 نسخ بيانات المجموعة</button>
+            <button class="btn btn-success" onclick="downloadAllImages()" data-i18n="btnSave">حفظ التقرير كصورة 💾</button>
+            <button class="btn btn-clear" onclick="goHome()" data-i18n="btnClear">مسح وبدء جديد ↻</button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="pinModal">
-        <div class="modal-card" style="text-align: center;">
-            <h3 id="pinTitle">🔒 رمز المحفظة</h3>
-            <div style="display:flex; justify-content:center; gap:10px; margin:20px 0;">
-                <div class="pin-dot" id="dot1" style="width:15px; height:15px; border:2px solid #3b82f6; border-radius:50%;"></div>
-                <div class="pin-dot" id="dot2" style="width:15px; height:15px; border:2px solid #3b82f6; border-radius:50%;"></div>
-                <div class="pin-dot" id="dot3" style="width:15px; height:15px; border:2px solid #3b82f6; border-radius:50%;"></div>
-                <div class="pin-dot" id="dot4" style="width:15px; height:15px; border:2px solid #3b82f6; border-radius:50%;"></div>
+    <div class="modal-overlay" id="settingsModal" onclick="if(event.target === this) closeModal('settingsModal')">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('settingsModal')">✖</button>
+            <h3 class="modal-title" data-i18n="stgTitle">⚙️ الإعدادات</h3>
+            <div class="settings-list">
+                <button class="settings-item" onclick="openHistoryModal()"><span data-i18n="stgHist">🕒 سجل الفحص</span></button>
+                <button class="settings-item" onclick="toggleLanguage()"><span data-i18n="stgLang">🌐 English / عربي</span></button>
+                <button class="settings-item" onclick="openModal('aboutModal')"><span data-i18n="stgAbout">👨‍💻 نبذة عن المطور</span></button>
             </div>
-            <div class="pin-grid">
-                <button class="pin-btn" onclick="addPin(1)">1</button><button class="pin-btn" onclick="addPin(2)">2</button><button class="pin-btn" onclick="addPin(3)">3</button>
-                <button class="pin-btn" onclick="addPin(4)">4</button><button class="pin-btn" onclick="addPin(5)">5</button><button class="pin-btn" onclick="addPin(6)">6</button>
-                <button class="pin-btn" onclick="addPin(7)">7</button><button class="pin-btn" onclick="addPin(8)">8</button><button class="pin-btn" onclick="addPin(9)">9</button>
-                <button class="pin-btn" onclick="closeModal('pinModal')" style="background:#fee2e2; color:#ef4444;">✖</button><button class="pin-btn" onclick="addPin(0)">0</button><button class="pin-btn" onclick="removePin()">⌫</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="historyModal" onclick="if(event.target === this) closeModal('historyModal')">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('historyModal')">✖</button>
+            <h3 class="modal-title" data-i18n="histTitle">🕒 آخر عمليات الفحص</h3>
+            <input type="text" id="historySearch" class="search-box" onkeyup="filterHistory()" placeholder="🔍 ابحث عن اسم..." data-i18n-ph="searchPh">
+            <div class="history-list" id="historyListContainer"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="exportModal" onclick="if(event.target === this) closeModal('exportModal')">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('exportModal')">✖</button>
+            <h3 class="modal-title" data-i18n="exportTitle">📋 بيانات المجموعة</h3>
+            <div style="background: var(--input-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 12px; max-height: 250px; overflow-y: auto; margin-bottom: 15px;">
+                <pre id="exportDataContent" style="font-size: 12px; text-align: left; direction: ltr; white-space: pre-wrap; font-family: monospace; line-height: 1.6;"></pre>
+            </div>
+            <button class="btn btn-main" onclick="copyExportData()" data-i18n="btnCopyData">📋 نسخ كافة البيانات</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="appInfoModal" onclick="if(event.target === this) closeModal('appInfoModal')">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
+            <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل والمفصل</h3>
+            <div class="info-content">
+                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
+                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص (الماسح السينمائي)</h4>
+                <p data-i18n="helpSec1Text" style="margin-bottom: 15px;">يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.</p>
+                <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
+                <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
+                <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
+                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (التنزيل المباشر ⬇️) أو (المشاركة 🔗).</p>
+                <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
+                <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aboutModal" onclick="if(event.target === this) closeModal('aboutModal')">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
+            <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
+            <div class="info-content">
+                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="saveOverlay" onclick="if(event.target === this) closeModal('saveOverlay')">
+        <div class="modal-card" style="text-align: center; padding: 20px;">
+            <button class="modal-close-btn" onclick="closeModal('saveOverlay')">✖</button>
+            <h3 class="modal-title" style="margin-bottom: 5px;" data-i18n="saveReady">التقرير جاهز!</h3>
+            <p style="font-size: 13px; font-weight: 700; color: #22c55e; margin-bottom: 15px;" data-i18n="saveInst">👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇</p>
+            <div style="max-height: 60vh; overflow-y: auto; border-radius: 12px; border: 2px dashed #3b82f6; padding: 5px; margin-bottom: 15px;">
+                <img id="finalImage" alt="Report" style="width: 100%; display: block; border-radius: 8px;">
+            </div>
+            <button class="btn btn-main" onclick="shareImageFile()" data-i18n="btnShareImg" style="margin-top: 10px; width: 100%;">🔗 مشاركة الصورة</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="pinModal" onclick="if(event.target === this) closeWalletAuth()">
+        <div class="modal-card" style="text-align: center;">
+            <button class="modal-close-btn" onclick="closeWalletAuth()">✖</button>
+            <h3 class="modal-title" id="pinTitle" data-i18n="pinTitle">🔒 أدخل الرمز السري</h3>
+            <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 15px; font-weight: 800;" id="pinSub" data-i18n="pinSub">المحفظة محمية ومحفوظة بجهازك فقط</p>
+            <div class="pin-container">
+                <div class="pin-dot" id="dot1"></div><div class="pin-dot" id="dot2"></div><div class="pin-dot" id="dot3"></div><div class="pin-dot" id="dot4"></div>
+            </div>
+            <div class="pin-pad">
+                <div class="pin-btn" onclick="addPin(1)">1</div><div class="pin-btn" onclick="addPin(2)">2</div><div class="pin-btn" onclick="addPin(3)">3</div>
+                <div class="pin-btn" onclick="addPin(4)">4</div><div class="pin-btn" onclick="addPin(5)">5</div><div class="pin-btn" onclick="addPin(6)">6</div>
+                <div class="pin-btn" onclick="addPin(7)">7</div><div class="pin-btn" onclick="addPin(8)">8</div><div class="pin-btn" onclick="addPin(9)">9</div>
+                <div></div><div class="pin-btn" onclick="addPin(0)">0</div>
+                <div class="pin-btn" onclick="removePin()" style="background: rgba(239,68,68,0.1); color: #ef4444; border-color: rgba(239,68,68,0.3);">⌫</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="walletModal" onclick="if(event.target === this) closeWalletModal()">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeWalletModal()">✖</button>
+            <h3 class="modal-title" data-i18n="walletTitle">🪪 محفظة المستندات</h3>
+            <div style="background: var(--input-bg); border: 1px dashed #3b82f6; padding: 15px; border-radius: 16px; margin-bottom: 15px; text-align: center; cursor: pointer;" onclick="document.getElementById('walletUpload').click()">
+                <div style="font-size: 24px; margin-bottom: 5px;">➕</div>
+                <div style="font-size: 13px; font-weight: 800; color: #3b82f6;" data-i18n="walletAdd">إضافة مستند جديد</div>
+            </div>
+            <input type="file" id="walletUpload" style="display: none;" accept="image/*" onchange="handleWalletUpload(event)">
+            <div class="wallet-grid" id="walletGallery"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="docViewModal">
+        <div class="modal-card" style="text-align: center; padding: 20px;">
+            <div style="max-height: 50vh; overflow-y: auto; border-radius: 12px; margin-bottom: 15px;">
+                <img id="docPreviewImg" style="width: 100%; border-radius: 8px;">
+            </div>
+            <input type="text" id="docNameInput" class="search-box" style="text-align: center; margin-bottom: 10px;" placeholder="اسم المستند (مثال: بطاقة وطنية)" data-i18n-ph="docNamePh">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-main" style="margin-top: 0; background: var(--btn-glass); border: 1px solid var(--border-color); color: var(--text-main);" onclick="closeDocView()" data-i18n="btnCancel">إلغاء</button>
+                <button class="btn btn-success" style="margin-top: 0;" onclick="saveDocToWallet()" data-i18n="btnSaveDoc">حفظ بالمحفظة 🔒</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="docFullModal" onclick="if(event.target === this) closeModal('docFullModal')">
+        <div class="modal-card" style="text-align: center; padding: 20px;">
+            <button class="modal-close-btn" onclick="closeModal('docFullModal')">✖</button>
+            <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 55vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">تنزيل</span></button>
+                <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareDocImage()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
             </div>
         </div>
     </div>
 
     <script>
-        /* === البرمجة والمنطق الكامل === */
-        
-        let appMode = 'single';
-        let currentRotation = 0;
-        let enteredPin = "";
-        let audioCtx;
+        function safeGetItem(key, defaultVal) { try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; } }
+        function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
 
-        // تشغيل الصوت (تفاعل المستخدم)
-        function playSound(freq = 600, dur = 0.1) {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
-            osc.start(); osc.stop(audioCtx.currentTime + dur);
+        // نظام الصوت
+        let audioCtx; let audioInitialized = false;
+        function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } }
+        function playClickSound() {
+            try {
+                if (!audioCtx) return; if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(600, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+            } catch(e) {}
+        }
+        document.addEventListener('click', function(e) {
+            if (!audioInitialized) { initAudio(); audioInitialized = true; }
+            if(e.target.closest('button') || e.target.closest('.mode-btn') || e.target.closest('.settings-item') || e.target.closest('.pin-btn')) {
+                if(!e.target.closest('.btn-scan') && !e.target.closest('.btn-main[onclick="generateTicket()"]')) { playClickSound(); }
+            }
+        });
+        function playSound(type) {
+            try {
+                if (!audioCtx) return;
+                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+                if (type === 'success') {
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                }
+            } catch(e) {}
+        }
+        function vibrate(type) {
+            if (!navigator.vibrate) return;
+            if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]);
         }
 
-        window.onload = () => {
-            setTimeout(() => document.getElementById('splashScreen').style.opacity = '0', 1500);
-            setTimeout(() => document.getElementById('splashScreen').remove(), 2100);
-            document.getElementById('travelDateInput').valueAsDate = new Date();
+        // المتغيرات
+        let currentLang = safeGetItem('appLang', 'ar');
+        let isDarkMode = safeGetItem('darkMode') === 'true';
+        let appMode = 'single'; 
+        let ticketCount = 0;
+        let currentRotation = 0;
+        let imageElement;
+        let groupPassengersData = []; 
+        let nationalityData = { flag: "🌍", name: "" };
+        const API_KEY = 'helloworld';
+
+        const countries = {
+            'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
+            'TUR': { ar: 'تركيا 🇹🇷', en: 'Turkey 🇹🇷' }, 'JOR': { ar: 'الأردن 🇯🇴', en: 'Jordan 🇯🇴' },
+            'LBN': { ar: 'لبنان 🇱🇧', en: 'Lebanon 🇱🇧' }, 'EGY': { ar: 'مصر 🇪🇬', en: 'Egypt 🇪🇬' },
+            'ARE': { ar: 'الإمارات 🇦🇪', en: 'UAE 🇦🇪' }, 'SAU': { ar: 'السعودية 🇸🇦', en: 'KSA 🇸🇦' },
+            'KWT': { ar: 'الكويت 🇰🇼', en: 'Kuwait 🇰🇼' }, 'QAT': { ar: 'قطر 🇶🇦', en: 'Qatar 🇶🇦' },
+            'OMN': { ar: 'عمان 🇴🇲', en: 'Oman 🇴🇲' }, 'BHR': { ar: 'البحرين 🇧🇭', en: 'Bahrain 🇧🇭' },
+            'IRN': { ar: 'إيران 🇮🇷', en: 'Iran 🇮🇷' }, 'USA': { ar: 'أمريكا 🇺🇸', en: 'USA 🇺🇸' },
+            'GBR': { ar: 'بريطانيا 🇬🇧', en: 'UK 🇬🇧' }, 'CAN': { ar: 'كندا 🇨🇦', en: 'Canada 🇨🇦' }
         };
+
+        const dict = {
+            ar: {
+                appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", 
+                btnSingle: "فحص فردي (شخص واحد)", descSingle: "استخراج تقرير صلاحية لجواز سفر واحد",
+                btnGroup: "فحص عائلي (مجموعة)", descGroup: "فحص عدة جوازات وإصدار تقرير شامل",
+                btnHome: "الرئيسية", camTitle: "المس هنا لالتقاط أو إدراج الجواز", camSub: "يدعم الفحص التلقائي بالذكاء الاصطناعي", scanning: "جاري الفحص والتحليل...",
+                btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
+                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري لحساب العمر)", btnGen: "إصدار تقرير الصلاحية",
+                btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "حفظ التقرير كصورة 💾", btnClear: "مسح وبدء جديد ↻", btnShareImg: "🔗 مشاركة الصورة",
+                stgTitle: "⚙️ الإعدادات", stgHist: "🕒 سجل الفحص", stgLang: "🌐 Switch to English", stgHelp: "ℹ️ دليل الاستخدام", stgAbout: "👨‍💻 نبذة عن المطور",
+                histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
+                exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
+                helpTitle: "ℹ️ الدليل الشامل والمفصل", 
+                helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
+                helpSec1Title: "🔍 أولاً: نظام الفحص (الماسح السينمائي)",
+                helpSec1Text: "يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية (الرادار والليزر) أثناء قيام النظام بتحليل الاسم، رقم الجواز، وتاريخ الانتهاء بثانية واحدة وبدون أخطاء. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة واحدة يمكن نسخها لبرامج الحجز.",
+                helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
+                helpSec2Text: "يظهر التقرير بحركة بطاقة ثلاثية الأبعاد (3D Flip) وينزل عليه ختم المطار (APPROVED / REJECTED). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير: الصلاحية أقل من 6 أشهر)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة بالسنوات والأشهر والأيام. إذا أدخلت (تاريخ السفر)، سينبهك النظام إذا كان الرضيع سيصبح طفلاً (فوق سنتين) لتجنب غرامات شركات الطيران.<br><b>3. الجنسية:</b> استخراج تلقائي لدولة الإصدار مع العلم.",
+                helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
+                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN) من اختيارك. تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك ومستمسكاتك داخل ذاكرة المتصفح العميقة (بدون إنترنت وبأمان تام). يقوم النظام بضغط الصور تلقائياً للحفاظ على سرعة الهاتف. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (التنزيل المباشر ⬇️) لحفظها في الاستوديو، أو (المشاركة 🔗) لإرسالها عبر الواتساب والبريد.",
+                helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
+                helpSec4Text: "تجنب تماماً استخدام (الفلاش) أو التصوير تحت إضاءة ساطعة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل وبشكل أفقي وواضح لضمان عمل الذكاء الاصطناعي بكفاءة.",
+                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
+                modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
+                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
+                warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
+                saveReady: "التقرير جاهز!", saveInst: "👇 المس الصورة مطولاً واختر (حفظ الصورة) 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "🪪 محفظة المستندات", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "تنزيل", btnShareDoc: "مشاركة"
+            },
+            en: {
+                appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
+                btnSingle: "Single Scan", descSingle: "Generate report for one passport",
+                btnGroup: "Group Scan", descGroup: "Scan multiple passports at once",
+                btnHome: "Home", camTitle: "Tap here to capture passport", camSub: "Supports AI auto scanning", scanning: "Scanning & Analyzing...",
+                btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
+                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
+                btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Save as Image 💾", btnClear: "Clear & Restart ↻", btnShareImg: "🔗 Share Image",
+                stgTitle: "⚙️ Settings", stgHist: "🕒 History", stgLang: "🌐 التبديل للعربية", stgHelp: "ℹ️ Guide", stgAbout: "👨‍💻 About Developer",
+                histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
+                exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
+                helpTitle: "ℹ️ Comprehensive Guide", 
+                helpIntro: "Welcome to the Comprehensive Guide. This system is a professional Super App combining AI passport checking with local encryption for document security.",
+                helpSec1Title: "🔍 First: Scanning System (Cyber UI)",
+                helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly. It supports Single Mode for one traveler, and Group Mode to scan multiple passports into an exportable list.",
+                helpSec2Title: "📊 Second: Validity Report & 3D Card",
+                helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It shows: <br><b>1. Color Indicator:</b> Green (Valid), Yellow (Warning <6 months), Red (Expired).<br><b>2. Age Calculator:</b> Exact age calculator. If 'Travel Date' is provided, it alerts you if an infant becomes a child.<br><b>3. Nationality:</b> Auto-detects issuing country and flag.",
+                helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
+                helpSec3Text: "A secure vault protected by a PIN of your choice. It uses IndexedDB to save your IDs deep in the browser memory (offline & completely secure). It auto-compresses images to save space. You can view, Download ⬇️, or Share 🔗 your documents easily.",
+                helpSec4Title: "📸 Fourth: Pro Photo Tips",
+                helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear for optimal AI performance.",
+                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who recognized the daily challenges faced by travelers and agencies in checking passports. Driven by this passion, he developed this smart system as an accurate and fast assistive tool.",
+                modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
+                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
+                warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
+                saveReady: "Report Ready!", saveInst: "👇 Long press the image to save 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "🪪 ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "Download", btnShareDoc: "Share"
+            }
+        };
+
+        // واجهة المستخدم الأساسية
+        function applyLanguage() {
+            document.getElementById('htmlTag').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (dict[currentLang][key]) el.innerHTML = dict[currentLang][key]; });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => { const key = el.getAttribute('data-i18n-ph'); if (dict[currentLang][key]) el.placeholder = dict[currentLang][key]; });
+            if(appMode) document.getElementById('currentModeBadge').innerText = appMode === 'single' ? dict[currentLang].modeS : dict[currentLang].modeG;
+            updateGreeting();
+        }
+        function toggleLanguage() { currentLang = currentLang === 'ar' ? 'en' : 'ar'; safeSetItem('appLang', currentLang); applyLanguage(); closeModal('settingsModal'); }
+        function applyDarkMode() {
+            if (isDarkMode) { document.body.classList.add('dark-mode'); document.getElementById('darkModeBtn').innerText = '☀️'; } 
+            else { document.body.classList.remove('dark-mode'); document.getElementById('darkModeBtn').innerText = '🌙'; }
+        }
+        function toggleDarkMode() { isDarkMode = !isDarkMode; safeSetItem('darkMode', isDarkMode); applyDarkMode(); }
+        function updateGreeting() {
+            const h = new Date().getHours();
+            let gAr = h < 12 ? "صباح الخير ☀️" : h < 18 ? "طاب مساؤك 🌤️" : "مساء الخير 🌙";
+            let gEn = h < 12 ? "Good Morning ☀️" : h < 18 ? "Good Afternoon 🌤️" : "Good Evening 🌙";
+            document.getElementById('greetingText').innerText = currentLang === 'ar' ? gAr : gEn;
+        }
+        function updateConnectionStatus() {
+            const dot = document.getElementById('connDot'); const txt = document.getElementById('connText');
+            if (navigator.onLine) { dot.classList.remove('offline'); txt.innerText = currentLang === 'ar' ? 'متصل بالسيرفر' : 'Connected'; } 
+            else { dot.classList.add('offline'); txt.innerText = currentLang === 'ar' ? 'غير متصل (تأكد من النت)' : 'Offline'; }
+        }
+        window.addEventListener('online', updateConnectionStatus); window.addEventListener('offline', updateConnectionStatus);
+
+        window.addEventListener('DOMContentLoaded', function() {
+            try {
+                imageElement = document.getElementById('previewImg');
+                document.getElementById('travelDateInput').valueAsDate = new Date();
+                applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
+                initWalletDB(); 
+            } catch(e) { console.error("Init err", e); }
+        });
+
+        // دوال النوافذ والتنقل
+        function openModal(id) { document.querySelectorAll('.modal-overlay').forEach(m => { m.classList.remove('active'); m.style.display = 'none'; }); document.getElementById(id).style.display = 'flex'; setTimeout(() => document.getElementById(id).classList.add('active'), 10); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); setTimeout(() => { document.getElementById(id).style.display = 'none'; }, 300); }
 
         function startScanner(mode) {
             appMode = mode;
-            document.getElementById('homeSection').style.display = 'none';
-            document.getElementById('scannerSection').style.display = 'block';
-            document.getElementById('modeBadge').innerText = mode === 'single' ? 'وضع فردي' : 'وضع عائلي';
-            playSound(800);
+            document.getElementById('homeSection').style.display = 'none'; document.getElementById('scannerSection').style.display = 'flex';
+            document.getElementById('currentModeBadge').innerText = mode === 'single' ? dict[currentLang].modeS : dict[currentLang].modeG;
+            document.getElementById('btnAddAnother').style.display = mode === 'group' ? 'block' : 'none';
+            document.getElementById('btnExportExcel').style.display = mode === 'group' ? 'block' : 'none';
+            resetForNext(true);
+        }
+        function goHome() { document.getElementById('scannerSection').style.display = 'none'; document.getElementById('ticketArea').style.display = 'none'; document.getElementById('homeSection').style.display = 'flex'; resetForNext(true); }
+        function resetForNext(fullClear = false) {
+            document.getElementById('nameInput').value = ''; document.getElementById('passNumInput').value = ''; document.getElementById('dobInput').value = ''; document.getElementById('expiryInput').value = '';
+            document.getElementById('previewImg').style.display = 'none'; document.getElementById('placeholder').style.display = 'flex'; document.getElementById('tools').style.display = 'none';
+            nationalityData = { flag: "🌍", name: "" };
+            if (fullClear) { document.getElementById('ticketsContainer').innerHTML = ''; document.getElementById('ticketArea').style.display = 'none'; ticketCount = 0; groupPassengersData = []; } 
+            else { document.getElementById('scannerSection').scrollIntoView({behavior: 'smooth'}); }
         }
 
-        function goHome() {
-            document.getElementById('scannerSection').style.display = 'none';
-            document.getElementById('ticketArea').style.display = 'none';
-            document.getElementById('homeSection').style.display = 'block';
-            resetInputs();
+        // السجل
+        function saveToHistory(name, pass) {
+            try {
+                let history = JSON.parse(safeGetItem('scanHistory', '[]'));
+                const now = new Date(); const timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} - ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+                history.unshift({ name: name, pass: pass, time: timeStr });
+                if(history.length > 20) history.pop(); safeSetItem('scanHistory', JSON.stringify(history));
+            } catch(e) {}
+        }
+        function openHistoryModal() { document.getElementById('historySearch').value = ''; try { renderHistory(JSON.parse(safeGetItem('scanHistory', '[]'))); } catch(e) { renderHistory([]); } openModal('historyModal'); }
+        function renderHistory(history) {
+            const container = document.getElementById('historyListContainer'); container.innerHTML = '';
+            if(history.length === 0) { container.innerHTML = `<div class="empty-history">${dict[currentLang].histEmpty}</div>`; } 
+            else { history.forEach(item => { container.innerHTML += `<div class="history-item"><div class="history-info"><h4>${item.name}</h4><p>${item.pass}</p></div><div class="history-time" style="color:#3b82f6;">${item.time}</div></div>`; }); }
+        }
+        function filterHistory() {
+            const query = document.getElementById('historySearch').value.toLowerCase();
+            try { const history = JSON.parse(safeGetItem('scanHistory', '[]')); const filtered = history.filter(item => item.name.toLowerCase().includes(query) || item.pass.toLowerCase().includes(query)); renderHistory(filtered); } catch(e) {}
         }
 
+        // قارئ الصور
         function loadFile(event) {
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = document.getElementById('previewImg');
-                    img.src = e.target.result;
-                    img.style.display = 'block';
-                    document.getElementById('placeholder').style.display = 'none';
-                    document.getElementById('toolButtons').style.display = 'flex';
-                };
-                reader.readAsDataURL(file);
-            }
+            if (file) { const reader = new FileReader(); reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; nationalityData = { flag: "🌍", name: "" }; }; reader.readAsDataURL(file); }
         }
+        function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
 
-        function rotateImage(deg) {
-            currentRotation = (currentRotation + deg) % 360;
-            document.getElementById('previewImg').style.transform = `rotate(${currentRotation}deg)`;
-            playSound(400);
-        }
-
-        // دالة الفحص عبر OCR.space
         async function processImage() {
-            if (!navigator.onLine) return alert("لا يوجد اتصال بالإنترنت!");
+            initAudio(); 
+            if (!navigator.onLine) { vibrate('error'); playSound('error'); return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); }
             document.getElementById('loader').style.display = 'flex';
-            playSound(1000, 0.2);
-
             try {
-                const imgBase64 = document.getElementById('previewImg').src;
-                const formData = new FormData();
-                formData.append("base64Image", imgBase64);
-                formData.append("apikey", "helloworld"); // استبدله بـ Key خاص بك لسرعة أكبر
-                formData.append("OCREngine", "2");
-
-                const res = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
-                const data = await res.json();
+                const rotatedBase64 = await getRotatedImage();
+                const formData = new FormData(); formData.append("base64Image", rotatedBase64); formData.append("language", "eng"); formData.append("isOverlayRequired", "false"); formData.append("detectOrientation", "true"); formData.append("scale", "true"); formData.append("OCREngine", "2"); formData.append("apikey", API_KEY);
                 
-                if (data.ParsedResults && data.ParsedResults[0]) {
-                    const text = data.ParsedResults[0].ParsedText;
-                    parsePassportData(text);
-                } else {
-                    alert("لم يتم العثور على بيانات، يرجى الإدخال يدوياً.");
-                }
-            } catch (e) {
-                alert("خطأ في الاتصال بالسيرفر.");
-            } finally {
-                document.getElementById('loader').style.display = 'none';
-            }
+                const response = await fetch('https://api.ocr.space/parse/image', { method: 'POST', body: formData });
+                const data = await response.json();
+                if (data.IsErroredOnProcessing || !data.ParsedResults || data.ParsedResults.length === 0) throw new Error("فشل");
+                
+                const text = data.ParsedResults[0].ParsedText;
+                
+                const mrzMatch = text.match(/P<([A-Z]{3})/);
+                if (mrzMatch && mrzMatch[1]) { const code = mrzMatch[1]; if (countries[code]) { nationalityData = { flag: countries[code][currentLang].slice(-2), name: countries[code][currentLang] }; } }
+
+                extractDates(text); extractNameFromText(text); extractPassportNumber(text);
+                vibrate('success'); playSound('success');
+            } catch (error) { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرجاء إدخال البيانات يدوياً." : "Please enter data manually."); } 
+            finally { document.getElementById('loader').style.display = 'none'; }
         }
 
-        function parsePassportData(text) {
-            // محرك بسيط لاستخراج الاسم ورقم الجواز (RegEx)
-            const lines = text.split('\n');
-            lines.forEach(line => {
-                if (line.match(/[A-Z]{1}[0-9]{7,8}/)) document.getElementById('passNumInput').value = line.match(/[A-Z]{1}[0-9]{7,8}/)[0];
+        function getRotatedImage() {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); const img = new Image(); img.src = imageElement.src;
+                img.onload = () => {
+                    if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } else { canvas.width = img.width; canvas.height = img.height; }
+                    ctx.translate(canvas.width / 2, canvas.height / 2); ctx.rotate(currentRotation * Math.PI / 180); ctx.drawImage(img, -img.width / 2, -img.height / 2);
+                    resolve(canvas.toDataURL('image/jpeg', 0.8));
+                };
             });
-            // استخراج التواريخ التقريبي
-            const dates = text.match(/\d{2}[\/\-.]\d{2}[\/\-.]\d{4}/g);
-            if (dates && dates.length >= 2) {
-                document.getElementById('dobInput').value = formatDate(dates[0]);
-                document.getElementById('expiryInput').value = formatDate(dates[1]);
-            }
-            playSound(1200);
         }
 
-        function formatDate(d) {
-            const parts = d.split(/[\/\-.]/);
-            if (parts[2].length === 4) return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            return d;
+        function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
+
+        function extractDates(text) {
+            const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g]; let dates = [];
+            let matches1 = [...text.matchAll(datePatterns[0])]; matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
+            let matches2 = [...text.matchAll(datePatterns[1])]; matches2.forEach(m => dates.push(`${m[3]}-${String(m[2]).padStart(2,'0')}-${String(m[1]).padStart(2,'0')}`));
+            dates = dates.filter(d => { let y = parseInt(d.split('-')[0]); return y > 1920 && y < 2050; }).sort();
+            if (dates.length > 0) {
+                document.getElementById('dobInput').value = dates[0]; highlightField('dobInput');
+                let lastDate = dates[dates.length - 1]; if (lastDate !== dates[0]) { document.getElementById('expiryInput').value = lastDate; highlightField('expiryInput'); }
+            }
+        }
+        function extractNameFromText(text) {
+            const mrzRegex = /P<[A-Z]{3}([A-Z<]+)<<([A-Z<]+)/g; const matches = [...text.matchAll(mrzRegex)];
+            if (matches.length > 0) { let s = matches[0][1].replace(/</g, ' ').trim(); let g = matches[0][2].replace(/</g, ' ').trim(); document.getElementById('nameInput').value = `${g} ${s}`; highlightField('nameInput'); } 
+            else { const lines = text.split('\n'); for (let line of lines) { if (/^[A-Z\s]{5,}$/.test(line.trim()) && !line.includes('REPUBLIC') && !line.includes('PASSPORT')) { document.getElementById('nameInput').value = line.trim(); break; } } }
+        }
+        function extractPassportNumber(text) {
+            const mrzPattern = /\b([A-Z0-9]{8,9})\d[A-Z]{3}\d{6}/g; const matchesMRZ = [...text.matchAll(mrzPattern)];
+            if (matchesMRZ.length > 0) { document.getElementById('passNumInput').value = matchesMRZ[0][1]; highlightField('passNumInput'); } 
+            else { const visualPattern = /\b[A-Z][0-9]{7,8}\b/g; const visualMatches = [...text.matchAll(visualPattern)]; if (visualMatches.length > 0) { document.getElementById('passNumInput').value = visualMatches[0][0]; } }
+        }
+        function calculateDiff(startDate, endDate) {
+            let years = endDate.getFullYear() - startDate.getFullYear(); let months = endDate.getMonth() - startDate.getMonth(); let days = endDate.getDate() - startDate.getDate();
+            if (days < 0) { months--; days += new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate(); } if (months < 0) { years--; months += 12; }
+            return { years, months, days, totalMonths: (years * 12) + months };
         }
 
         function generateTicket() {
-            const name = document.getElementById('nameInput').value;
-            const exp = new Date(document.getElementById('expiryInput').value);
-            const today = new Date();
+            initAudio(); 
+            const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
+            const nameVal = document.getElementById('nameInput').value || "GUEST"; const passNum = document.getElementById('passNumInput').value || "---";
+            const travelVal = document.getElementById('travelDateInput').value;
+
+            if (!dobVal) { vibrate('error'); playSound('error'); return alert(dict[currentLang].valErr); }
+            saveToHistory(nameVal, passNum); 
+
+            const today = new Date(); const dob = new Date(dobVal); const travelDate = travelVal ? new Date(travelVal) : today;
+            const ageToday = calculateDiff(dob, today); const ageTravel = calculateDiff(dob, travelDate);
             
-            if (!name) return alert("يرجى إدخال الاسم");
+            let type = "ADULT"; if (ageTravel.years < 2) { type = "INFANT"; } else if (ageTravel.years < 12) { type = "CHILD"; }
 
-            document.getElementById('scannerSection').style.display = 'none';
-            document.getElementById('ticketArea').style.display = 'block';
+            let ageAlertHTML = '';
+            if (ageToday.years < 2 && ageTravel.years >= 2) { ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnInfant}</div>`; } 
+            else if (ageToday.years < 12 && ageTravel.years >= 12) { ageAlertHTML = `<div class="age-alert" style="display:block;">${dict[currentLang].warnChild}</div>`; }
 
-            let status = "VALID ✅";
-            let stamp = "APPROVED";
-            let color = "#16a34a";
+            let statusTitle = "UNKNOWN"; let remainingText = dict[currentLang].remainErr;
+            let boxColor = "var(--input-bg)", borderColor = "var(--border-color)", textColor = "var(--text-main)";
+            let progressPct = 0; let progressColor = "#94a3b8"; let stampClass = "stamp-invalid"; let stampText = dict[currentLang].stampRejected;
 
-            if (exp < today) {
-                status = "EXPIRED ⛔";
-                stamp = "REJECTED";
-                color = "#ef4444";
-            } else if ((exp - today) / (1000*60*60*24*30) < 6) {
-                status = "INVALID (UNDER 6M) ⚠️";
-                stamp = "REJECTED";
-                color = "#f59e0b";
+            if (expiryVal) {
+                const expiryDate = new Date(expiryVal); const validDiff = calculateDiff(today, expiryDate);
+                if (expiryDate < today) {
+                    statusTitle = dict[currentLang].expTitle; remainingText = dict[currentLang].expSub; boxColor = "rgba(254,226,226,0.1)"; borderColor = "#ef4444"; textColor = "#ef4444"; vibrate('error'); playSound('error'); stampClass = "stamp-invalid"; stampText = dict[currentLang].stampRejected;
+                } else {
+                    remainingText = currentLang === 'ar' ? `باقي: <span dir="rtl">${validDiff.years} سنة و ${validDiff.months} شهر و ${validDiff.days} يوم</span>` : dict[currentLang].remText.replace('{y}', validDiff.years).replace('{m}', validDiff.months).replace('{d}', validDiff.days);
+                    progressPct = Math.min(100, (validDiff.totalMonths / 120) * 100); 
+                    if (validDiff.totalMonths < 6) { statusTitle = dict[currentLang].invTitle; boxColor = "rgba(255,237,213,0.1)"; borderColor = "#f59e0b"; textColor = "#f59e0b"; progressColor = "#f59e0b"; vibrate('error'); playSound('error'); stampClass = "stamp-invalid"; stampText = dict[currentLang].stampRejected; } 
+                    else { statusTitle = dict[currentLang].valTitle; boxColor = "rgba(220,252,231,0.1)"; borderColor = "#22c55e"; textColor = "#22c55e"; progressColor = "#22c55e"; vibrate('success'); playSound('success'); stampClass = "stamp-valid"; stampText = dict[currentLang].stampApproved; }
+                }
+            } else { vibrate('success'); playSound('success'); }
+            
+            const ageStrHTML = currentLang === 'ar' ? `<div style="display: flex; gap: 4px; direction: rtl; justify-content: flex-end; align-items: center;"><span>${ageTravel.years}</span><span>سنة و</span><span>${ageTravel.months}</span><span>شهر و</span><span>${ageTravel.days}</span><span>يوم</span></div>` : `${ageTravel.years}Y, ${ageTravel.months}M, ${ageTravel.days}D`;
+            const dateStr = today.toISOString().split('T')[0];
+
+            let reminderBtnHTML = '';
+            if (expiryVal && new Date(expiryVal) > today) {
+                const remindDate = new Date(expiryVal); remindDate.setMonth(remindDate.getMonth() - 6);
+                const dStr = remindDate.toISOString().replace(/-|:|\.\d\d\d/g,"");
+                const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('تجديد جواز ' + nameVal)}&dates=${dStr}/${dStr}&details=${encodeURIComponent('تذكير لتجديد الجواز')}`;
+                reminderBtnHTML = `<button class="btn-reminder" onclick="window.open('${calLink}', '_blank')">${dict[currentLang].btnReminder}</button>`;
             }
+            
+            const rawStatusText = statusTitle.replace(/<[^>]*>?/gm, ''); const rawRemainText = currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `باقي: ${calculateDiff(today, new Date(expiryVal)).years} سنة و ${calculateDiff(today, new Date(expiryVal)).months} شهر و ${calculateDiff(today, new Date(expiryVal)).days} يوم` : remainingText.replace(/<[^>]*>?/gm, '');
+            const waMessage = currentLang === 'ar' ? `أهلاً بك، تم فحص جواز السفر الخاص بك (${nameVal}).\nالنتيجة: ${rawStatusText}\nالصلاحية: ${rawRemainText}` : `Hello, passport checked for (${nameVal}).\nResult: ${rawStatusText}\nValidity: ${rawRemainText}`;
+            const waLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
+
+            groupPassengersData.push({ name: nameVal.toUpperCase(), pass: passNum, dob: dobVal, exp: expiryVal || "N/A", type: type });
 
             const ticketHTML = `
-                <div class="voucher">
-                    <div class="v-head">TRAVEL ELIGIBILITY REPORT</div>
-                    <div class="v-body">
-                        <div class="stamp" style="color:${color}; border-color:${color}; opacity:0.3;">${stamp}</div>
-                        <h2 style="margin-bottom:10px;">${name.toUpperCase()}</h2>
-                        <div style="background:${color}10; padding:15px; border-radius:12px; border:1px solid ${color};">
-                            <h3 style="color:${color}; text-align:center;">${status}</h3>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; margin-top:20px; font-size:12px; font-weight:800;">
-                            <div>PASS: ${document.getElementById('passNumInput').value}</div>
-                            <div>EXP: ${document.getElementById('expiryInput').value}</div>
-                        </div>
-                        <div style="text-align:center; margin-top:20px;">
-                            <canvas id="qr_${Date.now()}"></canvas>
+            <div class="voucher mb-4 voucher-3d" id="ticket_${ticketCount}">
+                <div class="v-head">
+                    <div class="v-date-corner">${dateStr}</div>
+                    <h3 class="v-title-main">TRAVEL ELIGIBILITY</h3>
+                    <p class="v-title-sub">DOCUMENT STATUS CHECK</p>
+                </div>
+                <div class="v-body">
+                    <div class="stamp ${stampClass} animate-stamp">${stampText}</div>
+                    <div class="v-passenger-row">
+                        <div class="v-badge">${nationalityData.flag} ${type}</div>
+                        <div class="v-pass-info">
+                            <p class="v-pass-label">PASSENGER</p>
+                            <h2 class="v-pass-name">${nameVal.toUpperCase()}</h2>
                         </div>
                     </div>
+                    ${ageAlertHTML}
+                    <div class="v-status-box" style="background-color:${boxColor}; border-color:${borderColor}; color:${textColor};">
+                        <p class="v-status-label" style="font-size: 10px; font-weight: 800; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase;">TRAVEL VALIDITY STATUS</p>
+                        <h3 class="v-status-title" style="font-size:${statusTitle.includes('✅') ? '18px' : '20px'}; margin-bottom: 6px;">${statusTitle}</h3>
+                        <div style="font-size: 14px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; gap: 4px; direction: ${currentLang==='ar'?'rtl':'ltr'};">${currentLang === 'ar' && expiryVal && new Date(expiryVal) > today ? `<span>باقي:</span><span>${calculateDiff(today, new Date(expiryVal)).years}</span><span>سنة و</span><span>${calculateDiff(today, new Date(expiryVal)).months}</span><span>شهر و</span><span>${calculateDiff(today, new Date(expiryVal)).days}</span><span>يوم</span>` : remainingText}</div>
+                        <div class="progress-bg"><div class="progress-fill" style="width: ${progressPct}%; background: ${progressColor};"></div></div>
+                    </div>
+                    <div class="v-detail-row-single">
+                        <div class="v-detail-value" style="width: 100%; text-align: right;">${ageStrHTML}</div>
+                        <p class="v-detail-label">${dict[currentLang].ageLabel}</p>
+                    </div>
+                    <div class="v-details-grid">
+                        <div class="v-grid-box"><p class="v-grid-label">EXPIRY DATE</p><p class="v-grid-value">${expiryVal || "--"}</p></div>
+                        <div class="v-grid-box"><p class="v-grid-label">BIRTH DATE</p><p class="v-grid-value">${dobVal}</p></div>
+                    </div>
+                    ${reminderBtnHTML}
+                    <div class="v-footer">
+                        <div class="qr-container"><canvas class="qr-canvas"></canvas></div>
+                        <div class="v-pass-num-box"><p class="v-pass-num-label">PASSPORT NO</p><p class="v-pass-num-value">${passNum}</p></div>
+                    </div>
+                    <button class="btn-wa" onclick="window.open('${waLink}', '_blank')"><svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        <span data-i18n="btnWa">${dict[currentLang].btnWa}</span>
+                    </button>
                 </div>
-            `;
-            
-            const container = document.getElementById('ticketsContainer');
-            if (appMode === 'single') container.innerHTML = ticketHTML;
-            else container.insertAdjacentHTML('beforeend', ticketHTML);
+            </div>`;
 
-            // توليد QR
-            setTimeout(() => {
-                const canvas = container.querySelector('canvas:last-child');
-                new QRious({ element: canvas, value: name + " | " + status, size: 100 });
-            }, 100);
+            const container = document.getElementById('ticketsContainer');
+            if (appMode === 'single') { container.innerHTML = ''; groupPassengersData = [groupPassengersData.pop()]; } 
             
-            playSound(1500, 0.3);
+            container.insertAdjacentHTML('beforeend', ticketHTML);
+            
+            const canvases = container.querySelectorAll('.qr-canvas');
+            const targetCanvas = canvases[canvases.length - 1];
+            new QRious({ element: targetCanvas, value: `NAME:${nameVal}|PASS:${passNum}|EXP:${expiryVal||'N/A'}`, size: 90 });
+
+            document.getElementById('ticketArea').style.display = 'block';
+            setTimeout(() => targetCanvas.scrollIntoView({behavior: 'smooth', block: 'end'}), 100);
+            ticketCount++;
         }
 
-        function downloadReport() {
-            html2canvas(document.getElementById('ticketsContainer')).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'AlShajan_Report.png';
-                link.href = canvas.toDataURL();
-                link.click();
+        // التصدير
+        function openExportModal() {
+            if(groupPassengersData.length === 0) return;
+            let textContent = currentLang === 'ar' ? "الاسم | الجواز | الميلاد | النفاذ | الفئة\n" : "Name | Passport | DOB | EXP | Type\n";
+            textContent += "----------------------------------------\n";
+            groupPassengersData.forEach(p => { textContent += `${p.name} | ${p.pass} | ${p.dob} | ${p.exp} | ${p.type}\n`; });
+            document.getElementById('exportDataContent').innerText = textContent;
+            openModal('exportModal');
+        }
+        function copyExportData() {
+            const text = document.getElementById('exportDataContent').innerText;
+            navigator.clipboard.writeText(text).then(() => { alert(currentLang === 'ar' ? "تم النسخ!" : "Copied!"); }).catch(err => { alert("Error"); });
+        }
+        function downloadAllImages() {
+            const container = document.getElementById('ticketsContainer');
+            html2canvas(container, { scale: 3, backgroundColor: "#ffffff" }).then(canvas => {
+                document.getElementById('finalImage').src = canvas.toDataURL('image/png');
+                openModal('saveOverlay'); 
             });
         }
-
-        function resetInputs() {
-            document.getElementById('nameInput').value = "";
-            document.getElementById('passNumInput').value = "";
-            document.getElementById('previewImg').style.display = 'none';
-            document.getElementById('placeholder').style.display = 'block';
-            document.getElementById('toolButtons').style.display = 'none';
+        async function shareImageFile() {
+            try {
+                const imgElement = document.getElementById('finalImage'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
+                const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
+                if (navigator.share) { await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] }); } 
+                else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك، يرجى الضغط مطولاً على الصورة لحفظها." : "Sharing not supported, please long press the image to save."); }
+            } catch(e) { console.error("Share error", e); }
         }
 
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            playSound(300);
+        /* ==================== محفظة المستندات (الخزنة السرية المكتملة) ==================== */
+        let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
+
+        function initWalletDB() {
+            try {
+                if (!window.indexedDB) return;
+                const request = window.indexedDB.open("SmartPassWalletDB", 1);
+                request.onupgradeneeded = function(e) {
+                    walletDB = e.target.result;
+                    if(!walletDB.objectStoreNames.contains('documents')) { walletDB.createObjectStore('documents', { keyPath: 'id', autoIncrement: true }); }
+                };
+                request.onsuccess = function(e) { walletDB = e.target.result; }; request.onerror = function(e) {};
+            } catch (e) {}
         }
 
-        // نظام المحفظة البسيط
         function openWalletAuth() {
-            enteredPin = "";
-            updatePinDots();
+            enteredPin = ""; updatePinDots();
+            const savedPin = safeGetItem("walletPIN", "");
+            
+            if (!savedPin) {
+                isPinSetupMode = true; setupPinStep = 1;
+                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "أدخل 4 أرقام لحماية مستمسكاتك" : "Enter 4 digits to secure your IDs";
+            } else {
+                isPinSetupMode = false;
+                document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code";
+                document.getElementById('pinSub').innerText = currentLang === 'ar' ? "المحفظة محمية ومحفوظة بجهازك فقط" : "Wallet is encrypted and saved locally";
+            }
             openModal('pinModal');
         }
 
-        function addPin(n) {
-            if (enteredPin.length < 4) {
-                enteredPin += n;
-                updatePinDots();
-                playSound(600 + (enteredPin.length * 100));
-                if (enteredPin.length === 4) {
-                    setTimeout(() => {
-                        if (enteredPin === "1234") { // الرمز الافتراضي
-                            alert("تم فتح المحفظة (ميزة قيد التطوير)");
-                            closeModal('pinModal');
-                        } else {
-                            alert("رمز خطأ");
-                            enteredPin = "";
-                            updatePinDots();
-                        }
-                    }, 300);
+        function closeWalletAuth() { closeModal('pinModal'); }
+        function closeWalletModal() { closeModal('walletModal'); }
+        function closeDocView() { closeModal('docViewModal'); document.getElementById('docNameInput').value = ''; }
+
+        function updatePinDots() {
+            for(let i=1; i<=4; i++) { let dot = document.getElementById('dot'+i); if(i <= enteredPin.length) dot.classList.add('filled'); else dot.classList.remove('filled'); }
+        }
+
+        function addPin(num) {
+            if (enteredPin.length < 4) { enteredPin += num; updatePinDots(); if (enteredPin.length === 4) setTimeout(checkPin, 200); }
+        }
+
+        function removePin() { if (enteredPin.length > 0) { enteredPin = enteredPin.slice(0, -1); updatePinDots(); } }
+
+        function checkPin() {
+            if (isPinSetupMode) {
+                if (setupPinStep === 1) {
+                    tempSetupPin = enteredPin; enteredPin = ""; updatePinDots(); setupPinStep = 2; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "تأكيد الرمز السري" : "Confirm PIN";
+                } else if (setupPinStep === 2) {
+                    if (enteredPin === tempSetupPin) { safeSetItem("walletPIN", enteredPin); vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery(); } 
+                    else { vibrate('error'); playSound('error'); alert(currentLang === 'ar' ? "الرمز غير متطابق، أعد المحاولة" : "PINs do not match, try again"); enteredPin = ""; updatePinDots(); setupPinStep = 1; tempSetupPin = ""; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 إنشاء رمز جديد للمحفظة" : "🔒 Create New PIN"; }
+                }
+            } else {
+                const savedPin = safeGetItem("walletPIN", "");
+                if (enteredPin === savedPin) { vibrate('success'); playSound('success'); closeWalletAuth(); openWalletGallery(); } 
+                else {
+                    vibrate('error'); playSound('error'); enteredPin = ""; updatePinDots();
+                    document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "رمز خاطئ، أعد المحاولة!" : "Wrong PIN, Try Again!";
+                    document.getElementById('pinTitle').style.color = "#ef4444";
+                    setTimeout(() => { document.getElementById('pinTitle').style.color = "var(--text-main)"; document.getElementById('pinTitle').innerText = currentLang === 'ar' ? "🔒 أدخل الرمز السري" : "🔒 Enter PIN Code"; }, 1500);
                 }
             }
         }
-        function removePin() { enteredPin = enteredPin.slice(0, -1); updatePinDots(); }
-        function updatePinDots() {
-            for(let i=1; i<=4; i++) {
-                document.getElementById('dot'+i).style.background = (i <= enteredPin.length) ? "#3b82f6" : "transparent";
+
+        function openWalletGallery() { openModal('walletModal'); loadDocsFromDB(); }
+
+        function loadDocsFromDB() {
+            const container = document.getElementById('walletGallery'); container.innerHTML = '';
+            if(!walletDB) return;
+            try {
+                const transaction = walletDB.transaction(["documents"], "readonly"); const store = transaction.objectStore("documents"); const request = store.getAll();
+                request.onsuccess = function(e) {
+                    const docs = e.target.result;
+                    if(docs.length === 0) { container.innerHTML = `<div style="grid-column: span 2; text-align: center; color: var(--text-sub); padding: 20px; font-size: 13px; font-weight: 800;">${currentLang==='ar'?'لا توجد مستندات محفوظة بعد.':'No documents saved yet.'}</div>`; } 
+                    else { docs.reverse().forEach(doc => { const card = document.createElement('div'); card.className = 'doc-card'; card.innerHTML = `<button class="doc-delete" onclick="deleteDoc(${doc.id}, event)">✖</button><img src="${doc.image}" onclick="viewFullDoc('${doc.image}')"><div class="doc-card-title">${doc.name}</div>`; container.appendChild(card); }); }
+                };
+            } catch(e) {}
+        }
+
+        function handleWalletUpload(event) {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas'); const MAX_WIDTH = 1200; 
+                    const scaleSize = MAX_WIDTH / img.width; canvas.width = MAX_WIDTH; canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    document.getElementById('docPreviewImg').src = compressedDataUrl; document.getElementById('docNameInput').value = ''; openModal('docViewModal');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file); event.target.value = ''; 
+        }
+
+        function saveDocToWallet() {
+            const name = document.getElementById('docNameInput').value || (currentLang === 'ar' ? 'مستند بدون اسم' : 'Unnamed Doc');
+            const imgData = document.getElementById('docPreviewImg').src;
+            if(!walletDB) return;
+            try {
+                const transaction = walletDB.transaction(["documents"], "readwrite"); const store = transaction.objectStore("documents");
+                const doc = { name: name, image: imgData, date: new Date().getTime() }; const request = store.add(doc);
+                request.onsuccess = function() { vibrate('success'); closeDocView(); loadDocsFromDB(); };
+            } catch(e) {}
+        }
+
+        function deleteDoc(id, event) {
+            event.stopPropagation();
+            if(confirm(currentLang === 'ar' ? 'هل أنت متأكد من مسح هذا المستند؟' : 'Are you sure you want to delete this document?')) {
+                try {
+                    const transaction = walletDB.transaction(["documents"], "readwrite"); const store = transaction.objectStore("documents"); store.delete(id);
+                    transaction.oncomplete = function() { loadDocsFromDB(); vibrate('success'); };
+                } catch(e) {}
             }
+        }
+
+        function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
+
+        function downloadDocImage() {
+            try {
+                const imgSrc = document.getElementById('docFullImg').src; const link = document.createElement('a');
+                link.href = imgSrc; link.download = 'Secure_Document_' + new Date().getTime() + '.jpg';
+                document.body.appendChild(link); link.click(); document.body.removeChild(link); vibrate('success');
+            } catch(e) {}
+        }
+
+        async function shareDocImage() {
+            try {
+                const imgElement = document.getElementById('docFullImg'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
+                const file = new File([blob], "Secure_Document.jpg", { type: "image/jpeg" });
+                if (navigator.share) { await navigator.share({ title: currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document', files: [file] }); } 
+                else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة في متصفحك." : "Sharing not supported in your browser."); }
+            } catch(e) {}
         }
     </script>
 </body>
