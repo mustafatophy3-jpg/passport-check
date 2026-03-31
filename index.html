@@ -430,7 +430,7 @@
                 <img id="finalImage" alt="Report" style="width: 100%; display: block; border-radius: 8px;">
             </div>
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openReportInBrowser()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="openReportInBrowser()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">حفظ التقرير</span></button>
                 <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareImageFile()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
             </div>
         </div>
@@ -486,7 +486,7 @@
             <img id="docFullImg" style="width: 100%; border-radius: 12px; max-height: 50vh; object-fit: contain; margin-bottom: 15px; margin-top: 15px;">
             
             <div style="display: flex; gap: 10px; justify-content: center;">
-                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">عرض للحفظ</span></button>
+                <button class="btn btn-main" style="flex: 1; margin: 0; background: #3b82f6;" onclick="downloadDocImage()"><span style="font-size: 16px;">⬇️</span> <span data-i18n="btnDownDoc">حفظ المستند</span></button>
                 <button class="btn btn-success" style="flex: 1; margin: 0;" onclick="shareDocImage()"><span style="font-size: 16px;">🔗</span> <span data-i18n="btnShareDoc">مشاركة</span></button>
             </div>
         </div>
@@ -580,7 +580,7 @@
                 helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
                 helpSec2Text: "يظهر التقرير بحركة بطاقة (3D Flip). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.",
                 helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
-                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح العميقة بأمان تام. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) أو (المشاركة 🔗).",
+                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح العميقة بأمان تام. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار الحفظ ⬇️ أو المشاركة 🔗.",
                 helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
                 helpSec4Text: "تجنب استخدام (الفلاش) أو التصوير تحت إضاءة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان عمل الذكاء الاصطناعي بكفاءة.",
                 abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام ليكون أداة دقيقة وسريعة لتقديم تجربة سفر سلسة للجميع.",
@@ -588,7 +588,7 @@
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
                 saveReady: "التقرير جاهز!", saveInst: "👇 اختر الإجراء المناسب لحفظ أو إرسال التقرير 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة"
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "حفظ", btnShareDoc: "مشاركة"
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -610,7 +610,7 @@
                 helpSec2Title: "📊 Second: Validity Report & 3D Card",
                 helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It calculates precise age and country of issue automatically.",
                 helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
-                helpSec3Text: "A secure vault protected by a PIN. It uses IndexedDB to save your IDs locally (offline & secure). You can View to Save ⬇️ or Share 🔗 your documents easily.",
+                helpSec3Text: "A secure vault protected by a PIN. It uses IndexedDB to save your IDs locally (offline & secure). You can easily download ⬇️ or Share 🔗 your documents.",
                 helpSec4Title: "📸 Fourth: Pro Photo Tips",
                 helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear.",
                 abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who developed this smart system as an accurate and fast assistive tool to reduce human errors in passport checks.",
@@ -618,7 +618,7 @@
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
                 saveReady: "Report Ready!", saveInst: "👇 Choose an action to save or share the report 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share"
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "Download", btnShareDoc: "Share"
             }
         };
 
@@ -743,28 +743,19 @@
         function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
 
         function extractDates(text) {
-            // البحث عن تواريخ MRZ بصيغة YYMMDD
-            // الترتيب: 6 أرقام (مواليد) -> رقم تأكيدي -> حرف (M/F/<) -> 6 أرقام (صلاحية)
             const mrzDatePattern = /([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])[0-9][MF<][A-Z<]{0,3}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])/;
             const match = text.match(mrzDatePattern);
 
             if (match) {
                 let dobYear = parseInt(match[1]);
-                // إذا سنة الميلاد أكبر من رقم معين (مثلاً 30) نعتبرها 1900، وإلا 2000
                 dobYear = dobYear > 30 ? 1900 + dobYear : 2000 + dobYear;
                 const dob = `${dobYear}-${match[2]}-${match[3]}`;
-
-                // تاريخ النفاذ دائماً بالألفينات
                 let expYear = 2000 + parseInt(match[4]);
                 const exp = `${expYear}-${match[5]}-${match[6]}`;
 
-                document.getElementById('dobInput').value = dob;
-                highlightField('dobInput');
-
-                document.getElementById('expiryInput').value = exp;
-                highlightField('expiryInput');
+                document.getElementById('dobInput').value = dob; highlightField('dobInput');
+                document.getElementById('expiryInput').value = exp; highlightField('expiryInput');
             } else {
-                // الخطة البديلة (الطريقة القديمة) في حال عدم وضوح الـ MRZ
                 const datePatterns = [/\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b/g, /\b(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})\b/g]; 
                 let dates = [];
                 let matches1 = [...text.matchAll(datePatterns[0])]; matches1.forEach(m => dates.push(`${m[1]}-${String(m[2]).padStart(2,'0')}-${String(m[3]).padStart(2,'0')}`));
@@ -937,7 +928,6 @@
             } catch (e) {}
         }
 
-        // دالة التشفير (تعمل بسلاسة على الأندرويد)
         async function hashPIN(pin) {
             const encoder = new TextEncoder();
             const data = encoder.encode(pin);
@@ -948,7 +938,6 @@
 
         function openWalletAuth() {
             closeSidebar(); enteredPin = ""; updatePinDots();
-            // فحص إذا اكو رمز مشفر، أو رمز قديم غير مشفر
             const savedPin = safeGetItem("walletPIN_hash", "") || safeGetItem("walletPIN", "");
             
             if (!savedPin) {
@@ -992,11 +981,10 @@
                 }
             } else {
                 const savedHash = safeGetItem("walletPIN_hash", "");
-                const oldPlainPin = safeGetItem("walletPIN", ""); // دعم التوافقية إذا جان مخزون قديماً
+                const oldPlainPin = safeGetItem("walletPIN", ""); 
                 const currentHash = await hashPIN(enteredPin);
 
                 if (currentHash === savedHash || enteredPin === oldPlainPin) { 
-                    // تحديث الرمز القديم إلى مشفر تلقائياً
                     if (enteredPin === oldPlainPin) {
                         safeSetItem("walletPIN_hash", currentHash);
                         localStorage.removeItem("walletPIN");
@@ -1066,46 +1054,77 @@
 
         function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
 
-        /* ==================== دوال الحفظ والمشاركة الآمنة (Web/APK Safe) ==================== */
+        /* ==================== دوال الحفظ والمشاركة الآمنة (WebView Safe) ==================== */
+
+        // دالة تحويل الـ Base64 إلى ملف حقيقي بالذاكرة المؤقتة (يمنع التعليق)
+        function base64ToBlob(base64, mime) {
+            const byteString = atob(base64.split(',')[1]);
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mime });
+        }
+
+        // دالة التحميل الصامت الآمنة لأندرويد
+        function safeDownload(imgId, filename) {
+            try {
+                const img = document.getElementById(imgId);
+                const mime = img.src.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,/)[1];
+                const blob = base64ToBlob(img.src, mime);
+                const url = window.URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            } catch (e) {
+                alert(currentLang === 'ar' ? "حدث خطأ أثناء الحفظ. تأكد من إعطاء صلاحية التخزين للتطبيق." : "Error saving. Check storage permissions.");
+            }
+        }
+
+        // دالة المشاركة الآمنة لأندرويد
+        async function safeShare(imgId, filename, mimeType, titleStr) {
+            try {
+                const img = document.getElementById(imgId);
+                const blob = base64ToBlob(img.src, mimeType);
+                const file = new File([blob], filename, { type: mimeType });
+                
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ title: titleStr, files: [file] });
+                } else if (navigator.share) {
+                    await navigator.share({ title: titleStr, files: [file] });
+                } else {
+                    alert(currentLang === 'ar' ? "المشاركة المباشرة غير مدعومة بهذا التطبيق، سيتم حفظ الصورة بدلاً من ذلك." : "Sharing not supported, downloading instead.");
+                    safeDownload(imgId, filename);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
 
         function downloadDocImage() {
-            try {
-                const imgSrc = document.getElementById('docFullImg').src; const newWindow = window.open();
-                if (newWindow) {
-                    newWindow.document.write(`<html><head><title>حفظ المستند</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;"><h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">تم التجهيز بنجاح</h3><p style="color:white; font-family:sans-serif; margin-bottom:20px; font-size:14px;">اضغط مطولاً على الصورة أدناه واختر (حفظ) 💾</p><img src="${imgSrc}" style="max-width:95%; max-height:75vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);"></body></html>`);
-                    newWindow.document.close();
-                } else { alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ (Pop-ups) بجهازك." : "Please allow pop-ups."); }
-            } catch(e) { alert(currentLang === 'ar' ? "حدث خطأ. يرجى أخذ لقطة شاشة." : "Error. Please take a screenshot."); }
+            safeDownload('docFullImg', 'Secure_Document.jpg');
         }
 
         function openReportInBrowser() {
-            try {
-                const imgSrc = document.getElementById('finalImage').src; const newWindow = window.open();
-                if (newWindow) {
-                    newWindow.document.write(`<html><head><title>حفظ التقرير</title><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0; display:flex; justify-content:center; align-items:center; background:#0f172a; flex-direction:column; height:100vh; text-align:center;"><h3 style="color:#22c55e; font-family:sans-serif; margin-bottom:10px;">تم تجهيز التقرير</h3><p style="color:white; font-family:sans-serif; margin-bottom:20px; font-size:14px;">اضغط مطولاً على الصورة أدناه واختر (حفظ) 💾</p><img src="${imgSrc}" style="max-width:95%; max-height:75vh; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.5);"></body></html>`);
-                    newWindow.document.close();
-                } else { alert(currentLang === 'ar' ? "يرجى السماح بفتح النوافذ (Pop-ups) بجهازك." : "Please allow pop-ups."); }
-            } catch(e) { alert(currentLang === 'ar' ? "حدث خطأ. يرجى أخذ لقطة شاشة." : "Error. Please take a screenshot."); }
+            safeDownload('finalImage', 'PassCheck_Report.png');
         }
 
         async function shareDocImage() {
-            try {
-                if (navigator.share) {
-                    const imgElement = document.getElementById('docFullImg'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
-                    const file = new File([blob], "Secure_Document.jpg", { type: "image/jpeg" });
-                    await navigator.share({ title: currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document', files: [file] });
-                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save'."); }
-            } catch(e) {}
+            safeShare('docFullImg', 'Secure_Document.jpg', 'image/jpeg', currentLang === 'ar' ? 'مستند محفوظ' : 'Saved Document');
         }
 
         async function shareImageFile() {
-            try {
-                if (navigator.share) {
-                    const imgElement = document.getElementById('finalImage'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
-                    const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
-                    await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] });
-                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save'."); }
-            } catch(e) {}
+            safeShare('finalImage', 'PassCheck_Report.png', 'image/png', currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report');
         }
     </script>
 </body>
