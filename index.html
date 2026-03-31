@@ -41,12 +41,11 @@
             -webkit-tap-highlight-color: transparent; position: relative; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; 
         }
         
-        /* شاشة الترحيب */
+        /* شاشة الترحيب وصورة التطبيق */
         #splashScreen { position: fixed; inset: 0; background: linear-gradient(135deg, rgba(30, 58, 138, 0.85), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1080&q=80') center/cover; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
         
-        /* إعدادات شعار التطبيق (قص الحواف البيضاء) */
-        .app-logo-img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; }
-        .splash-logo-box { width: 130px; height: 130px; background: transparent; border-radius: 28px; display: flex; justify-content: center; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.4); animation: pulseLogo 2s infinite alternate; margin-bottom: 25px; padding: 0;}
+        .app-logo-img { width: 100%; height: 100%; object-fit: contain; background: transparent; border-radius: 25px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));}
+        .splash-logo-box { width: 140px; height: 140px; background: transparent; display: flex; justify-content: center; align-items: center; animation: pulseLogo 2s infinite alternate; margin-bottom: 25px; padding: 0;}
         
         .splash-text { color: white; font-weight: 900; font-size: 26px; letter-spacing: 1px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);}
         .splash-sub { color: #93c5fd; font-size: 13px; font-weight: 900; margin-top: 8px; letter-spacing: 3px; text-transform: uppercase;}
@@ -84,7 +83,7 @@
         .sidebar-brand { background: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.95)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80') center/cover; margin: 0 -20px 20px -20px; padding: 50px 20px 30px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border-bottom: 1px solid var(--border-color); position: relative;}
         
         /* شعار القائمة الجانبية */
-        .sidebar-brand-icon { background: transparent; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); padding: 0;}
+        .sidebar-brand-icon { background: transparent; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; padding: 0; margin-bottom: 5px;}
         .sidebar-brand-text { font-size: 20px; font-weight: 900; color: white; line-height: 1.3; }
         
         .sidebar-section-title { font-size: 11px; font-weight: 800; color: #3b82f6; text-transform: uppercase; margin-bottom: 10px; margin-top: 15px; letter-spacing: 1px;}
@@ -239,11 +238,18 @@
         .count-num { font-size: 28px; font-weight: 900; line-height: 1; color: #60a5fa;}
         .count-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-top: 4px;}
 
-        /* ستايلات اخرى */
+        /* ستايلات الشروحات والنصوص */
         .info-content { font-size: 14px; line-height: 1.8; font-weight: 600; text-align: right; }
         [dir="ltr"] .info-content { text-align: left; }
         .info-content p.intro { font-size: 15px; color: var(--text-main); font-weight: 800; margin-bottom: 25px; text-align: center; background: var(--input-bg); padding: 18px; border-radius: 16px; border: 1px solid var(--border-color);}
+        .info-content h4 { color: #3b82f6; margin-top: 20px; font-weight: 900; font-size: 17px;}
+        .info-content ul { padding-right: 20px; margin-bottom: 20px; list-style-type: none; }
+        [dir="ltr"] .info-content ul { padding-left: 20px; padding-right: 0;}
+        .info-content li { margin-bottom: 10px; position: relative; }
         
+        .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
+
+        /* === ستايلات المحفظة السرية === */
         .pin-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; direction: ltr; }
         .pin-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--border-color); border: 2px solid #3b82f6; transition: 0.2s; }
         .pin-dot.filled { background: #3b82f6; box-shadow: 0 0 10px rgba(59,130,246,0.5);}
@@ -269,8 +275,7 @@
 
     <div id="splashScreen">
         <div class="splash-logo-box">
-            <img src="logo.png" class="app-logo-img" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <span style="display:none; font-size: 60px;">🛂</span>
+            <img src="logo.png" class="app-logo-img" alt="Logo">
         </div>
         <div class="splash-text">Smart Pass System</div>
         <div class="splash-sub">GLOBAL SYSTEM</div>
@@ -386,8 +391,7 @@
         
         <div class="sidebar-brand">
             <div class="sidebar-brand-icon">
-                <img src="logo.png" class="app-logo-img" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <span style="display:none; font-size: 32px;">🛂</span>
+                <img src="logo.png" class="app-logo-img" alt="Logo">
             </div>
             <div class="sidebar-brand-text">Smart Pass<br><span style="color:#93c5fd; font-size: 14px;">System</span></div>
         </div>
@@ -509,9 +513,15 @@
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل والمفصل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير لحماية مستمسكاتك.</p>
-                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص</h4>
-                <p data-i18n="helpSec1Text">يعمل بدمج تقنيتين لضمان دقة 100%. ويدعم وضعين: الفردي، والعائلي لفحص عدة جوازات.</p>
+                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
+                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص (الماسح السينمائي)</h4>
+                <p data-i18n="helpSec1Text">يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.</p>
+                <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
+                <p data-i18n="helpSec2Text">يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
+                <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
+                <p data-i18n="helpSec3Text">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).</p>
+                <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
+                <p data-i18n="helpSec4Text">تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.</p>
             </div>
         </div>
     </div>
@@ -521,7 +531,7 @@
             <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
             <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
             <div class="info-content">
-                <p data-i18n="abtText">هذا النظام الذكي تم تطويره ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
+                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
             </div>
         </div>
     </div>
@@ -598,7 +608,7 @@
     </div>
 
     <script>
-        // دوال الأمان لمنع الكراش من الذاكرة
+        // دوال الأمان
         function safeGetItem(key, defaultVal) { try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; } }
         function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
 
@@ -695,10 +705,16 @@
                 histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
                 exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
                 helpTitle: "ℹ️ الدليل الشامل والمفصل", 
-                helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
+                helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
                 helpSec1Title: "🔍 أولاً: نظام الفحص (الماسح السينمائي)",
-                helpSec1Text: "يعمل النظام بدمج تقنيتين لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI أثناء قيام النظام بتحليل البيانات.",
-                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "تم التطوير ليكون أداة مساعدة دقيقة وسريعة لتقديم تجربة سفر سلسة للجميع.",
+                helpSec1Text: "يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.",
+                helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
+                helpSec2Text: "يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.",
+                helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
+                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).",
+                helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
+                helpSec4Text: "تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.",
+                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
@@ -723,8 +739,14 @@
                 helpTitle: "ℹ️ Comprehensive Guide", 
                 helpIntro: "Welcome to the Comprehensive Guide. This system is a professional Super App combining AI passport checking with local encryption for document security.",
                 helpSec1Title: "🔍 First: Scanning System (Cyber UI)",
-                helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly.",
-                abtTitle: "👨‍💻 About Developer", abtText: "Developed as a smart assistive tool to reduce human errors in passport checks.",
+                helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly. It supports Single mode for one passenger, and Group mode for scanning multiple passports.",
+                helpSec2Title: "📊 Second: Validity Report & 3D Card",
+                helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It calculates precise age and country of issue automatically.",
+                helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
+                helpSec3Text: "A secure vault protected by a PIN. It uses IndexedDB to save your IDs locally (offline & secure). You can easily download ⬇️ or Share 🔗 your documents.",
+                helpSec4Title: "📸 Fourth: Pro Photo Tips",
+                helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear.",
+                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who developed this smart system as an accurate and fast assistive tool to reduce human errors in passport checks, making travel procedures smoother for everyone.",
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
@@ -803,7 +825,6 @@
         function toggleLogForm() {
             const form = document.getElementById('logForm');
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            // Clear inputs
             ['logCountryInput','logAirlineInput','logPNRInput','logDepInput','logRetInput','logDaysInput','logNotesInput'].forEach(id => document.getElementById(id).value = '');
         }
         function calculateLogDays() {
@@ -883,7 +904,7 @@
             let target = document.getElementById('countdownInput').value;
             if(!target) { vibrate('error'); return; }
             safeSetItem('travelTargetDate', target);
-            safeSetItem('countdownAlertPlayed', 'false'); // Reset alert
+            safeSetItem('countdownAlertPlayed', 'false'); 
             countdownAlertPlayed = false;
             vibrate('success'); playSound('success');
             renderCountdown();
@@ -898,7 +919,6 @@
         function initCountdown() {
             countdownAlertPlayed = safeGetItem('countdownAlertPlayed', 'false') === 'true';
             if(safeGetItem('travelTargetDate', '')) {
-                // start loop in background
                 countdownInterval = setInterval(updateCountdownClock, 1000);
             }
         }
@@ -945,7 +965,6 @@
                 countdownAlertPlayed = true;
             }
 
-            // If modal is not open, elements might not exist, but we update if they do
             let elDays = document.getElementById('cdDays');
             if(elDays) {
                 elDays.innerText = String(days).padStart(2, '0');
@@ -954,7 +973,6 @@
                 document.getElementById('cdSecs').innerText = String(seconds).padStart(2, '0');
             }
         }
-
 
         // السجل (History) الفحص
         function saveToHistory(name, pass) {
@@ -1062,7 +1080,7 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // توليد التقرير الفحص
+        // توليد التقرير
         function generateTicket() {
             initAudio(); 
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
@@ -1190,7 +1208,7 @@
             });
         }
 
-        /* ==================== محفظة المستندات (الخزنة السرية) ==================== */
+        /* ==================== المحفظة السرية ==================== */
         let walletDB; let enteredPin = ""; let isPinSetupMode = false; let setupPinStep = 1; let tempSetupPin = "";
 
         function initWalletDB() {
