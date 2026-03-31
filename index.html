@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* === المتغيرات اللونية (الوضع الفاتح والمظلم) === */
+        /* === المتغيرات اللونية === */
         :root {
             --bg-grad-1: rgba(240, 244, 253, 0.95); --bg-grad-2: rgba(217, 230, 246, 0.95);
             --card-bg: rgba(255, 255, 255, 0.75);
@@ -32,7 +32,6 @@
             --btn-glass: rgba(30,41,59,0.6);
         }
 
-        /* === الإعدادات الأساسية والخلفية الشاملة === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Cairo', sans-serif; 
@@ -42,14 +41,17 @@
             -webkit-tap-highlight-color: transparent; position: relative; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; 
         }
         
-        /* شاشة الترحيب (Splash Screen) */
+        /* شاشة الترحيب */
         #splashScreen { position: fixed; inset: 0; background: linear-gradient(135deg, rgba(30, 58, 138, 0.85), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1080&q=80') center/cover; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease; }
-        .splash-logo-box { width: 120px; height: 120px; background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 35px; display: flex; justify-content: center; align-items: center; font-size: 60px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); animation: pulseLogo 2s infinite alternate; margin-bottom: 25px;}
+        
+        /* إعدادات شعار التطبيق (قص الحواف البيضاء) */
+        .app-logo-img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; }
+        .splash-logo-box { width: 130px; height: 130px; background: transparent; border-radius: 28px; display: flex; justify-content: center; align-items: center; box-shadow: 0 15px 35px rgba(0,0,0,0.4); animation: pulseLogo 2s infinite alternate; margin-bottom: 25px; padding: 0;}
+        
         .splash-text { color: white; font-weight: 900; font-size: 26px; letter-spacing: 1px; text-shadow: 0 4px 10px rgba(0,0,0,0.5);}
         .splash-sub { color: #93c5fd; font-size: 13px; font-weight: 900; margin-top: 8px; letter-spacing: 3px; text-transform: uppercase;}
         @keyframes pulseLogo { 0% { transform: scale(0.95) translateY(0); } 100% { transform: scale(1.05) translateY(-10px); } }
 
-        /* الكرات المضيئة في الخلفية */
         body::before, body::after { content: ''; position: absolute; border-radius: 50%; z-index: -2; filter: blur(70px); opacity: 0.5; animation: floatOrbs 15s ease-in-out infinite alternate; pointer-events: none;}
         body::before { width: 400px; height: 400px; background: var(--orb-1); top: -100px; left: -150px; }
         body::after { width: 350px; height: 350px; background: var(--orb-2); bottom: 0%; right: -100px; animation-delay: -7s; }
@@ -58,7 +60,6 @@
         .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; z-index: 1; position: relative; }
         .card { background: var(--card-bg); border-radius: 30px; padding: 25px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1), inset 0 0 0 1px var(--border-color); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); position: relative; transition: all 0.3s; }
 
-        /* === الهيدر والشريط العلوي === */
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .greeting-box { font-size: 13px; font-weight: 800; color: var(--text-main); display: flex; flex-direction: column; gap: 4px;}
         .conn-indicator { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-sub);}
@@ -69,7 +70,7 @@
         .hamburger-btn:active { transform: scale(0.9); }
         .hamburger-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
 
-        /* === القائمة الجانبية (Sidebar) === */
+        /* === القائمة الجانبية === */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
         .sidebar { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: var(--modal-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); z-index: 10000; transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; padding: 0 20px 20px 20px; box-shadow: -20px 0 50px rgba(0,0,0,0.2); overflow-y: auto;}
@@ -81,7 +82,9 @@
         [dir="ltr"] .sidebar-close { left: auto; right: 20px; }
         
         .sidebar-brand { background: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.95)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80') center/cover; margin: 0 -20px 20px -20px; padding: 50px 20px 30px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border-bottom: 1px solid var(--border-color); position: relative;}
-        .sidebar-brand-icon { font-size: 32px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); width: 64px; height: 64px; display: flex; justify-content: center; align-items: center; border-radius: 18px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.2);}
+        
+        /* شعار القائمة الجانبية */
+        .sidebar-brand-icon { background: transparent; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); padding: 0;}
         .sidebar-brand-text { font-size: 20px; font-weight: 900; color: white; line-height: 1.3; }
         
         .sidebar-section-title { font-size: 11px; font-weight: 800; color: #3b82f6; text-transform: uppercase; margin-bottom: 10px; margin-top: 15px; letter-spacing: 1px;}
@@ -89,10 +92,9 @@
         [dir="ltr"] .sidebar-btn { text-align: left; }
         .sidebar-btn:active { transform: scale(0.97); background: rgba(59,130,246,0.1); border-color: #3b82f6; color: #3b82f6;}
         
-        /* نسخة ذهبية اسفل القائمة */
-        .golden-edition { margin-top: auto; padding-top: 20px; text-align: center; color: var(--text-sub); font-size: 11px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7;}
+        .golden-edition { margin-top: auto; padding-top: 20px; text-align: center; color: var(--text-sub); font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7;}
 
-        /* === الشاشة الرئيسية (Home) مع بانر الطيران === */
+        /* === الشاشة الرئيسية === */
         #homeSection { display: flex; flex-direction: column; gap: 20px; width: 100%;}
         .hero-banner { width: 100%; height: 200px; border-radius: 26px; background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80') center/cover; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.15); margin-bottom: 5px; }
         .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.2) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; text-align: right; direction: rtl; }
@@ -148,8 +150,8 @@
         .form-group { display: flex; flex-direction: column; }
         label { font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase; }
         .label-blue { color: #2563eb; }
-        input { padding: 14px; border-radius: 16px; border: 1px solid var(--border-color); background: var(--input-bg); font-family: inherit; font-size: 14px; font-weight: 800; color: var(--text-main); outline: none; transition: 0.3s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
-        input:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
+        input, textarea { padding: 14px; border-radius: 16px; border: 1px solid var(--border-color); background: var(--input-bg); font-family: inherit; font-size: 14px; font-weight: 800; color: var(--text-main); outline: none; transition: 0.3s; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        input:focus, textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
         input.input-blue { background: rgba(239,246,255,0.7); border-color: rgba(147,197,253,0.6); color: #1e40af; }
         .text-center { text-align: center; } .text-left { text-align: left; direction: ltr; }
         
@@ -209,7 +211,7 @@
         .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 20px; border-radius: 16px; padding: 16px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(34,197,94,0.3);}
         .btn-reminder { background: #f8fafc; color: #2563eb; border: 1px solid #bfdbfe; width: 100%; margin-top: 10px; border-radius: 16px; padding: 14px; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; }
 
-        /* === النوافذ المنبثقة العامة === */
+        /* === النوافذ المنبثقة === */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .modal-overlay.active { display: flex; opacity: 1; pointer-events: auto; }
         .modal-card { background: var(--modal-bg); border-radius: 28px; padding: 35px 25px; width: 100%; max-width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative; transform: translateY(20px); transition: transform 0.3s; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; color: var(--text-main);}
@@ -222,17 +224,26 @@
         .history-item { background: var(--input-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);}
         .history-info h4 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
         
+        /* === سجل السفر (Travel Log) === */
+        .log-item { background: var(--input-bg); border: 1px solid var(--border-color); border-right: 4px solid #3b82f6; padding: 15px; border-radius: 16px; margin-bottom: 15px; text-align: right; box-shadow: 0 4px 10px rgba(0,0,0,0.02);}
+        [dir="ltr"] .log-item { border-right: 1px solid var(--border-color); border-left: 4px solid #3b82f6; text-align: left;}
+        .log-item h4 { font-size: 16px; font-weight: 900; color: #1e3a8a; margin-bottom: 5px; }
+        .log-item p { font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 4px; }
+        .log-badge { display: inline-block; background: #e0f2fe; color: #2563eb; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 900; margin-top: 5px;}
+        .log-delete-btn { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; float: left; margin-top: -25px;}
+        [dir="ltr"] .log-delete-btn { float: right; }
+
+        /* === عداد السفر (Countdown) === */
+        .countdown-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; direction: ltr;}
+        .count-box { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; width: 70px; height: 75px; border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1);}
+        .count-num { font-size: 28px; font-weight: 900; line-height: 1; color: #60a5fa;}
+        .count-label { font-size: 10px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-top: 4px;}
+
+        /* ستايلات اخرى */
         .info-content { font-size: 14px; line-height: 1.8; font-weight: 600; text-align: right; }
         [dir="ltr"] .info-content { text-align: left; }
         .info-content p.intro { font-size: 15px; color: var(--text-main); font-weight: 800; margin-bottom: 25px; text-align: center; background: var(--input-bg); padding: 18px; border-radius: 16px; border: 1px solid var(--border-color);}
-        .info-content h4 { color: #3b82f6; margin-top: 20px; font-weight: 900; font-size: 17px;}
-        .info-content ul { padding-right: 20px; margin-bottom: 20px; list-style-type: none; }
-        [dir="ltr"] .info-content ul { padding-left: 20px; padding-right: 0;}
-        .info-content li { margin-bottom: 10px; position: relative; }
         
-        .highlight { box-shadow: 0 0 0 4px rgba(34,197,94,0.3) !important; background-color: #f0fdf4 !important; transition: background-color 1s ease; }
-
-        /* === ستايلات المحفظة السرية === */
         .pin-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; direction: ltr; }
         .pin-dot { width: 18px; height: 18px; border-radius: 50%; background: var(--border-color); border: 2px solid #3b82f6; transition: 0.2s; }
         .pin-dot.filled { background: #3b82f6; box-shadow: 0 0 10px rgba(59,130,246,0.5);}
@@ -257,7 +268,10 @@
     </script>
 
     <div id="splashScreen">
-        <div class="splash-logo-box">✈️</div>
+        <div class="splash-logo-box">
+            <img src="logo.png" class="app-logo-img" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span style="display:none; font-size: 60px;">🛂</span>
+        </div>
         <div class="splash-text">Smart Pass System</div>
         <div class="splash-sub">GLOBAL SYSTEM</div>
     </div>
@@ -371,7 +385,10 @@
         <button class="sidebar-close" onclick="closeSidebar()">✖</button>
         
         <div class="sidebar-brand">
-            <div class="sidebar-brand-icon">✈️</div>
+            <div class="sidebar-brand-icon">
+                <img src="logo.png" class="app-logo-img" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span style="display:none; font-size: 32px;">🛂</span>
+            </div>
             <div class="sidebar-brand-text">Smart Pass<br><span style="color:#93c5fd; font-size: 14px;">System</span></div>
         </div>
 
@@ -382,6 +399,8 @@
         <div class="sidebar-section-title" data-i18n="sideTools">أدوات النظام</div>
         <button class="sidebar-btn" onclick="openWalletAuth()">🪪 <span data-i18n="walletTitle">المحفظة السرية</span></button>
         <button class="sidebar-btn" onclick="openHistoryModal()">🕒 <span data-i18n="stgHist">سجل الفحص</span></button>
+        <button class="sidebar-btn" onclick="openTravelLogModal()">🧾 <span data-i18n="logTitle">سجل السفر</span></button>
+        <button class="sidebar-btn" onclick="openCountdownModal()">⏳ <span data-i18n="countTitle">عداد السفر</span></button>
 
         <div class="sidebar-section-title" data-i18n="sideSettings">الإعدادات والملف</div>
         <button class="sidebar-btn" onclick="toggleDarkMode()">🌙 <span data-i18n="stgDark">الوضع المظلم</span></button>
@@ -390,6 +409,79 @@
         <button class="sidebar-btn" onclick="openModal('aboutModal')">👨‍💻 <span data-i18n="stgAbout">نبذة عن المطور</span></button>
         
         <div class="golden-edition">GOLDEN EDITION V1.0</div>
+    </div>
+
+    <div class="modal-overlay" id="travelLogModal" onclick="if(event.target === this) closeModal('travelLogModal')">
+        <div class="modal-card">
+            <button class="modal-close-btn" onclick="closeModal('travelLogModal')">✖</button>
+            <h3 class="modal-title" data-i18n="logTitle">🧾 سجل السفر</h3>
+            
+            <div style="background: var(--input-bg); border: 2px dashed #3b82f6; padding: 15px; border-radius: 16px; margin-bottom: 20px; text-align: center; cursor: pointer;" onclick="toggleLogForm()">
+                <div style="font-size: 14px; font-weight: 900; color: #3b82f6;">➕ إضافة رحلة جديدة</div>
+            </div>
+
+            <div id="logForm" style="display: none; background: rgba(59,130,246,0.05); border: 1px solid var(--border-color); padding: 15px; border-radius: 16px; margin-bottom: 20px;">
+                <div class="input-row" style="margin-top: 0;">
+                    <div class="form-group">
+                        <label data-i18n="logCountry">الدول التي زرتها</label>
+                        <input type="text" id="logCountryInput" placeholder="مثال: تركيا، دبي">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="logAirline">نوع الطيران</label>
+                        <input type="text" id="logAirlineInput" placeholder="مثال: الخطوط الجوية">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label data-i18n="logPNR">رقم الحجز (PNR)</label>
+                    <input type="text" id="logPNRInput" placeholder="A1B2C3" class="text-left">
+                </div>
+                <div class="input-row">
+                    <div class="form-group">
+                        <label data-i18n="logDep">تاريخ الذهاب</label>
+                        <input type="date" id="logDepInput" onchange="calculateLogDays()">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="logRet">تاريخ العودة</label>
+                        <input type="date" id="logRetInput" onchange="calculateLogDays()">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label data-i18n="logDays">عدد أيام السفر</label>
+                    <input type="text" id="logDaysInput" class="input-blue" readonly placeholder="يحسب تلقائياً">
+                </div>
+                <div class="form-group" style="margin-top: 10px;">
+                    <label data-i18n="logNotes">ملاحظات عن الرحلة</label>
+                    <textarea id="logNotesInput" rows="3" placeholder="اكتب ذكرياتك أو تفاصيل إضافية هنا..."></textarea>
+                </div>
+                <button class="btn btn-main" style="margin-top: 15px;" onclick="saveTravelLog()" data-i18n="btnSaveLog">حفظ السجل</button>
+            </div>
+
+            <div id="logListContainer"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="countdownModal" onclick="if(event.target === this) closeModal('countdownModal')">
+        <div class="modal-card" style="text-align: center;">
+            <button class="modal-close-btn" onclick="closeModal('countdownModal')">✖</button>
+            <h3 class="modal-title" data-i18n="countTitle">⏳ عداد السفر</h3>
+            <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 20px; font-weight: 800;" data-i18n="countSub">أدخل موعد رحلتك القادمة ليبدأ العد التنازلي</p>
+            
+            <div class="form-group" style="margin-bottom: 20px; text-align: right;" dir="rtl">
+                <label data-i18n="countTarget">موعد السفر (التاريخ والوقت)</label>
+                <input type="datetime-local" id="countdownInput">
+                <button class="btn btn-success" style="margin-top: 10px;" onclick="startCountdown()" data-i18n="countSet">بدء العداد 🚀</button>
+                <button class="btn btn-clear" onclick="clearCountdown()" data-i18n="countClear" style="display: none;" id="btnClearCount">إيقاف ومسح</button>
+            </div>
+
+            <div id="countdownDisplay" style="display: none;">
+                <div class="countdown-container">
+                    <div class="count-box"><span class="count-num" id="cdDays">00</span><span class="count-label" data-i18n="countDays">يوم</span></div>
+                    <div class="count-box"><span class="count-num" id="cdHours">00</span><span class="count-label" data-i18n="countHrs">ساعة</span></div>
+                    <div class="count-box"><span class="count-num" id="cdMins">00</span><span class="count-label" data-i18n="countMins">دقيقة</span></div>
+                    <div class="count-box"><span class="count-num" id="cdSecs">00</span><span class="count-label" data-i18n="countSecs">ثانية</span></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="historyModal" onclick="if(event.target === this) closeModal('historyModal')">
@@ -417,15 +509,9 @@
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل والمفصل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
-                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص (الماسح السينمائي)</h4>
-                <p data-i18n="helpSec1Text" style="margin-bottom: 15px;">يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.</p>
-                <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
-                <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
-                <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
-                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).</p>
-                <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
-                <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.</p>
+                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير لحماية مستمسكاتك.</p>
+                <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص</h4>
+                <p data-i18n="helpSec1Text">يعمل بدمج تقنيتين لضمان دقة 100%. ويدعم وضعين: الفردي، والعائلي لفحص عدة جوازات.</p>
             </div>
         </div>
     </div>
@@ -435,7 +521,7 @@
             <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
             <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
             <div class="info-content">
-                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
+                <p data-i18n="abtText">هذا النظام الذكي تم تطويره ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
             </div>
         </div>
     </div>
@@ -556,7 +642,7 @@
             if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]);
         }
 
-        // جلب درجة الحرارة عبر API مجاني وبدون صلاحيات مزعجة للمستخدم (IP-based)
+        // جلب درجة الحرارة عبر API مجاني وبدون صلاحيات
         async function fetchWeather() {
             try {
                 const geoRes = await fetch('https://get.geojs.io/v1/ip/geo.json');
@@ -581,7 +667,7 @@
         let imageElement;
         let groupPassengersData = []; 
         let nationalityData = { flag: "🌍", name: "" };
-        const API_KEY = 'helloworld'; // استبدل بمفتاح OCR حقيقي لاحقاً
+        const API_KEY = 'helloworld'; 
 
         const countries = {
             'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
@@ -611,19 +697,15 @@
                 helpTitle: "ℹ️ الدليل الشامل والمفصل", 
                 helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
                 helpSec1Title: "🔍 أولاً: نظام الفحص (الماسح السينمائي)",
-                helpSec1Text: "يعمل النظام بدمج تقنيتين لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI أثناء قيام النظام بتحليل البيانات. يدعم النظام وضعين: الفردي، والعائلي لفحص عدة جوازات وجمعهم بقائمة.",
-                helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
-                helpSec2Text: "يظهر التقرير بحركة بطاقة (3D Flip). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.",
-                helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
-                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح العميقة بأمان تام. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) أو (المشاركة 🔗).",
-                helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
-                helpSec4Text: "تجنب استخدام (الفلاش) أو التصوير تحت إضاءة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان عمل الذكاء الاصطناعي بكفاءة.",
-                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "هذا النظام الذكي تم تطويره ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
+                helpSec1Text: "يعمل النظام بدمج تقنيتين لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI أثناء قيام النظام بتحليل البيانات.",
+                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "تم التطوير ليكون أداة مساعدة دقيقة وسريعة لتقديم تجربة سفر سلسة للجميع.",
                 modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
                 saveReady: "التقرير جاهز!", saveInst: "👇 اختر الإجراء المناسب لحفظ أو إرسال التقرير 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة"
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة",
+                logTitle: "سجل السفر", logCountry: "الدول التي زرتها", logAirline: "نوع الطيران", logPNR: "رقم الحجز (PNR)", logDep: "تاريخ الذهاب", logRet: "تاريخ العودة", logDays: "عدد أيام السفر", logNotes: "ملاحظات عن الرحلة", btnSaveLog: "حفظ السجل",
+                countTitle: "عداد السفر", countSub: "أدخل موعد رحلتك القادمة ليبدأ العد التنازلي", countTarget: "موعد السفر (التاريخ والوقت)", countSet: "بدء العداد 🚀", countClear: "إيقاف ومسح", countDays: "يوم", countHrs: "ساعة", countMins: "دقيقة", countSecs: "ثانية"
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -642,18 +724,14 @@
                 helpIntro: "Welcome to the Comprehensive Guide. This system is a professional Super App combining AI passport checking with local encryption for document security.",
                 helpSec1Title: "🔍 First: Scanning System (Cyber UI)",
                 helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly.",
-                helpSec2Title: "📊 Second: Validity Report & 3D Card",
-                helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It calculates precise age and country of issue automatically.",
-                helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
-                helpSec3Text: "A secure vault protected by a PIN. It uses IndexedDB to save your IDs locally (offline & secure). You can easily download ⬇️ or Share 🔗 your documents.",
-                helpSec4Title: "📸 Fourth: Pro Photo Tips",
-                helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear.",
                 abtTitle: "👨‍💻 About Developer", abtText: "Developed as a smart assistive tool to reduce human errors in passport checks.",
                 modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
                 saveReady: "Report Ready!", saveInst: "👇 Choose an action to save or share the report 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share"
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share",
+                logTitle: "Travel Log", logCountry: "Visited Countries", logAirline: "Airline", logPNR: "Booking No (PNR)", logDep: "Departure Date", logRet: "Return Date", logDays: "Travel Days", logNotes: "Trip Notes", btnSaveLog: "Save Log",
+                countTitle: "Travel Countdown", countSub: "Enter your upcoming trip date to start countdown", countTarget: "Trip Date & Time", countSet: "Start Timer 🚀", countClear: "Stop & Clear", countDays: "DAYS", countHrs: "HOURS", countMins: "MINS", countSecs: "SECS"
             }
         };
 
@@ -665,7 +743,7 @@
             if(appMode) document.getElementById('currentModeBadge').innerText = appMode === 'single' ? dict[currentLang].modeS : dict[currentLang].modeG;
             updateGreeting();
         }
-        function toggleLanguage() { currentLang = currentLang === 'ar' ? 'en' : 'ar'; safeSetItem('appLang', currentLang); applyLanguage(); closeSidebar(); }
+        function toggleLanguage() { currentLang = currentLang === 'ar' ? 'en' : 'ar'; safeSetItem('appLang', currentLang); applyLanguage(); closeSidebar(); renderTravelLogs(); renderCountdown(); }
         function applyDarkMode() { if (isDarkMode) { document.body.classList.add('dark-mode'); } else { document.body.classList.remove('dark-mode'); } }
         function toggleDarkMode() { isDarkMode = !isDarkMode; safeSetItem('darkMode', isDarkMode); applyDarkMode(); closeSidebar(); }
         function updateGreeting() {
@@ -686,12 +764,13 @@
                 imageElement = document.getElementById('previewImg');
                 document.getElementById('travelDateInput').valueAsDate = new Date();
                 applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
-                fetchWeather(); // جلب درجة الحرارة
+                fetchWeather(); 
                 initWalletDB(); 
+                initCountdown();
             } catch(e) { console.error("Init err", e); }
         });
 
-        // دوال القائمة الجانبية (Sidebar) والنوافذ
+        // دوال القائمة الجانبية والنوافذ
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
         function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
         
@@ -715,7 +794,169 @@
             else { document.getElementById('scannerSection').scrollIntoView({behavior: 'smooth'}); }
         }
 
-        // السجل (History)
+        /* === سجل السفر (Travel Log) === */
+        function openTravelLogModal() {
+            renderTravelLogs();
+            document.getElementById('logForm').style.display = 'none';
+            openModal('travelLogModal');
+        }
+        function toggleLogForm() {
+            const form = document.getElementById('logForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            // Clear inputs
+            ['logCountryInput','logAirlineInput','logPNRInput','logDepInput','logRetInput','logDaysInput','logNotesInput'].forEach(id => document.getElementById(id).value = '');
+        }
+        function calculateLogDays() {
+            let dep = document.getElementById('logDepInput').value;
+            let ret = document.getElementById('logRetInput').value;
+            if(dep && ret) {
+                let d1 = new Date(dep); let d2 = new Date(ret);
+                let diff = (d2 - d1) / (1000 * 60 * 60 * 24);
+                document.getElementById('logDaysInput').value = diff > 0 ? diff : 0;
+            }
+        }
+        function saveTravelLog() {
+            let log = {
+                id: Date.now(),
+                country: document.getElementById('logCountryInput').value || (currentLang === 'ar' ? 'غير محدد' : 'Not specified'),
+                airline: document.getElementById('logAirlineInput').value,
+                pnr: document.getElementById('logPNRInput').value,
+                dep: document.getElementById('logDepInput').value,
+                ret: document.getElementById('logRetInput').value,
+                days: document.getElementById('logDaysInput').value,
+                notes: document.getElementById('logNotesInput').value
+            };
+            let logs = JSON.parse(safeGetItem('travelLogs', '[]'));
+            logs.unshift(log);
+            safeSetItem('travelLogs', JSON.stringify(logs));
+            vibrate('success'); playSound('success');
+            toggleLogForm();
+            renderTravelLogs();
+        }
+        function renderTravelLogs() {
+            const container = document.getElementById('logListContainer');
+            container.innerHTML = '';
+            let logs = JSON.parse(safeGetItem('travelLogs', '[]'));
+            if(logs.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:var(--text-sub); padding:15px; font-size:13px; font-weight:800;">${currentLang === 'ar' ? 'لا يوجد سجل سفر حالياً.' : 'No travel logs yet.'}</div>`;
+                return;
+            }
+            logs.forEach(log => {
+                let details = '';
+                if(log.pnr) details += `PNR: <span style="color:#3b82f6;">${log.pnr}</span> | `;
+                if(log.airline) details += `✈️ ${log.airline}`;
+                
+                let dates = '';
+                if(log.dep) dates += `${log.dep}`;
+                if(log.ret) dates += ` ➔ ${log.ret}`;
+                
+                container.innerHTML += `
+                <div class="log-item">
+                    <button class="log-delete-btn" onclick="deleteLog(${log.id})">✖</button>
+                    <h4>${log.country}</h4>
+                    <p dir="ltr">${details}</p>
+                    <p style="color:#10b981;">📅 ${dates}</p>
+                    ${log.days ? `<div class="log-badge">${log.days} ${currentLang === 'ar' ? 'أيام' : 'Days'}</div>` : ''}
+                    ${log.notes ? `<p style="margin-top:8px; border-top:1px dashed var(--border-color); padding-top:8px;">📝 ${log.notes}</p>` : ''}
+                </div>`;
+            });
+        }
+        function deleteLog(id) {
+            if(confirm(currentLang === 'ar' ? 'مسح هذا السجل؟' : 'Delete this log?')) {
+                let logs = JSON.parse(safeGetItem('travelLogs', '[]'));
+                logs = logs.filter(l => l.id !== id);
+                safeSetItem('travelLogs', JSON.stringify(logs));
+                renderTravelLogs();
+            }
+        }
+
+        /* === عداد السفر (Countdown) === */
+        let countdownInterval;
+        let countdownAlertPlayed = false;
+
+        function openCountdownModal() {
+            renderCountdown();
+            openModal('countdownModal');
+        }
+
+        function startCountdown() {
+            let target = document.getElementById('countdownInput').value;
+            if(!target) { vibrate('error'); return; }
+            safeSetItem('travelTargetDate', target);
+            safeSetItem('countdownAlertPlayed', 'false'); // Reset alert
+            countdownAlertPlayed = false;
+            vibrate('success'); playSound('success');
+            renderCountdown();
+        }
+
+        function clearCountdown() {
+            safeSetItem('travelTargetDate', '');
+            clearInterval(countdownInterval);
+            renderCountdown();
+        }
+
+        function initCountdown() {
+            countdownAlertPlayed = safeGetItem('countdownAlertPlayed', 'false') === 'true';
+            if(safeGetItem('travelTargetDate', '')) {
+                // start loop in background
+                countdownInterval = setInterval(updateCountdownClock, 1000);
+            }
+        }
+
+        function renderCountdown() {
+            clearInterval(countdownInterval);
+            let target = safeGetItem('travelTargetDate', '');
+            if(!target) {
+                document.getElementById('countdownDisplay').style.display = 'none';
+                document.getElementById('btnClearCount').style.display = 'none';
+            } else {
+                document.getElementById('countdownDisplay').style.display = 'block';
+                document.getElementById('btnClearCount').style.display = 'inline-block';
+                document.getElementById('countdownInput').value = target;
+                updateCountdownClock();
+                countdownInterval = setInterval(updateCountdownClock, 1000);
+            }
+        }
+
+        function updateCountdownClock() {
+            let target = safeGetItem('travelTargetDate', '');
+            if(!target) return;
+            
+            let targetDate = new Date(target).getTime();
+            let now = new Date().getTime();
+            let dist = targetDate - now;
+
+            if (dist < 0) {
+                document.getElementById('countdownDisplay').innerHTML = `<h3 style="color:#10b981; margin:20px 0;">${currentLang === 'ar' ? '✈️ حان موعد السفر! رحلة سعيدة' : '✈️ It is time to travel! Have a safe trip'}</h3>`;
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            let days = Math.floor(dist / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((dist % (1000 * 60)) / 1000);
+
+            // Alert 24 hours before
+            if (days === 1 && hours === 0 && minutes === 0 && seconds === 0 && !countdownAlertPlayed) {
+                playSound('success'); vibrate('success');
+                alert(currentLang === 'ar' ? 'غداً موعد سفرك! استعد ✈️' : 'Your trip is tomorrow! Get ready ✈️');
+                safeSetItem('countdownAlertPlayed', 'true');
+                countdownAlertPlayed = true;
+            }
+
+            // If modal is not open, elements might not exist, but we update if they do
+            let elDays = document.getElementById('cdDays');
+            if(elDays) {
+                elDays.innerText = String(days).padStart(2, '0');
+                document.getElementById('cdHours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('cdMins').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('cdSecs').innerText = String(seconds).padStart(2, '0');
+            }
+        }
+
+
+        // السجل (History) الفحص
         function saveToHistory(name, pass) {
             try {
                 let history = JSON.parse(safeGetItem('scanHistory', '[]'));
@@ -821,7 +1062,7 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // توليد التقرير
+        // توليد التقرير الفحص
         function generateTicket() {
             initAudio(); 
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
@@ -1091,7 +1332,6 @@
         function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
 
         /* ==================== دوال الحفظ والمشاركة الأصلية ==================== */
-
         function downloadDocImage() {
             try {
                 const imgSrc = document.getElementById('docFullImg').src; const newWindow = window.open();
