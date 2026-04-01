@@ -65,8 +65,10 @@
         .conn-indicator { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text-sub);}
         .conn-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; }
         .conn-dot.offline { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
-        .hamburger-btn { background: var(--btn-glass); border: 1px solid var(--border-color); color: var(--text-main); width: 46px; height: 46px; border-radius: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05); z-index: 100;}
+
+        .hamburger-btn { background: var(--btn-glass); border: 1px solid var(--border-color); color: var(--text-main); width: 46px; height: 46px; border-radius: 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(0,0,0,0.05); z-index: 100; padding: 0;}
         .hamburger-btn:active { transform: scale(0.9); }
+        .hamburger-btn svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
 
         /* القائمة الجانبية */
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -75,18 +77,21 @@
         [dir="ltr"] .sidebar { right: auto; left: -320px; transition: left 0.4s ease; }
         .sidebar.active { right: 0; }
         [dir="ltr"] .sidebar.active { left: 0; }
+        
         .sidebar-close { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2); width: 36px; height: 36px; border-radius: 12px; font-weight: bold; color: white; cursor: pointer; display: flex; justify-content: center; align-items: center; z-index: 10;}
         [dir="ltr"] .sidebar-close { left: auto; right: 20px; }
         
-        .sidebar-brand { background: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.95)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80') center/cover; margin: 0 -20px 20px -20px; padding: 50px 20px 30px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border-bottom: 1px solid var(--border-color);}
-        .sidebar-brand-icon { background: transparent; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; margin-bottom: 5px;}
+        .sidebar-brand { background: linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.95)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80') center/cover; margin: 0 -20px 20px -20px; padding: 50px 20px 30px 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; border-bottom: 1px solid var(--border-color); position: relative;}
+        
+        .sidebar-brand-icon { background: transparent; width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; padding: 0; margin-bottom: 5px;}
         .sidebar-brand-text { font-size: 20px; font-weight: 900; color: white; line-height: 1.3; }
-        .my-id-badge { background: #3b82f6; color: white; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 900; margin-top: 5px; box-shadow: 0 4px 10px rgba(59,130,246,0.4); display: inline-block; letter-spacing: 2px;}
+        .my-id-badge { background: #3b82f6; color: white; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 900; margin-top: 5px; box-shadow: 0 4px 10px rgba(59,130,246,0.4); display: inline-block; letter-spacing: 1px; direction: rtl;}
         
         .sidebar-section-title { font-size: 11px; font-weight: 800; color: #3b82f6; text-transform: uppercase; margin-bottom: 10px; margin-top: 15px; letter-spacing: 1px;}
         .sidebar-btn { background: var(--input-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 16px; display: flex; align-items: center; gap: 12px; font-family: inherit; font-size: 14px; font-weight: 800; color: var(--text-main); cursor: pointer; transition: 0.2s; width: 100%; text-align: right; margin-bottom: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);}
         [dir="ltr"] .sidebar-btn { text-align: left; }
         .sidebar-btn:active { transform: scale(0.97); background: rgba(59,130,246,0.1); border-color: #3b82f6; color: #3b82f6;}
+        
         .golden-edition { margin-top: auto; padding-top: 20px; text-align: center; color: var(--text-sub); font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7;}
 
         /* الشاشة الرئيسية */
@@ -96,12 +101,10 @@
         .hero-title { color: white; font-size: 24px; font-weight: 900; margin-bottom: 4px; line-height: 1.2;}
         .hero-sub { color: #93c5fd; font-size: 13px; font-weight: 700; opacity: 0.9;}
         
-        .pulse-btn { background: linear-gradient(135deg, #2563eb, #1e3a8a); color: white; width: 100%; padding: 20px; border-radius: 22px; font-size: 18px; font-weight: 900; border: none; cursor: pointer; box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3); transition: transform 0.2s; position: relative; overflow: hidden;}
-        .pulse-btn:active { transform: scale(0.96); }
+        .pulse-btn { background: linear-gradient(135deg, #2563eb, #1e3a8a); color: white; width: 100%; padding: 20px; border-radius: 22px; font-size: 18px; font-weight: 900; border: none; cursor: pointer; box-shadow: 0 15px 35px rgba(37, 99, 235, 0.3); margin-top: 10px; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden;}
+        .pulse-btn:active { transform: scale(0.96); box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2); }
         .pulse-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transform: translateX(-100%); animation: shine 3s infinite; }
         @keyframes shine { 100% { transform: translateX(100%); } }
-        
-        .arrival-btn { background: linear-gradient(135deg, #10b981, #059669); margin-top: -5px; box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3);}
 
         .tips-marquee { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 12px; margin-top: 15px; overflow: hidden; white-space: nowrap; font-size: 12px; font-weight: 800; color: var(--text-sub); display: flex; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02);}
         .tips-marquee span { display: inline-block; animation: scrollMarquee 40s linear infinite; padding-left: 100%; }
@@ -208,7 +211,7 @@
         .btn-wa { background: linear-gradient(135deg, #22c55e, #16a34a); color: white; width: 100%; margin-top: 20px; border-radius: 16px; padding: 16px; font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; border: none; box-shadow: 0 10px 25px rgba(34,197,94,0.3);}
         .btn-reminder { background: #f8fafc; color: #2563eb; border: 1px solid #bfdbfe; width: 100%; margin-top: 10px; border-radius: 16px; padding: 14px; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; border: none; }
 
-        /* === النوافذ المنبثقة === */
+        /* النوافذ المنبثقة العامة */
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(10px); }
         .modal-overlay.active { display: flex; }
         .modal-card { background: var(--modal-bg); border-radius: 28px; padding: 35px 25px; width: 100%; max-width: 420px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative; max-height: 90vh; overflow-y: auto; color: var(--text-main);}
@@ -268,15 +271,63 @@
 <body>
 
     <script>
+        // إعدادات Firebase (يجب أن تكون في بداية الكود للعمل بشكل صحيح)
+        const firebaseConfig = { databaseURL: "https://smartpasscheck-default-rtdb.firebaseio.com" };
+        try {
+            firebase.initializeApp(firebaseConfig);
+            window.database = firebase.database();
+        } catch(e) { console.log("Firebase Init error", e); }
+
+        // توليد أو جلب هوية التطبيق الخاصة (App ID)
+        function safeGetItem(key, defaultVal) { try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; } }
+        function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
+
+        let myID = safeGetItem('user_app_id', '');
+        if(!myID) {
+            myID = Math.floor(1000 + Math.random() * 9000).toString();
+            safeSetItem('user_app_id', myID);
+        }
+
         window.addEventListener('load', function() {
             setTimeout(() => { const splash = document.getElementById('splashScreen'); if(splash) { splash.style.opacity = '0'; setTimeout(() => splash.remove(), 600); } }, 2000);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // تحديث الكود في القائمة الجانبية
+            if(document.getElementById('myAppID')) document.getElementById('myAppID').innerText = myID;
+            
+            // الاستماع لأي إشعار وصول يخص الكود مالتي
+            if(window.database) {
+                database.ref('notices/' + myID).on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if(data) {
+                        if(data.status === 'arrived') {
+                            playSound('success'); vibrate('success');
+                            let arrMsg = currentLang === 'ar' ? `المسافر صاحب الكود (${data.sender}) قد وصل إلى وجهته بسلامة! ✅` : `Passenger with code (${data.sender}) has arrived safely! ✅`;
+                            document.getElementById('alertTitle').innerText = currentLang === 'ar' ? 'بشرى سارة!' : 'Great News!';
+                            document.getElementById('alertTitle').style.color = '#10b981';
+                            document.getElementById('alertMsg').innerText = arrMsg;
+                            openModal('alertModal');
+                        } else if(data.status === 'help') {
+                            playSound('error'); vibrate('error');
+                            let helpMsg = currentLang === 'ar' ? `المسافر صاحب الكود (${data.sender}) يحتاج إلى مساعدة ضرورية! 🆘` : `Passenger with code (${data.sender}) needs urgent help! 🆘`;
+                            document.getElementById('alertTitle').innerText = currentLang === 'ar' ? 'تنبيه طوارئ!' : 'Emergency Alert!';
+                            document.getElementById('alertTitle').style.color = '#ef4444';
+                            document.getElementById('alertMsg').innerText = helpMsg;
+                            openModal('alertModal');
+                        }
+                        // مسح الإشعار بعد ظهوره
+                        database.ref('notices/' + myID).remove();
+                    }
+                });
+            }
         });
     </script>
 
     <div id="splashScreen">
         <div class="splash-logo-box">
             <img src="logo.png" class="app-logo-img" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <span style="display:none; font-size: 60px;">🛂</span>
+            <span style="display:none; font-size: 80px;">🛂</span>
         </div>
         <div class="splash-text">Smart Pass System</div>
         <div class="splash-sub">GLOBAL SYSTEM</div>
@@ -309,11 +360,6 @@
                 <button class="pulse-btn" onclick="startScanner('single')">
                     <span data-i18n="btnStart">بدء الفحص ✈️✨</span>
                 </button>
-
-                <button class="pulse-btn arrival-btn" onclick="openModal('arrivalModal')">
-                    <span data-i18n="btnArrival">أنا وصلت بخير ✅</span>
-                </button>
-
                 <p style="font-size:12px; text-align: center; margin-top:-5px; color:var(--text-sub); font-weight: 800;" data-i18n="startHint">لخيارات الفحص العائلي وأدوات النظام، افتح القائمة الجانبية (☰)</p>
 
                 <div class="tips-marquee">
@@ -398,7 +444,7 @@
         <div class="sidebar-brand">
             <div class="sidebar-brand-icon">
                 <img src="logo.png" class="app-logo-img" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <span style="display:none; font-size: 32px;">🛂</span>
+                <span style="display:none; font-size: 40px;">🛂</span>
             </div>
             <div class="sidebar-brand-text">Smart Pass<br><span style="color:#93c5fd; font-size: 14px;">System</span></div>
             <div class="my-id-badge" data-i18n="myAppIdBadge">كود تطبيقك: <span id="myAppID">----</span></div>
@@ -409,6 +455,7 @@
         <button class="sidebar-btn" onclick="startScanner('group')">👨‍👩‍👧‍👦 <span data-i18n="btnGroup">فحص عائلي (مجموعة)</span></button>
 
         <div class="sidebar-section-title" data-i18n="sideTools">أدوات النظام</div>
+        <button class="sidebar-btn" onclick="openArrivalModal()">📍 <span data-i18n="sideArrival">تنبيه الوصول</span></button>
         <button class="sidebar-btn" onclick="openWalletAuth()">🪪 <span data-i18n="walletTitle">المحفظة السرية</span></button>
         <button class="sidebar-btn" onclick="openHistoryModal()">🕒 <span data-i18n="stgHist">سجل الفحص</span></button>
         <button class="sidebar-btn" onclick="openTravelLogModal()">🧾 <span data-i18n="logTitle">سجل السفر</span></button>
@@ -426,19 +473,21 @@
     <div class="modal-overlay" id="arrivalModal" onclick="if(event.target === this) closeModal('arrivalModal')">
         <div class="modal-card">
             <button class="modal-close-btn" onclick="closeModal('arrivalModal')">✖</button>
-            <h3 class="modal-title" data-i18n="arrTitle">وصلت بخير ✅</h3>
-            <p style="font-size:13px; margin-bottom:15px; font-weight:800; text-align:center; color: var(--text-sub);" data-i18n="arrSub">أدخل كود التطبيق للشخص الذي تريد إعلامه بوصولك</p>
+            <h3 class="modal-title" data-i18n="sideArrival">تنبيه الوصول</h3>
+            <p style="font-size:13px; margin-bottom:15px; font-weight:800; text-align:center; color: var(--text-sub);" data-i18n="arrSub">أدخل كود التطبيق للشخص الذي تريد إعلامه بموقفك</p>
             <input type="number" id="targetID" placeholder="أدخل كود المستلم (4 أرقام)" style="text-align:center; font-size:20px; letter-spacing:5px;">
-            <button class="pulse-btn" style="background:#10b981; margin-top:20px;" onclick="sendArrivalNotice()" data-i18n="btnSendArr">إرسال إشعار الوصول 🚀</button>
+            
+            <button class="pulse-btn" style="background:#10b981; margin-top:20px; width: 100%; border-radius: 16px;" onclick="sendArrivalNotice('arrived')" data-i18n="btnArrival">أنا وصلت بخير ✅</button>
+            <button class="pulse-btn" style="background:#ef4444; margin-top:10px; width: 100%; border-radius: 16px; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);" onclick="sendArrivalNotice('help')" data-i18n="btnHelp">أحتاج مساعدة 🆘</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="alertModal">
         <div class="modal-card arrival-popup">
             <span class="arrival-icon">✈️</span>
-            <h2 style="color:#10b981; font-weight:900; margin-bottom:10px;" data-i18n="alertTitle">بشرى سارة!</h2>
+            <h2 id="alertTitle" style="color:#10b981; font-weight:900; margin-bottom:10px;">بشرى سارة!</h2>
             <p id="alertMsg" style="font-size:16px; font-weight:800; line-height:1.6; margin-bottom: 20px;"></p>
-            <button class="pulse-btn" onclick="closeModal('alertModal')" data-i18n="alertOk">الحمد لله على السلامة</button>
+            <button class="pulse-btn" onclick="closeModal('alertModal')" data-i18n="alertOk">حسناً</button>
         </div>
     </div>
 
@@ -634,201 +683,25 @@
     </div>
 
     <script>
-        // إعدادات قواعد بيانات فايربيس (نسخة تجريبية مفتوحة للربط)
-        const firebaseConfig = { databaseURL: "https://smartpasscheck-default-rtdb.firebaseio.com" };
-        try {
-            firebase.initializeApp(firebaseConfig);
-            window.database = firebase.database();
-        } catch(e) { console.log("Firebase Init error", e); }
-
-        // توليد هوية التطبيق (App ID)
-        let myID = safeGetItem('user_app_id', '');
-        if(!myID) {
-            myID = Math.floor(1000 + Math.random() * 9000).toString();
-            safeSetItem('user_app_id', myID);
-        }
-        document.addEventListener("DOMContentLoaded", () => {
-            if(document.getElementById('myAppID')) document.getElementById('myAppID').innerText = myID;
-            
-            // الاستماع للإشعارات
-            if(window.database) {
-                database.ref('notices/' + myID).on('value', (snapshot) => {
-                    const data = snapshot.val();
-                    if(data && data.status === 'arrived') {
-                        playSound('success'); vibrate('success');
-                        let arrMsg = currentLang === 'ar' ? `المسافر صاحب الكود (${data.sender}) قد وصل إلى وجهته بسلامة!` : `Passenger with code (${data.sender}) has arrived safely!`;
-                        document.getElementById('alertMsg').innerText = arrMsg;
-                        openModal('alertModal');
-                        database.ref('notices/' + myID).remove();
-                    }
-                });
-            }
-        });
-
         function openArrivalModal() { openModal('arrivalModal'); }
         
-        function sendArrivalNotice() {
+        function sendArrivalNotice(type) {
             const target = document.getElementById('targetID').value;
             if(target.length !== 4) { alert(currentLang==='ar'?"يرجى إدخال كود صحيح من 4 أرقام":"Please enter a valid 4-digit code"); return; }
             if(!window.database) { alert("Service unavailable"); return; }
             
-            database.ref('notices/' + target).set({ sender: myID, status: 'arrived', time: Date.now() })
+            database.ref('notices/' + target).set({ sender: myID, status: type, time: Date.now() })
             .then(() => {
                 vibrate('success'); playSound('success');
-                alert(currentLang==='ar'?"تم إرسال إشعار الوصول بنجاح! ✅":"Arrival notice sent successfully! ✅");
+                let msg = type === 'arrived' 
+                    ? (currentLang==='ar'?"تم إرسال إشعار الوصول بنجاح! ✅":"Arrival notice sent! ✅")
+                    : (currentLang==='ar'?"تم إرسال طلب المساعدة! 🆘":"Help request sent! 🆘");
+                alert(msg);
                 closeModal('arrivalModal');
             }).catch(() => {
                 alert(currentLang==='ar'?"يرجى التأكد من توفر الإنترنت لإرسال الإشعار":"Please ensure internet connection");
             });
         }
-
-        // دوال الأمان لمنع الكراش من الذاكرة
-        function safeGetItem(key, defaultVal) { try { return localStorage.getItem(key) || defaultVal; } catch(e) { return defaultVal; } }
-        function safeSetItem(key, val) { try { localStorage.setItem(key, val); } catch(e) {} }
-
-        // نظام الصوت المريح
-        let audioCtx; let audioInitialized = false;
-        function initAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } if (audioCtx.state === 'suspended') { audioCtx.resume(); } }
-        function playClickSound() {
-            try {
-                if (!audioCtx) return; if (audioCtx.state === 'suspended') audioCtx.resume();
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                osc.type = 'sine'; osc.frequency.setValueAtTime(600, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.05);
-                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.05);
-            } catch(e) {}
-        }
-        document.addEventListener('click', function(e) {
-            if (!audioInitialized) { initAudio(); audioInitialized = true; }
-            if(e.target.closest('button') || e.target.closest('.sidebar-btn') || e.target.closest('.pin-btn')) {
-                if(!e.target.closest('.btn-scan') && !e.target.closest('.pulse-btn') && !e.target.closest('.btn-main[onclick="generateTicket()"]')) { playClickSound(); }
-            }
-        });
-        function playSound(type) {
-            try {
-                if (!audioCtx) return;
-                const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-                if (type === 'success') {
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
-                } else if (type === 'error') {
-                    osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-                    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); gainNode.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                }
-            } catch(e) {}
-        }
-        function vibrate(type) {
-            if (!navigator.vibrate) return;
-            if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]);
-        }
-
-        // جلب درجة الحرارة عبر API مجاني
-        async function fetchWeather() {
-            try {
-                const geoRes = await fetch('https://get.geojs.io/v1/ip/geo.json');
-                const geoData = await geoRes.json();
-                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${geoData.latitude}&longitude=${geoData.longitude}&current_weather=true`);
-                const weatherData = await weatherRes.json();
-                document.getElementById('weatherTemp').innerHTML = ` | 🌡️ ${Math.round(weatherData.current_weather.temperature)}°C`;
-            } catch (e) {
-                console.log("تعذر جلب درجة الحرارة", e);
-            }
-        }
-
-        // المتغيرات والقاموس
-        let currentLang = safeGetItem('appLang', 'ar');
-        let isDarkMode = safeGetItem('darkMode') === 'true';
-        let appMode = 'single'; 
-        let ticketCount = 0;
-        let currentRotation = 0;
-        let imageElement;
-        let groupPassengersData = []; 
-        let nationalityData = { flag: "🌍", name: "" };
-        const API_KEY = 'helloworld'; 
-
-        const countries = {
-            'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
-            'TUR': { ar: 'تركيا 🇹🇷', en: 'Turkey 🇹🇷' }, 'JOR': { ar: 'الأردن 🇯🇴', en: 'Jordan 🇯🇴' },
-            'LBN': { ar: 'لبنان 🇱🇧', en: 'Lebanon 🇱🇧' }, 'EGY': { ar: 'مصر 🇪🇬', en: 'Egypt 🇪🇬' },
-            'ARE': { ar: 'الإمارات 🇦🇪', en: 'UAE 🇦🇪' }, 'SAU': { ar: 'السعودية 🇸🇦', en: 'KSA 🇸🇦' },
-            'KWT': { ar: 'الكويت 🇰🇼', en: 'Kuwait 🇰🇼' }, 'QAT': { ar: 'قطر 🇶🇦', en: 'Qatar 🇶🇦' },
-            'OMN': { ar: 'عمان 🇴🇲', en: 'Oman 🇴🇲' }, 'BHR': { ar: 'البحرين 🇧🇭', en: 'Bahrain 🇧🇭' },
-            'IRN': { ar: 'إيران 🇮🇷', en: 'Iran 🇮🇷' }, 'USA': { ar: 'أمريكا 🇺🇸', en: 'USA 🇺🇸' },
-            'GBR': { ar: 'بريطانيا 🇬🇧', en: 'UK 🇬🇧' }, 'CAN': { ar: 'كندا 🇨🇦', en: 'Canada 🇨🇦' }
-        };
-
-        const dict = {
-            ar: {
-                appTitle: "التدقيق الذكي للجوازات", appSub: "النظام الشامل لفحص صلاحية السفر", 
-                btnStart: "بدء الفحص ✈️✨", btnArrival: "أنا وصلت بخير ✅", startHint: "لخيارات الفحص العائلي وأدوات النظام، افتح القائمة الجانبية (☰)",
-                sideModes: "أوضاع الفحص", sideTools: "أدوات النظام", sideSettings: "الإعدادات والملف",
-                btnSingle: "فحص فردي (شخص واحد)", descSingle: "استخراج تقرير صلاحية لجواز سفر واحد",
-                btnGroup: "فحص عائلي (مجموعة)", descGroup: "فحص عدة جوازات وإصدار تقرير شامل",
-                btnHome: "الرئيسية", camTitle: "المس هنا لالتقاط أو إدراج الجواز", camSub: "يدعم الفحص التلقائي بالذكاء الاصطناعي", scanning: "جاري الفحص والتحليل...",
-                btnRot: "تدوير ⟳", btnScan: "مسح ضوئي 🔍", lblName: "الاسم الكامل (English)", lblPass: "رقم الجواز",
-                lblDob: "تاريخ الميلاد", lblExp: "تاريخ النفاذ (Expiry)", lblTravel: "تاريخ السفر المتوقع (اختياري لحساب العمر)", btnGen: "إصدار تقرير الصلاحية",
-                btnAddGroup: "➕ إضافة شخص آخر للمجموعة", btnExport: "📋 نسخ بيانات المجموعة", btnSave: "تجهيز التقرير للحفظ 💾", btnClear: "مسح وبدء جديد ↻", btnShareImg: "مشاركة",
-                stgTitle: "⚙️ الإعدادات", stgHist: "سجل الفحص", stgLang: "English / عربي", stgDark: "الوضع المظلم / الفاتح", stgHelp: "الدليل الشامل", stgAbout: "نبذة عن المطور",
-                histTitle: "🕒 آخر عمليات الفحص", histEmpty: "لا توجد عمليات فحص سابقة.", searchPh: "🔍 ابحث عن اسم...",
-                exportTitle: "📋 بيانات المجموعة", btnCopyData: "📋 نسخ كافة البيانات",
-                helpTitle: "ℹ️ الدليل الشامل والمفصل", 
-                helpIntro: "أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.",
-                helpSec1Title: "🔍 أولاً: نظام الفحص (الماسح السينمائي)",
-                helpSec1Text: "يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.",
-                helpSec2Title: "📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D",
-                helpSec2Text: "يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.",
-                helpSec3Title: "🪪 ثالثاً: محفظة المستندات (الخزنة السرية)",
-                helpSec3Text: "خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).",
-                helpSec4Title: "📸 رابعاً: نصائح التصوير الاحترافي",
-                helpSec4Text: "تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.",
-                abtTitle: "👨‍💻 نبذة عن المطور", abtText: "خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.",
-                modeS: "وضع فردي 👤", modeG: "وضع عائلي 👨‍👩‍👧‍👦", valErr: "يرجى تحديد تاريخ الميلاد", remainErr: "غير محدد",
-                expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
-                warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
-                saveReady: "التقرير جاهز!", saveInst: "👇 اختر الإجراء المناسب لحفظ أو إرسال التقرير 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة",
-                logTitle: "سجل السفر", logAdd: "➕ إضافة رحلة جديدة", logCountry: "الدول التي زرتها", logAirline: "نوع الطيران", logPNR: "رقم الحجز (PNR)", logDep: "تاريخ الذهاب", logRet: "تاريخ العودة", logDays: "عدد أيام السفر", logNotes: "ملاحظات عن الرحلة", btnSaveLog: "حفظ السجل",
-                countTitle: "عداد السفر", countSub: "أدخل موعد رحلتك القادمة ليبدأ العد التنازلي", countTarget: "موعد السفر (التاريخ والوقت)", countSet: "بدء العداد 🚀", countClear: "إيقاف ومسح", countDays: "يوم", countHrs: "ساعة", countMins: "دقيقة", countSecs: "ثانية",
-                arrTitle: "وصلت بخير ✅", arrSub: "أدخل كود التطبيق للشخص الذي تريد إعلامه بوصولك", btnSendArr: "إرسال إشعار الوصول 🚀", alertTitle: "بشرى سارة!", alertOk: "الحمد لله على السلامة", myAppIdBadge: "كود تطبيقك: "
-            },
-            en: {
-                appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
-                btnStart: "Start Scan ✈️✨", btnArrival: "I Arrived Safely ✅", startHint: "For group scanning & tools, open side menu (☰)",
-                sideModes: "Scan Modes", sideTools: "System Tools", sideSettings: "Settings & Profile",
-                btnSingle: "Single Scan", descSingle: "Generate report for one passport",
-                btnGroup: "Group Scan", descGroup: "Scan multiple passports at once",
-                btnHome: "Home", camTitle: "Tap here to capture passport", camSub: "Supports AI auto scanning", scanning: "Scanning & Analyzing...",
-                btnRot: "Rotate ⟳", btnScan: "Scan 🔍", lblName: "FULL NAME", lblPass: "PASSPORT NUMBER",
-                lblDob: "DATE OF BIRTH", lblExp: "EXPIRY DATE", lblTravel: "TRAVEL DATE (OPTIONAL)", btnGen: "Generate Report",
-                btnAddGroup: "➕ Add Another Person", btnExport: "📋 Copy Group Data", btnSave: "Prepare Report 💾", btnClear: "Clear & Restart ↻", btnShareImg: "Share",
-                stgTitle: "⚙️ Settings", stgHist: "Scan History", stgLang: "التبديل للعربية", stgDark: "Dark / Light Mode", stgHelp: "User Guide", stgAbout: "About Developer",
-                histTitle: "🕒 Scan History", histEmpty: "No history found.", searchPh: "🔍 Search name...",
-                exportTitle: "📋 Group Data", btnCopyData: "📋 Copy All Data",
-                helpTitle: "ℹ️ Comprehensive Guide", 
-                helpIntro: "Welcome to the Comprehensive Guide. This system is a professional Super App combining AI passport checking with local encryption for document security.",
-                helpSec1Title: "🔍 First: Scanning System (Cyber UI)",
-                helpSec1Text: "The system merges Visual and MRZ reading for 100% accuracy. When capturing a passport, the Cyber UI radar activates while analyzing data instantly. It supports Single mode for one passenger, and Group mode for scanning multiple passports.",
-                helpSec2Title: "📊 Second: Validity Report & 3D Card",
-                helpSec2Text: "The report appears as a 3D flipping card stamped with APPROVED/REJECTED. It calculates precise age and country of issue automatically.",
-                helpSec3Title: "🪪 Third: ID Wallet (Secure Vault)",
-                helpSec3Text: "A secure vault protected by a PIN. It uses IndexedDB to save your IDs locally (offline & secure). You can easily download ⬇️ or Share 🔗 your documents.",
-                helpSec4Title: "📸 Fourth: Pro Photo Tips",
-                helpSec4Text: "Avoid using flash or bright lights that cause glare on the passport. Ensure the bottom MRZ lines are fully visible, horizontal, and clear.",
-                abtTitle: "👨‍💻 About Developer", abtText: "A travel and tourism expert who developed this smart system as an accurate and fast assistive tool to reduce human errors in passport checks, making travel procedures smoother for everyone.",
-                modeS: "Single 👤", modeG: "Group 👨‍👩‍👧‍👦", valErr: "Please select Date of Birth", remainErr: "Not set",
-                expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
-                warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
-                saveReady: "Report Ready!", saveInst: "👇 Choose an action to save or share the report 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share",
-                logTitle: "Travel Log", logAdd: "➕ Add New Trip", logCountry: "Visited Countries", logAirline: "Airline", logPNR: "Booking No (PNR)", logDep: "Departure Date", logRet: "Return Date", logDays: "Travel Days", logNotes: "Trip Notes", btnSaveLog: "Save Log",
-                countTitle: "Travel Countdown", countSub: "Enter your upcoming trip date to start countdown", countTarget: "Trip Date & Time", countSet: "Start Timer 🚀", countClear: "Stop & Clear", countDays: "DAYS", countHrs: "HOURS", countMins: "MINS", countSecs: "SECS",
-                arrTitle: "I Arrived Safely ✅", arrSub: "Enter the app code of the person you want to notify", btnSendArr: "Send Arrival Notice 🚀", alertTitle: "Great News!", alertOk: "Thank God for safety", myAppIdBadge: "App Code: "
-            }
-        };
 
         // إعدادات اللغة والثيم
         function applyLanguage() {
@@ -853,17 +726,6 @@
             else { dot.classList.add('offline'); txt.innerText = currentLang === 'ar' ? 'غير متصل (تأكد من النت)' : 'Offline'; }
         }
         window.addEventListener('online', updateConnectionStatus); window.addEventListener('offline', updateConnectionStatus);
-
-        window.addEventListener('DOMContentLoaded', function() {
-            try {
-                imageElement = document.getElementById('previewImg');
-                document.getElementById('travelDateInput').valueAsDate = new Date();
-                applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
-                fetchWeather(); 
-                initWalletDB(); 
-                initCountdown();
-            } catch(e) { console.error("Init err", e); }
-        });
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
         function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
@@ -1149,7 +1011,6 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // توليد التقرير
         function generateTicket() {
             initAudio(); 
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
