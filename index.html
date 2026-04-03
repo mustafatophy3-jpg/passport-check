@@ -382,6 +382,7 @@
         <div class="sidebar-section-title" data-i18n="sideTools">أدوات النظام</div>
         <button class="sidebar-btn" onclick="openWalletAuth()">🪪 <span data-i18n="walletTitle">المحفظة السرية</span></button>
         <button class="sidebar-btn" onclick="openHistoryModal()">🕒 <span data-i18n="stgHist">سجل الفحص</span></button>
+        <button class="sidebar-btn" onclick="openAiAssistantModal()">🤖 <span data-i18n="aiTitle">المساعد الذكي</span></button>
 
         <div class="sidebar-section-title" data-i18n="sideSettings">الإعدادات والملف</div>
         <button class="sidebar-btn" onclick="toggleDarkMode()">🌙 <span data-i18n="stgDark">الوضع المظلم</span></button>
@@ -390,6 +391,25 @@
         <button class="sidebar-btn" onclick="openModal('aboutModal')">👨‍💻 <span data-i18n="stgAbout">نبذة عن المطور</span></button>
         
         <div class="golden-edition">GOLDEN EDITION V1.0</div>
+    </div>
+
+    <div class="modal-overlay" id="aiAssistantModal" onclick="if(event.target === this) closeModal('aiAssistantModal')">
+        <div class="modal-card" style="display: flex; flex-direction: column; height: 85vh; padding: 25px 20px;">
+            <button class="modal-close-btn" onclick="closeModal('aiAssistantModal')">✖</button>
+            <h3 class="modal-title" data-i18n="aiTitle" style="margin-bottom: 15px;">المساعد الذكي 🤖</h3>
+            
+            <div id="aiChatBox" style="flex: 1; overflow-y: auto; background: var(--input-bg); border-radius: 16px; padding: 15px; margin-bottom: 15px; border: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 12px;">
+                <div style="text-align: center; color: var(--text-sub); font-size: 13px; font-weight: 800; margin-top: auto; margin-bottom: auto;" id="aiEmptyState">
+                    اسألني أي شيء عن السفر، المطارات، أو الوجهات! 🌍<br><br>
+                    <span style="font-size: 10px; opacity: 0.7;">(يتطلب اتصال بالإنترنت)</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="aiQueryInput" data-i18n-ph="aiPlaceholder" placeholder="اكتب سؤالك هنا..." style="flex: 1; border-radius: 16px; padding: 14px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); outline: none;">
+                <button class="pulse-btn" style="width: auto; padding: 0 20px; margin: 0; border-radius: 16px;" onclick="askGemini()">➤</button>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="historyModal" onclick="if(event.target === this) closeModal('historyModal')">
@@ -417,15 +437,15 @@
             <button class="modal-close-btn" onclick="closeModal('appInfoModal')">✖</button>
             <h3 class="modal-title" data-i18n="helpTitle">ℹ️ الدليل الشامل والمفصل</h3>
             <div class="info-content">
-                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام ليس مجرد قارئ تقليدي، بل هو أداة احترافية (Super App) تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
+                <p class="intro" data-i18n="helpIntro">أهلاً بك في الدليل الشامل. هذا النظام أداة احترافية تجمع بين الذكاء الاصطناعي لفحص الجوازات، وبين التشفير المحلي لحماية مستمسكاتك.</p>
                 <h4 data-i18n="helpSec1Title">🔍 أولاً: نظام الفحص (الماسح السينمائي)</h4>
-                <p data-i18n="helpSec1Text" style="margin-bottom: 15px;">يعمل النظام بدمج تقنيتين (القراءة البصرية وقراءة شريط MRZ السفلي) لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI السينمائية أثناء قيام النظام بتحليل البيانات بثانية واحدة. يدعم النظام وضعين: الفردي لمسافر واحد، والعائلي لفحص عدة جوازات وجمعهم بقائمة قابلة للنسخ لبرامج الحجز.</p>
+                <p data-i18n="helpSec1Text" style="margin-bottom: 15px;">يعمل النظام بدمج تقنيتين لضمان دقة 100%. عند التقاط الجواز، تظهر واجهة Cyber UI أثناء قيام النظام بتحليل البيانات. يدعم النظام وضعين: الفردي، والعائلي لفحص عدة جوازات وجمعهم بقائمة.</p>
                 <h4 data-i18n="helpSec2Title">📊 ثانياً: تقرير الصلاحية والبطاقة الـ 3D</h4>
-                <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة (3D Flip) وينزل عليه ختم المطار. يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح للسفر)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة وتنبيهك لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
+                <p data-i18n="helpSec2Text" style="margin-bottom: 15px;">يظهر التقرير بحركة بطاقة (3D Flip). يعرض التقرير: <br><b>1. مؤشر الألوان:</b> أخضر (صالح)، أصفر (تحذير الصلاحية)، أحمر (منتهي).<br><b>2. حاسبة العمر:</b> تحسب العمر بدقة لتجنب غرامات الطيران للأطفال.<br><b>3. الجنسية:</b> استخراج تلقائي للدولة مع العلم.</p>
                 <h4 data-i18n="helpSec3Title">🪪 ثالثاً: محفظة المستندات (الخزنة السرية)</h4>
-                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح بأمان. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) لفتحها بأمان، أو (المشاركة 🔗).</p>
+                <p data-i18n="helpSec3Text" style="margin-bottom: 15px;">خزنة مشفرة ومحمية برمز سري (PIN). تعتمد على تقنية (IndexedDB) لحفظ صور هوياتك داخل ذاكرة المتصفح العميقة بأمان تام. يمكنك عرض الصورة وتكبيرها، واستخدام أزرار (عرض للحفظ ⬇️) أو (المشاركة 🔗).</p>
                 <h4 data-i18n="helpSec4Title">📸 رابعاً: نصائح التصوير الاحترافي</h4>
-                <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب استخدام الفلاش أو التصوير تحت إضاءة تعكس الضوء وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان القراءة.</p>
+                <p data-i18n="helpSec4Text" style="margin-bottom: 15px;">تجنب استخدام (الفلاش) أو التصوير تحت إضاءة تعكس الضوء على الجواز وتخفي الحروف. تأكد من ظهور شريط (MRZ) السفلي بالكامل لضمان عمل الذكاء الاصطناعي بكفاءة.</p>
             </div>
         </div>
     </div>
@@ -435,7 +455,7 @@
             <button class="modal-close-btn" onclick="closeModal('aboutModal')">✖</button>
             <h3 class="modal-title" data-i18n="abtTitle">👨‍💻 نبذة عن المطور</h3>
             <div class="info-content">
-                <p data-i18n="abtText">خبير في مجال السياحة والسفر، أدرك من خلال خبرته العملية التحديات اليومية التي تواجه المسافرين وشركات السياحة في تدقيق الجوازات وحساب فترات الصلاحية. انطلاقاً من هذا الشغف، قام بتطوير هذا النظام الذكي ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
+                <p data-i18n="abtText">هذا النظام الذكي تم تطويره ليكون أداة مساعدة دقيقة وسريعة، تهدف إلى تسهيل إجراءات السفر، تقليل الأخطاء البشرية، وتقديم تجربة سفر سلسة للجميع.</p>
             </div>
         </div>
     </div>
@@ -556,7 +576,7 @@
             if (type === 'success') navigator.vibrate([50, 50, 50]); else if (type === 'error') navigator.vibrate([200, 100, 200]);
         }
 
-        // جلب درجة الحرارة عبر API مجاني
+        // جلب درجة الحرارة عبر API مجاني وبدون صلاحيات مزعجة للمستخدم
         async function fetchWeather() {
             try {
                 const geoRes = await fetch('https://get.geojs.io/v1/ip/geo.json');
@@ -572,9 +592,6 @@
             }
         }
 
-        // مفتاح Gemini الخاص بك
-        const GEMINI_API_KEY = 'AIzaSyAesHSyIX8vJOBVlPYUZWGVEiQtm5Kbo8U';
-
         // المتغيرات والقاموس
         let currentLang = safeGetItem('appLang', 'ar');
         let isDarkMode = safeGetItem('darkMode') === 'true';
@@ -584,6 +601,9 @@
         let imageElement;
         let groupPassengersData = []; 
         let nationalityData = { flag: "🌍", name: "" };
+        
+        // ======= مفتاح الذكاء الاصطناعي Gemini اللي دزيته إنت =======
+        const GEMINI_API_KEY = "AIzaSyCxPj9U-UXnjSD0Oro1Iql6ENAEZdDCjVk"; 
 
         const countries = {
             'IRQ': { ar: 'العراق 🇮🇶', en: 'Iraq 🇮🇶' }, 'SYR': { ar: 'سوريا 🇸🇾', en: 'Syria 🇸🇾' },
@@ -625,7 +645,8 @@
                 expTitle: "EXPIRED ⛔", expSub: "منتهي الصلاحية", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "باقي: {y} سنة و {m} شهر و {d} يوم",
                 warnInfant: "⚠️ انتبه: المسافر سيصبح طفلاً (Child) ويحتاج مقعد في تاريخ السفر المحدد!", warnChild: "⚠️ انتبه: المسافر سيصبح بالغاً (Adult) في تاريخ السفر المحدد!", btnReminder: "📅 إضافة تذكير بموعد التجديد", btnWa: "مشاركة عبر واتساب",
                 saveReady: "التقرير جاهز!", saveInst: "👇 اختر الإجراء المناسب لحفظ أو إرسال التقرير 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة"
+                pinTitle: "🔒 أدخل الرمز السري", pinSub: "المحفظة محمية ومحفوظة بجهازك فقط", walletTitle: "المحفظة السرية", walletAdd: "إضافة مستند جديد", docNamePh: "اسم المستند (مثال: بطاقة وطنية)", btnCancel: "إلغاء", btnSaveDoc: "حفظ بالمحفظة 🔒", btnDownDoc: "عرض للحفظ", btnShareDoc: "مشاركة",
+                aiTitle: "المساعد الذكي 🤖", aiPlaceholder: "اكتب سؤالك هنا..."
             },
             en: {
                 appTitle: "Smart Pass Check", appSub: "Comprehensive Validity System",
@@ -655,7 +676,8 @@
                 expTitle: "EXPIRED ⛔", expSub: "Passport expired", invTitle: "INVALID ⚠️", valTitle: "VALID FOR TRAVEL ✅", remText: "Remaining: {y}Y, {m}M, {d}D",
                 warnInfant: "⚠️ Note: Passenger becomes a Child (needs seat) on travel date!", warnChild: "⚠️ Note: Passenger becomes an Adult on travel date!", btnReminder: "📅 Add Renewal Reminder", btnWa: "Share via WhatsApp",
                 saveReady: "Report Ready!", saveInst: "👇 Choose an action to save or share the report 👇", ageLabel: "AGE DETAILS", stampApproved: "APPROVED", stampRejected: "REJECTED",
-                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share"
+                pinTitle: "🔒 Enter PIN Code", pinSub: "Wallet is encrypted and saved locally", walletTitle: "ID Wallet", walletAdd: "Add New Document", docNamePh: "Document Name (e.g., ID Card)", btnCancel: "Cancel", btnSaveDoc: "Save Securely 🔒", btnDownDoc: "View to Save", btnShareDoc: "Share",
+                aiTitle: "AI Assistant 🤖", aiPlaceholder: "Type your question here..."
             }
         };
 
@@ -688,8 +710,13 @@
                 imageElement = document.getElementById('previewImg');
                 document.getElementById('travelDateInput').valueAsDate = new Date();
                 applyLanguage(); applyDarkMode(); updateGreeting(); updateConnectionStatus();
-                fetchWeather(); // جلب درجة الحرارة
+                fetchWeather(); 
                 initWalletDB(); 
+                
+                // تفعيل زر الانتر للبحث بالمساعد الذكي
+                document.getElementById('aiQueryInput').addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') { askGemini(); }
+                });
             } catch(e) { console.error("Init err", e); }
         });
 
@@ -717,7 +744,69 @@
             else { document.getElementById('scannerSection').scrollIntoView({behavior: 'smooth'}); }
         }
 
-        // السجل (History)
+        // ==================== المساعد الذكي (AI Assistant) ====================
+        function openAiAssistantModal() {
+            openModal('aiAssistantModal');
+        }
+
+        async function askGemini() {
+            const inputEl = document.getElementById('aiQueryInput');
+            const query = inputEl.value.trim();
+            if(!query) return;
+
+            const chatBox = document.getElementById('aiChatBox');
+            
+            // إزالة نص الترحيب عند بدء المحادثة
+            const emptyState = document.getElementById('aiEmptyState');
+            if(emptyState) emptyState.style.display = 'none';
+
+            // إضافة رسالة المستخدم للشات
+            const isRtl = currentLang === 'ar';
+            const userAlign = isRtl ? 'align-self: flex-start;' : 'align-self: flex-end;';
+            const botAlign = isRtl ? 'align-self: flex-end;' : 'align-self: flex-start;';
+            
+            chatBox.innerHTML += `<div style="${userAlign} background: #3b82f6; color: white; padding: 12px 18px; border-radius: 16px 16px 0 16px; max-width: 85%; font-size: 14px; font-weight: 700;">${query}</div>`;
+            inputEl.value = '';
+            
+            // إضافة مؤشر التحميل
+            const loadingId = 'loading_' + Date.now();
+            chatBox.innerHTML += `<div id="${loadingId}" style="${botAlign} background: var(--card-bg); color: var(--text-main); padding: 12px 18px; border-radius: 16px 16px 16px 0; max-width: 85%; font-size: 14px; font-weight: 700; border: 1px solid var(--border-color);">جاري التفكير... ⏳</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            if(!navigator.onLine) {
+                document.getElementById(loadingId).innerText = currentLang === 'ar' ? "❌ لا يوجد اتصال بالإنترنت." : "❌ No internet connection.";
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: query + " (أجب باختصار وبشكل مباشر ومفيد، كأنك مساعد شخصي بداخل تطبيق سفر. لا تستخدم أكواد برمجية بالرد)" }] }]
+                    })
+                });
+                
+                const data = await response.json();
+                if(data.error) throw new Error(data.error.message);
+                
+                let aiText = data.candidates[0].content.parts[0].text;
+                // تنسيق النص قليلاً (تحويل النجمات إلى سطور جديدة أو بولد)
+                aiText = aiText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); 
+                aiText = aiText.replace(/\*/g, '•');
+                aiText = aiText.replace(/\n/g, '<br>');
+                
+                // استبدال مؤشر التحميل بالرد الحقيقي
+                document.getElementById(loadingId).innerHTML = aiText;
+                
+            } catch (err) {
+                console.error(err);
+                document.getElementById(loadingId).innerText = currentLang === 'ar' ? "⚠️ عذراً، لم أتمكن من الإجابة. تأكد من صحة المفتاح أو الاتصال." : "⚠️ Error communicating with AI.";
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // ==================== السجل (History) ====================
         function saveToHistory(name, pass) {
             try {
                 let history = JSON.parse(safeGetItem('scanHistory', '[]'));
@@ -737,143 +826,89 @@
             try { const history = JSON.parse(safeGetItem('scanHistory', '[]')); const filtered = history.filter(item => item.name.toLowerCase().includes(query) || item.pass.toLowerCase().includes(query)); renderHistory(filtered); } catch(e) {}
         }
 
-        // قارئ الصور والذكاء الاصطناعي (Gemini)
+        // ==================== قارئ الصور بالذكاء الاصطناعي (Gemini Vision) ====================
         function loadFile(event) {
             const file = event.target.files[0];
             if (file) { const reader = new FileReader(); reader.onload = function(e) { imageElement.src = e.target.result; imageElement.style.display = 'block'; document.getElementById('placeholder').style.display = 'none'; document.getElementById('tools').style.display = 'flex'; currentRotation = 0; imageElement.style.transform = `rotate(0deg)`; nationalityData = { flag: "🌍", name: "" }; }; reader.readAsDataURL(file); }
         }
         function rotateImage(deg) { currentRotation = (currentRotation + deg) % 360; imageElement.style.transform = `rotate(${currentRotation}deg)`; }
 
+        function getRotatedImage() {
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); const img = new Image(); img.src = imageElement.src;
+                img.onload = () => {
+                    if (currentRotation === 90 || currentRotation === 270) { canvas.width = img.height; canvas.height = img.width; } else { canvas.width = img.width; canvas.height = img.height; }
+                    ctx.translate(canvas.width / 2, canvas.height / 2); ctx.rotate(currentRotation * Math.PI / 180); ctx.drawImage(img, -img.width / 2, -img.height / 2);
+                    resolve(canvas.toDataURL('image/jpeg', 0.8));
+                };
+            });
+        }
+
         function highlightField(id) { const el = document.getElementById(id); el.classList.add('highlight'); setTimeout(()=> el.classList.remove('highlight'), 1500); }
 
         async function processImage() {
             initAudio(); 
-            if (!navigator.onLine) { 
-                vibrate('error'); playSound('error'); 
-                return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); 
-            }
-            
+            if (!navigator.onLine) { vibrate('error'); playSound('error'); return alert(currentLang === 'ar' ? "يرجى الاتصال بالإنترنت أولاً!" : "No internet connection!"); }
             document.getElementById('loader').style.display = 'flex';
-            const cyberTextEl = document.querySelector('.cyber-text');
-            if(cyberTextEl) cyberTextEl.innerText = currentLang === 'ar' ? "Gemini يحلل الجواز..." : "Gemini is analyzing...";
-
+            
             try {
-                // 1. الحصول على الصورة وتجهيزها (إزالة المقطع الأول من Base64)
-                const fullBase64 = await getRotatedImage();
-                const rawBase64 = fullBase64.split(',')[1]; 
-
-                // 2. إعداد الطلب لـ Gemini 1.5 Flash
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+                // استخراج الصورة بدون بادئة base64
+                const rotatedBase64 = await getRotatedImage();
+                const base64Data = rotatedBase64.split(',')[1];
                 
-                // الأوامر الصارمة لـ Gemini ليرجع البيانات بشكل منظم
-                const promptText = `
-                You are an expert passport data extractor. Extract the following details from this passport image.
-                Return ONLY a valid JSON object with the exact following keys. Do NOT include markdown blocks like \`\`\`json.
-                {
-                    "name": "Full English Name (First and Last) without extra characters",
-                    "passportNumber": "Passport Number (usually 8-9 alphanumeric characters)",
-                    "dob": "Date of birth in YYYY-MM-DD format",
-                    "expiryDate": "Date of expiry in YYYY-MM-DD format",
-                    "countryCode": "3-letter ISO country code (e.g., IRQ, SYR, TUR)"
-                }
-                If a field is unreadable, set its value to "".
-                `;
-
+                // إرسال الصورة لـ Gemini لاستخراج البيانات بصيغة JSON مرتبة
                 const requestBody = {
                     contents: [{
                         parts: [
-                            { text: promptText },
-                            { inline_data: { mime_type: "image/jpeg", data: rawBase64 } }
+                            { text: "Extract passport details from this image, focusing on the MRZ zone at the bottom. Return ONLY a valid JSON object without any markdown formatting, backticks, or extra text. Use exactly these keys: \"name\" (Full English name), \"passportNumber\" (Alphanumeric passport number), \"dob\" (Date of Birth in YYYY-MM-DD), \"expiry\" (Date of Expiry in YYYY-MM-DD), \"nationalityCode\" (3-letter ISO country code from MRZ, e.g. IRQ, SYR, TUR). If reading fails entirely, return {\"error\": true}" },
+                            { inlineData: { mimeType: "image/jpeg", data: base64Data } }
                         ]
-                    }],
-                    generationConfig: { temperature: 0.1 } 
+                    }]
                 };
 
-                // 3. إرسال الطلب
-                const response = await fetch(url, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(requestBody)
                 });
 
-                if (!response.ok) throw new Error("فشل الاتصال بـ Gemini");
-
                 const data = await response.json();
-                const responseText = data.candidates[0].content.parts[0].text;
+                if(data.error) throw new Error(data.error.message);
                 
-                // 4. تحويل النص المستلم إلى كائن JSON
-                const passportData = JSON.parse(responseText.trim());
+                // تنظيف النتيجة وتحويلها إلى كائن برمجي (Object)
+                let aiText = data.candidates[0].content.parts[0].text;
+                aiText = aiText.replace(/```json/g, '').replace(/```/g, '').trim();
+                const result = JSON.parse(aiText);
 
-                // 5. ملء الحقول في الواجهة
-                if (passportData.name) {
-                    document.getElementById('nameInput').value = passportData.name;
-                    highlightField('nameInput');
+                if (result.error || !result.passportNumber) throw new Error("لم يتم التعرف على الجواز");
+
+                // تحديث علم الدولة
+                if (result.nationalityCode && countries[result.nationalityCode]) { 
+                    nationalityData = { flag: countries[result.nationalityCode][currentLang].slice(-2), name: countries[result.nationalityCode][currentLang] }; 
+                } else {
+                    nationalityData = { flag: "🌍", name: result.nationalityCode || "" };
                 }
-                if (passportData.passportNumber) {
-                    document.getElementById('passNumInput').value = passportData.passportNumber;
-                    highlightField('passNumInput');
-                }
-                if (passportData.dob) {
-                    document.getElementById('dobInput').value = passportData.dob;
-                    highlightField('dobInput');
-                }
-                if (passportData.expiryDate) {
-                    document.getElementById('expiryInput').value = passportData.expiryDate;
-                    highlightField('expiryInput');
-                }
-                if (passportData.countryCode && countries[passportData.countryCode]) {
-                    nationalityData = { 
-                        flag: countries[passportData.countryCode][currentLang].slice(-2), 
-                        name: countries[passportData.countryCode][currentLang] 
-                    };
-                }
+
+                // تعبئة الحقول تلقائياً
+                document.getElementById('nameInput').value = result.name || ""; 
+                if(result.name) highlightField('nameInput');
+                
+                document.getElementById('passNumInput').value = result.passportNumber || ""; 
+                if(result.passportNumber) highlightField('passNumInput');
+                
+                document.getElementById('dobInput').value = result.dob || ""; 
+                if(result.dob) highlightField('dobInput');
+                
+                document.getElementById('expiryInput').value = result.expiry || ""; 
+                if(result.expiry) highlightField('expiryInput');
 
                 vibrate('success'); playSound('success');
             } catch (error) { 
-                console.error("Gemini Error:", error);
+                console.error("OCR Error:", error);
                 vibrate('error'); playSound('error'); 
-                alert(currentLang === 'ar' ? "فشل التعرف على الجواز، الرجاء إدخال البيانات يدوياً." : "Failed to read passport, please enter manually."); 
-            } finally { 
-                document.getElementById('loader').style.display = 'none'; 
-                if(cyberTextEl) cyberTextEl.innerText = dict[currentLang].scanning;
-            }
-        }
-
-        // دالة تصغير وضغط الصورة 
-        function getRotatedImage() {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas'); 
-                const ctx = canvas.getContext('2d'); 
-                const img = new Image(); 
-                img.src = imageElement.src;
-                img.onload = () => {
-                    const MAX_WIDTH = 1000;
-                    let scaleSize = 1;
-                    
-                    if (img.width > MAX_WIDTH) {
-                        scaleSize = MAX_WIDTH / img.width;
-                    }
-
-                    const finalWidth = img.width * scaleSize;
-                    const finalHeight = img.height * scaleSize;
-
-                    if (currentRotation === 90 || currentRotation === 270) { 
-                        canvas.width = finalHeight; 
-                        canvas.height = finalWidth; 
-                    } else { 
-                        canvas.width = finalWidth; 
-                        canvas.height = finalHeight; 
-                    }
-                    
-                    ctx.translate(canvas.width / 2, canvas.height / 2); 
-                    ctx.rotate(currentRotation * Math.PI / 180); 
-                    
-                    ctx.drawImage(img, -finalWidth / 2, -finalHeight / 2, finalWidth, finalHeight);
-                    
-                    // ضغط الصورة لتقليل الحجم وإرسالها لـ Gemini بشكل أسرع
-                    resolve(canvas.toDataURL('image/jpeg', 0.6));
-                };
-            });
+                alert(currentLang === 'ar' ? "لم تكن الصورة واضحة تماماً، الرجاء إدخال البيانات يدوياً." : "Image not clear, please enter data manually."); 
+            } 
+            finally { document.getElementById('loader').style.display = 'none'; }
         }
 
         function calculateDiff(startDate, endDate) {
@@ -882,7 +917,7 @@
             return { years, months, days, totalMonths: (years * 12) + months };
         }
 
-        // توليد التقرير
+        // ==================== توليد التقرير ====================
         function generateTicket() {
             initAudio(); 
             const dobVal = document.getElementById('dobInput').value; const expiryVal = document.getElementById('expiryInput').value;
@@ -1151,6 +1186,8 @@
 
         function viewFullDoc(imgSrc) { document.getElementById('docFullImg').src = imgSrc; openModal('docFullModal'); }
 
+        /* === دوال الحفظ والمشاركة الأصلية === */
+
         function downloadDocImage() {
             try {
                 const imgSrc = document.getElementById('docFullImg').src; const newWindow = window.open();
@@ -1187,9 +1224,4 @@
                     const imgElement = document.getElementById('finalImage'); const fetchRes = await fetch(imgElement.src); const blob = await fetchRes.blob();
                     const file = new File([blob], "PassCheck_Report.png", { type: "image/png" });
                     await navigator.share({ title: currentLang === 'ar' ? 'تقرير الجواز' : 'Passport Report', files: [file] });
-                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة ثم شاركها." : "Sharing not supported. Click 'View to Save'."); }
-            } catch(e) {}
-        }
-    </script>
-</body>
-</html>
+                } else { alert(currentLang === 'ar' ? "المشاركة غير مدعومة بجهازك ❌\n\nاضغط على (عرض للحفظ) لفتح الصورة
